@@ -31,3 +31,14 @@ if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(UgandaPilote ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
+
+#Detect and add Boost
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.58.0 COMPONENTS filesystem regex)
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
+endif()
