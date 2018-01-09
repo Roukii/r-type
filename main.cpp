@@ -1,11 +1,23 @@
 //
-// Created by Alexandre on 1/9/2018.
+// Created by sentrance on 09/01/18.
 //
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
-int main(int ac, char **av)
-{
-    std::cout << "hello world !" << std::endl;
-    return (0);
+
+int main(int argc, char* argv[]) {
+
+    // Code adapted from the SFML 2 "Window" example.
+
+    sf::Window App(sf::VideoMode(800, 600), "myproject");
+
+    while (App.isOpen()) {
+        sf::Event Event;
+        while (App.pollEvent(Event)) {
+            if (Event.type == sf::Event::Closed)
+                App.close();
+        }
+        App.display();
+    }
 }
