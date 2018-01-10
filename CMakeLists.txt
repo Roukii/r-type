@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add sources
-set(SOURCE_FILES main.cpp utils)
+set(SOURCE_FILES main.cpp IState.cpp IState.hpp SplashScreen.cpp SplashScreen.hpp Core.cpp Core.hpp MenuScreen.cpp MenuScreen.hpp GameScreen.cpp GameScreen.hpp OptionsScreen.cpp OptionsScreen.hpp)
 
 #Create executable
 add_executable(UgandaPilote ${SOURCE_FILES})
@@ -30,15 +30,4 @@ find_package(SFML 2 REQUIRED network audio graphics window system)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(UgandaPilote ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-endif()
-
-#Detect and add Boost
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.58.0 COMPONENTS filesystem regex)
-
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
 endif()
