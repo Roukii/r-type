@@ -28,6 +28,7 @@ void	SplashScreen::game(std::shared_ptr<IState> &state) {
 
 int    SplashScreen::exec() {
     std::cout << "SplashScreen" << std::endl;
+    return 0;
 }
 
 void   SplashScreen::init() {

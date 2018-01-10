@@ -5,8 +5,7 @@
 #ifndef R_TYPE_CORE_HPP
 #define R_TYPE_CORE_HPP
 
-#include <tr1/memory>
-#include <bits/shared_ptr.h>
+#include <memory>
 #include "IState.hpp"
 
 class Core {

@@ -5,8 +5,7 @@
 #ifndef R_TYPE_ISTATE_HPP
 #define R_TYPE_ISTATE_HPP
 
-#include <tr1/memory>
-#include <bits/shared_ptr.h>
+#include <memory>
 
 class Core;
 

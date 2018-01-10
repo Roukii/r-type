@@ -30,6 +30,7 @@ void	OptionsScreen::game(std::shared_ptr<IState> &state) {
 
 int    OptionsScreen::exec() {
     std::cout << "OptionsScreen" << std::endl;
+    return 0;
 }
 
 void   OptionsScreen::init() {

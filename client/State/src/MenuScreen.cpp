@@ -29,6 +29,7 @@ void	MenuScreen::game(std::shared_ptr<IState> &state) {
 
 int    MenuScreen::exec(){
     std::cout << "MenuScreen" << std::endl;
+    return 0;
 }
 
 void   MenuScreen::init() {

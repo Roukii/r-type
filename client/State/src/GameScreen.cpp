@@ -29,6 +29,7 @@ void	GameScreen::game(std::shared_ptr<IState> &state) {
 
 int    GameScreen::exec() {
     std::cout << "GameScreen" << std::endl;
+    return 0;
 }
 
 void   GameScreen::init() {
