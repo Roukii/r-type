@@ -11,7 +11,7 @@
 #include "AEntity.hpp"
 #include "EngineDefinitions.hpp"
 
-namespace AUgandaEngine {
+namespace UgandaEngine {
     class AGameEngine {
         /*
          * Variables
@@ -37,8 +37,8 @@ namespace AUgandaEngine {
         //Game Loop
         virtual void gameLoop() = 0;
 
-        //Boolean to check if window is still opened
-        virtual bool isWindowOpen() = 0;
+        //Boolean to check loop condition
+        virtual bool isAlive() = 0;
 
         //Generic functions to draw
         virtual void drawWindow() = 0;
