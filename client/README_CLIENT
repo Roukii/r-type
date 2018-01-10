@@ -1,0 +1,3 @@
+Ici on ne met QUE ce qui est en rapport DIRECT avec le client (ex : les statepattern ou le singleton d'option)
+
+Ce qu'on ne met pas: un ECS généralisé ou un GAMEENGINE par exemple.

@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add sources
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp utils)
 
 #Create executable
 add_executable(UgandaPilote ${SOURCE_FILES})
