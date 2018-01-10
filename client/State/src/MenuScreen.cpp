@@ -11,7 +11,6 @@
 
 void	MenuScreen::splash(std::shared_ptr<IState> &state) {
     state = std::make_shared<SplashScreen>();
-    delete this;
 }
 
 void	MenuScreen::menu(std::shared_ptr<IState> &state) {
@@ -19,12 +18,10 @@ void	MenuScreen::menu(std::shared_ptr<IState> &state) {
 
 void	MenuScreen::options(std::shared_ptr<IState> &state) {
     state = std::make_shared<OptionsScreen>();
-    delete this;
 }
 
 void	MenuScreen::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameScreen>();
-    delete this;
 }
 
 int    MenuScreen::exec(){

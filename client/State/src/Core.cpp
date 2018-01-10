@@ -2,9 +2,7 @@
 // Created by Samy on 10/01/2018.
 //
 
-#include <stdio.h>
 #include <iostream>
-#include <string>
 #include "../include/Core.hpp"
 #include "../include/SplashScreen.hpp"
 
@@ -25,7 +23,7 @@ void    Core::start() {
     while (1) {
         _state->exec();
         std::string lol;
-        std::getline(std::cin, lol);
+        getline(std::cin, lol);
         if (lol == "splash")
             splash();
         else if (lol == "menu")

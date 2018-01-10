@@ -11,17 +11,14 @@
 
 void	GameScreen::splash(std::shared_ptr<IState> &state) {
     state = std::make_shared<SplashScreen>();
-    delete this;
 }
 
 void	GameScreen::menu(std::shared_ptr<IState> &state) {
     state = std::make_shared<MenuScreen>();
-    delete this;
 }
 
 void	GameScreen::options(std::shared_ptr<IState> &state) {
     state = std::make_shared<OptionsScreen>();
-    delete this;
 }
 
 void	GameScreen::game(std::shared_ptr<IState> &state) {
