@@ -17,7 +17,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add sources
-set(SOURCE_FILES main.cpp IState.cpp IState.hpp SplashScreen.cpp SplashScreen.hpp Core.cpp Core.hpp MenuScreen.cpp MenuScreen.hpp GameScreen.cpp GameScreen.hpp OptionsScreen.cpp OptionsScreen.hpp)
+set(SOURCE_FILES main.cpp)
+#set(SOURCE_FILES main.cpp client/IState.hpp client/SplashScreen.cpp client/SplashScreen.hpp client/Core.cpp client/Core.hpp client/MenuScreen.cpp client/MenuScreen.hpp client/GameScreen.cpp client/GameScreen.hpp client/OptionsScreen.cpp client/OptionsScreen.hpp)
 
 #Create executable
 add_executable(UgandaPilote ${SOURCE_FILES})
@@ -32,6 +33,8 @@ if(SFML_FOUND)
     target_link_libraries(UgandaPilote ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 
+add_definitions( -DBOOST_ALL_NO_LIB )
+
 #Detect and add Boost
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
@@ -43,8 +46,4 @@ if(Boost_FOUND)
     target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
 endif()
 
-#Detect and add Boost
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.58.0 COMPONENTS filesystem regex)
+add_subdirectory(server)
