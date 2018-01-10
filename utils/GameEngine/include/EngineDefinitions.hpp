@@ -5,7 +5,7 @@
 #ifndef R_TYPE_ENGINEDEFINITIONS_HPP
 #define R_TYPE_ENGINEDEFINITIONS_HPP
 
-namespace AUgandaEngine {
+namespace UgandaEngine {
     enum KeyInput {
         UP,
         DOWN,
