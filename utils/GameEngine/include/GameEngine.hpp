@@ -16,6 +16,9 @@ namespace UgandaEngine {
          * Variables
          */
     private:
+        //Is it a graphical UE?
+        bool _isGraphical;
+
         //Window
         sf::RenderWindow _Window;
 
@@ -30,7 +33,7 @@ namespace UgandaEngine {
          * Constructor and destructor
          */
     public:
-        GameEngine();
+        GameEngine(bool hasGraphics);
         ~GameEngine() = default;
 
         /*
@@ -48,6 +51,7 @@ namespace UgandaEngine {
 
         //Event functions
         void update(float deltaTime);
+        void addEntity(const AEntity &newEntity);
     };
 }
 
