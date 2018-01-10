@@ -5,6 +5,8 @@
 #ifndef R_TYPE_ENGINEDEFINITIONS_HPP
 #define R_TYPE_ENGINEDEFINITIONS_HPP
 
+
+//TODO: debug : l'utilisateur doit pouvoir charger ce qui l'intéresse (nbr de key, component type, etc...)
 namespace UgandaEngine {
     enum KeyInput {
         UP,
@@ -18,6 +20,12 @@ namespace UgandaEngine {
         PAUSE,
         SPACE,
         ESCAPE
+    };
+    enum ComponentType {
+        DEFAULT,
+        POSITION2D,
+        SPRITE,
+        DAMAGE
     };
 }
 

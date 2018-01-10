@@ -3,3 +3,7 @@
 //
 
 #include "../include/AEntity.hpp"
+
+void UgandaEngine::AEntity::addComponent(const UgandaEngine::AComponent &component) {
+    _Components.push_back(component);
+}

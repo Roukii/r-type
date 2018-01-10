@@ -5,7 +5,9 @@
 #ifndef R_TYPE_AENTITY_HPP
 #define R_TYPE_AENTITY_HPP
 
+#include <vector>
 #include "EngineDefinitions.hpp"
+#include "AComponent.hpp"
 
 namespace UgandaEngine {
     class AEntity {
@@ -13,30 +15,24 @@ namespace UgandaEngine {
          * Variables
          */
     protected:
-        //Entity hurt or/and can be hurt
-        bool _doesDamage;
-        bool _takeDamage;
-
-        //Speed
-        float _Speed;
+        //Vector d'entity
+        std::vector<AComponent> _Components;
 
         /*
          * Constructors / Destructor
          */
-        AEntity() : _Speed(0), _doesDamage(false), _takeDamage(false) {};
+        AEntity() = default;
         virtual ~AEntity() = default;
 
         /*
          * Function and methods
          */
     public:
-        //Getters and setters
-        bool doesDamage() { return _takeDamage; }
-        bool takeDamage() { return _doesDamage; }
-
         //Moving functions. Position should have the calcul: pos += _Speed * elapsedTime.
         //Update Entity function
         virtual void update(float elapsedTime, KeyInput keyInput) = 0;
+
+        virtual void addComponent(const AComponent &component);
     };
 }
 

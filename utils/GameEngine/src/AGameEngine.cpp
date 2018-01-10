@@ -16,12 +16,12 @@ UgandaEngine::AGameEngine::AGameEngine() {
         drawWindow();
 }
 
-void UgandaEngine::AGameEngine::update(float deltaTime, KeyInput keyInput) {
-    //Call every update entities event
-    for (AEntity e : _Entities) {
-        e.update(deltaTime, keyInput);
-    }
-}
+//void UgandaEngine::AGameEngine::update(float deltaTime, KeyInput keyInput) {
+//    //Call every update entities event
+//    for (AEntity e : _Entities) {
+//        e.update(deltaTime, keyInput);
+//    }
+//}
 
 void UgandaEngine::AGameEngine::addEntity(const UgandaEngine::AEntity &newEntity) {
     _Entities.push_back(newEntity);

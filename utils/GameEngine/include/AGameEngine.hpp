@@ -47,7 +47,7 @@ namespace UgandaEngine {
         virtual KeyInput input() = 0;
 
         //Event functions
-        void update(float deltaTime, KeyInput keyInput);
+        //void update(float deltaTime, KeyInput keyInput);
         void addEntity(const AEntity &newEntity);
     };
 }
