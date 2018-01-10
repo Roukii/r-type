@@ -8,8 +8,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include "EngineDefinitions.hpp"
 
-namespace UgandaEngine {
+//TODO: ajouté des booléens pour voir si l'entité est hurtable (si elle prend des dégâts) ou si elle heurt en touchant
+
+namespace AUgandaEngine {
     class AEntity {
         /*
          * Variables
@@ -37,10 +40,10 @@ namespace UgandaEngine {
         sf::Sprite getSprite() { return _Sprite; }
 
         //Moving functions. Position should have the calcul: pos += _Speed * elapsedTime.
-        virtual void move(const sf::Vector2f newPos);
+        virtual void move(const sf::Vector2f newPos) = 0;
 
         //Update Entity function
-        virtual void update(float elapsedTime);
+        virtual void update(float elapsedTime, KeyInput keyInput) = 0;
     };
 }
 

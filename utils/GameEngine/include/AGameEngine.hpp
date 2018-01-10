@@ -9,23 +9,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "AEntity.hpp"
+#include "EngineDefinitions.hpp"
 
-namespace UgandaEngine {
-    class GameEngine {
+namespace AUgandaEngine {
+    class AGameEngine {
         /*
          * Variables
          */
     private:
-        //Is it a graphical UE?
-        bool _isGraphical;
-
-        //Window
-        sf::RenderWindow _Window;
-
-        //Background's sprite and texture
-        sf::Sprite _BgSprite;
-        sf::Texture _BgTexture;
-
         //List of entities
         std::vector<AEntity> _Entities;
 
@@ -33,8 +24,8 @@ namespace UgandaEngine {
          * Constructor and destructor
          */
     public:
-        GameEngine(bool hasGraphics);
-        ~GameEngine() = default;
+        AGameEngine();
+        ~AGameEngine() = default;
 
         /*
          * Function and methods
@@ -43,14 +34,20 @@ namespace UgandaEngine {
     public:
         void start();
 
-        //Input functions
-        void input();
+        //Game Loop
+        virtual void gameLoop() = 0;
 
-        //Drawing functions
-        void draw();
+        //Boolean to check if window is still opened
+        virtual bool isWindowOpen() = 0;
+
+        //Generic functions to draw
+        virtual void drawWindow() = 0;
+
+        //Key handling
+        virtual KeyInput input() = 0;
 
         //Event functions
-        void update(float deltaTime);
+        void update(float deltaTime, KeyInput keyInput);
         void addEntity(const AEntity &newEntity);
     };
 }
