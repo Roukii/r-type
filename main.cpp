@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Core.hpp"
+#include "client/State/include/Core.hpp"
 
 int main(int argc, char* argv[]) {
 //
@@ -21,7 +21,6 @@ int main(int argc, char* argv[]) {
 //        App.display();
 //    }
     Core *core;
-
     try { core = new Core(); }
     catch (const std::exception &e) {std::cerr << "Error: " << e.what() << std::endl;}
     core->start();

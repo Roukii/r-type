@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add sources
-set(SOURCE_FILES main.cpp utils)
+set(SOURCE_FILES main.cpp utils client/State/src/Core.cpp client/State/src/GameScreen.cpp client/State/src/MenuScreen.cpp client/State/src/OptionsScreen.cpp client/State/src/SplashScreen.cpp)
 
 #Create executable
 add_executable(UgandaPilote ${SOURCE_FILES})
