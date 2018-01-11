@@ -8,7 +8,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 #Project's name
-project(r-type_server)
+project(r-type_clienttest)
 
 #Set lang to C++ 98
 set(CMAKE_CXX_STANDARD 17)
@@ -20,12 +20,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 include_directories(include)
 
 #Add sources
-set(SERVER_SOURCE_FILES src/Rtype.cpp include/ServerUdp.hpp src/ServerUdp.cpp)
+set(CLIENTTEST_SOURCE_FILES clientudp.cpp)
 
 #Create executable
-add_executable(Server ${SERVER_SOURCE_FILES})
+add_executable(ClientTest ${CLIENTTEST_SOURCE_FILES})
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
-    target_link_libraries(Server ${Boost_LIBRARIES})
+    target_link_libraries(ClientTest ${Boost_LIBRARIES})
 endif()
