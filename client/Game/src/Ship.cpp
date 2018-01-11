@@ -45,20 +45,22 @@ void 		Ship::update(const sf::Event& e) {
 	_frameTime = _frameClock.restart();
 	Animation*	currentAnim = _animations[NONE];
 	if (e.type == sf::Event::KeyPressed) {
-		if (e.key.code == sf::Keyboard::Up) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 			currentAnim = _animations[UP];
 			_position.y -= _speed;
-		} else if (e.key.code == sf::Keyboard::Down) {
+		} if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			currentAnim = _animations[DOWN];
 			_position.y += _speed;
-		} else if (e.key.code == sf::Keyboard::Right) {
-			currentAnim = _animations[NONE];
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			_position.x += _speed;
-		} else if (e.key.code == sf::Keyboard::Left) {
-			currentAnim = _animations[NONE];
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			_position.x -= _speed;
 		}
-	}
+	} else
+		currentAnim = _animations[NONE];
+
 	_currentSprite.setPosition(_position);
 	_currentSprite.update(_frameTime);
 	_currentSprite.play(*currentAnim);

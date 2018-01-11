@@ -126,9 +126,7 @@ void		AnimatedSprite::update(sf::Time deltaTime) {
 					_isPaused = true;
 				} else
 					_currentFrame = 0; // reset to start
-
 			}
-
 			// set the current frame, not reseting the time
 			setFrame(_currentFrame, false);
 		}
