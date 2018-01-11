@@ -5,6 +5,8 @@
 
 int main() {
 	sf::RenderWindow	win(sf::VideoMode(1920, 1080), "R-Type");
+	win.setFramerateLimit(60);
+	win.setVerticalSyncEnabled(false);
 	Ship			ship;
 
 	while (win.isOpen())

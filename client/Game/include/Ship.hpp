@@ -9,9 +9,17 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Clock.hpp>
+
+#include "AnimatedSprite.hpp"
 
 class Ship : public sf::Drawable {
 public:
+	enum 	Direction {
+		UP = 0,
+		DOWN,
+		NONE
+	};
 	/*
 	 * CTOR & DTOR
 	 */
@@ -24,9 +32,14 @@ public:
 	virtual void 	draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	sf::Sprite	_sprite;
-	sf::Texture	_texture;
+	AnimatedSprite	_currentSprite;
+	std::vector<Animation*>	_animations;
+	Direction	_currentDirection;
+	sf::Texture*	_texture;
 	sf::Vector2f	_position;
+	sf::Clock	_frameClock;
+	sf::Time	_frameTime;
+	float 		_speed;
 };
 
 
