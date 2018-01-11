@@ -4,12 +4,12 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <stdexcept>
+#include "../include/Ship.hpp"
 
-#include "Ship.hpp"
 
 Ship::Ship() : _currentDirection(NONE), _speed(8.0f) {
 	_texture = new sf::Texture;
-	if (!_texture->loadFromFile("assets/ship_1.png"))
+	if (!_texture->loadFromFile("../assets/ship_1.png"))
 		throw std::invalid_argument("Error: Cannot load image");
 
 	_animations.emplace_back(new Animation);

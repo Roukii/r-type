@@ -2,7 +2,7 @@
 // Created by alex on 1/11/18.
 //
 
-#include "AnimatedSprite.hpp"
+#include "../include/AnimatedSprite.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
 	: _animation(NULL), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(NULL) {
