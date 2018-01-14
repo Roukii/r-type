@@ -1,0 +1,6 @@
+{
+  "texture":"../etc.png",
+  "id":"0",
+  "walkable":"true",
+  "event":"false"
+}
