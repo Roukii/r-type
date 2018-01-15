@@ -1,6 +1,6 @@
 {
   "texture":"",
   "id":"b",
-  "walkable":"false",
+  "walkable":"true",
   "event":"false"
 }
