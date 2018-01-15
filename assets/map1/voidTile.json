@@ -1,5 +1,5 @@
 {
-  "texture":"../etc.png",
+  "texture":"",
   "id":"0",
   "walkable":"true",
   "event":"false"

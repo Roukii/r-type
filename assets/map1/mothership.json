@@ -1,0 +1,8 @@
+{
+  "background":"../Stars.jpg",
+  "0":"../assets/map1/voidTile.json",
+  "1":"../assets/map1/voidTileEvent.json",
+  "2":"../assets/map1/shipTile.json",
+  "b":"../assets/map1/shipTileB.json",
+  "map":"../assets/map1/mothership.Ug"
+}

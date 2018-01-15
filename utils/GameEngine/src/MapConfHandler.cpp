@@ -108,7 +108,7 @@ void UgandaEngine::MapConfHandler::Map::createMap(const std::string &file) {
         while (line[i]) {
             if (line[i] != ',') {
                 MapTile mapTile = MapTile();
-                mapTile._id = line[i];
+                mapTile._id = line[i] - '0';
                 for (MapTile mt : _mapTiles) {
                     if (mt._id == mapTile._id) {
                         mapTile._isEvent = mt._isEvent;
