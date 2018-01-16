@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include "../include/Core.hpp"
-#include "../include/SplashScreen.hpp"
+#include "../include/SplashState.hpp"
+#include "../include/MenuState.hpp"
 
 //void	Core::initLib(int x, int y)
 //{
@@ -19,34 +20,38 @@
 //}
 
 void    Core::start() {
-    this->_state = std::make_shared<SplashScreen>();
+    this->_state = std::make_shared<MenuState>();
+    sf::RenderWindow	win(sf::VideoMode(1920, 1080), "R-Type");
     while (1) {
-        _state->exec();
-        std::string lol;
-        getline(std::cin, lol);
-        if (lol == "splash")
+      int ret =  _state->exec(win);
+        std::cout << ret << std::endl;
+        if (ret == 0)
             splash();
-        else if (lol == "menu")
+        else if (ret == 1)
             menu();
-        else if (lol == "options")
+        else if (ret == 2)
             options();
-        else if (lol == "game")
+        else if (ret == 3)
             game();
     }
 }
 
 void	Core::splash(){
     this->_state->splash(_state);
+    this->_state->init();
 }
 
 void	Core::menu() {
     this->_state->menu(_state);
+    this->_state->init();
 }
 
 void	Core::options() {
     this->_state->options(_state);
+    this->_state->init();
 }
 
 void	Core::game() {
     this->_state->game(_state);
+    this->_state->init();
 }

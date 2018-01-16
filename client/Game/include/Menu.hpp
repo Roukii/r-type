@@ -29,7 +29,7 @@ public:
     sf::Sprite *getSprite() {return _sprite;}
     void moveDown();
     void moveUp();
-    void handleKeys(const sf::Event&e);
+    int handleKeys(const sf::Event&e);
 };
 
 #endif //R_TYPE_MENU_HPP

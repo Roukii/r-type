@@ -6,6 +6,7 @@
 #define R_TYPE_ISTATE_HPP
 
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 class Core;
 
@@ -16,7 +17,7 @@ public:
     virtual void options(std::shared_ptr<IState> &state) = 0;
     virtual void game(std::shared_ptr<IState> &state) = 0;
 
-    virtual int exec() = 0;
+    virtual int exec(sf::RenderWindow &win) = 0;
     virtual void init() = 0;
     template<typename T>
     IState* screen() {

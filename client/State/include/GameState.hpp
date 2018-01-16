@@ -2,24 +2,23 @@
 // Created by Samy on 10/01/2018.
 //
 
-#ifndef R_TYPE_MENUSCREEN_HPP
-#define R_TYPE_MENUSCREEN_HPP
+#ifndef R_TYPE_GAMESCREEN_HPP
+#define R_TYPE_GAMESCREEN_HPP
 
 #include "IState.hpp"
 #include "Core.hpp"
 
-class MenuScreen : public IState {
+class GameState : public IState {
 public:
-    MenuScreen(){};
-    virtual ~MenuScreen(){};
+    GameState(){};
+    virtual ~GameState(){};
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);
     virtual void game(std::shared_ptr<IState> &state);
 
-    virtual int exec();
+    virtual int exec(sf::RenderWindow &win);
     virtual void init();
 };
 
-
-#endif //R_TYPE_MENUSCREEN_HPP
+#endif //R_TYPE_GAMESCREEN_HPP
