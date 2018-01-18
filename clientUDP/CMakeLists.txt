@@ -20,7 +20,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 include_directories(include)
 
 #Add sources
-set(CLIENTTEST_SOURCE_FILES clientudp.cpp)
+set(CLIENTTEST_SOURCE_FILES src/ClientUdp.cpp src/main.cpp include/ClientUdp.hpp src/Random.cpp include/Random.h)
 
 #Create executable
 add_executable(ClientTest ${CLIENTTEST_SOURCE_FILES})

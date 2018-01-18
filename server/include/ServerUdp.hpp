@@ -17,6 +17,8 @@
 #include <vector>
 #include <string>
 
+using endpoint = boost::asio::ip::udp::endpoint;
+
 namespace RTypeServer
 {
     class ServerUdp
@@ -30,17 +32,21 @@ namespace RTypeServer
 
         ServerUdp &operator=(const ServerUdp &) = delete;
 
+        void SendToClient(const std::string &, unsigned int);
+        void SendToAll(const std::string &);
+        void SendToAllExcept(const std::string &, unsigned int);
+
     private:
         void startReceive();
-        void handleReceive(const boost::system::error_code& error, std::size_t);
-        void handleSend(boost::shared_ptr<std::string>, const boost::system::error_code&, std::size_t);
+        void send(const std::string &, endpoint);
+        void handleError(const boost::system::error_code &, endpoint);
+        void removeDisconnectedClient(endpoint);
+
     private:
-        //boost::asio::io_service         &_service;
         boost::asio::ip::udp::socket    _socket;
-        boost::asio::ip::udp::endpoint _remoteEndpoint;
-        boost::array<char, 1> recv_buffer_;
-        char test[MAX_SIZE_MSG];
-        //std::vector<char> _message;
+        std::vector<endpoint> _clientsList;
+        endpoint _lastEndpoint;
+        char *_data;
     };
 }
 
