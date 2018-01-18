@@ -2,7 +2,7 @@
 // Created by alex on 1/11/18.
 //
 
-#include "../include/Animation.hpp"
+#include "Animation.hpp"
 
 Animation::Animation() : _texture(nullptr) {}
 

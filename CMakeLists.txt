@@ -16,13 +16,15 @@ set(CMAKE_CXX_STANDARD 17)
 #Set executable at cmake dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
+INCLUDE_DIRECTORIES(client/Game/include)
+
 #Add sources
 #set(SOURCE_FILES main.cpp utils client/State/src/Core.cpp client/State/src/GameScreen.cpp client/State/src/MenuState.cpp client/State/src/OptionsScreen.cpp client/State/src/SplashScreen.cpp)
-set(SOURCE_FILES utils client/Game/src/main.cpp client/Game/src/Ship.cpp client/Game/include/Ship.hpp client/Game/include/AnimatedSprite.hpp client/Game/include/Animation.hpp client/Game/src/AnimatedSprite.cpp client/Game/src/Animation.cpp
-        utils/GameEngine/src/MapConfHandler.cpp client/Game/src/Menu.cpp client/State/src/Core.cpp client/State/src/GameState.cpp client/State/src/MenuState.cpp client/State/src/OptionsState.cpp client/State/src/SplashState.cpp)
+FILE(GLOB CLIENT_GAME_SOURCES client/Game/include/*.hpp client/Game/src/*.cpp client/State/include/*.hpp client/State/src/*.cpp)
 
 #Create executable
-add_executable(UgandaPilote ${SOURCE_FILES})
+add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
+
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

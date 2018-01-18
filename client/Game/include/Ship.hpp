@@ -5,13 +5,18 @@
 #ifndef DISPLAYTESTS_SHIP_HPP
 #define DISPLAYTESTS_SHIP_HPP
 
+#include <memory>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Clock.hpp>
+#include <list>
 
 #include "AnimatedSprite.hpp"
+#include "ShipProjectile.hpp"
+
+// TODO: Replace by smart pointers!!!
 
 class Ship : public sf::Drawable {
 public:
@@ -24,12 +29,10 @@ public:
 	 * CTOR & DTOR
 	 */
 	Ship();
-	~Ship() {}
+	~Ship() override = default;
 
 	void 		update(const sf::Event&);
-
-
-	virtual void 	draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	void 		draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
 	AnimatedSprite	_currentSprite;
@@ -40,6 +43,7 @@ private:
 	sf::Clock	_frameClock;
 	sf::Time	_frameTime;
 	float 		_speed;
+	std::list<ShipProjectile>	_missiles;
 };
 
 

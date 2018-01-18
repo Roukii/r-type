@@ -4,12 +4,13 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <stdexcept>
-#include "../include/Ship.hpp"
+#include <iostream>
 
+#include "Ship.hpp"
 
 Ship::Ship() : _currentDirection(NONE), _speed(8.0f) {
 	_texture = new sf::Texture;
-	if (!_texture->loadFromFile("../assets/ship_1.png"))
+	if (!_texture->loadFromFile("assets/ship_1.png"))
 		throw std::invalid_argument("Error: Cannot load image");
 
 	_animations.emplace_back(new Animation);
@@ -44,11 +45,12 @@ Ship::Ship() : _currentDirection(NONE), _speed(8.0f) {
 void 		Ship::update(const sf::Event& e) {
 	_frameTime = _frameClock.restart();
 	Animation*	currentAnim = _animations[NONE];
-	if (e.type == sf::Event::KeyPressed) {
+	//if (e.type == sf::Event::KeyPressed) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 			currentAnim = _animations[UP];
 			_position.y -= _speed;
-		} if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			currentAnim = _animations[DOWN];
 			_position.y += _speed;
 		}
@@ -58,8 +60,31 @@ void 		Ship::update(const sf::Event& e) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			_position.x -= _speed;
 		}
-	} else
-		currentAnim = _animations[NONE];
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			std::cout << "Instanciation of projectile" << std::endl;
+			_missiles.emplace_back(_speed + 1.0f, sf::Vector2(_position.x + 90.f, _position.y + 23.f));
+		}
+	/*} else
+		currentAnim = _animations[NONE];*/
+
+	/*if (e.type == sf::Event::KeyReleased) {
+		switch (e.key.code) {
+			case sf::Keyboard::Space:
+				std::cout << "Instanciation of projectile" << std::endl;
+				_missiles.emplace_back(_speed + 1.0f, sf::Vector2(_position.x + 90.f, _position.y + 23.f));
+			default:
+				break;
+		}
+	}*/
+
+	for (auto it = _missiles.begin(); it != _missiles.end(); ++it) {
+		if (it->isDestroyed()) {
+			_missiles.erase(it);
+			it = _missiles.begin();
+		}
+		else
+			it->update();
+	}
 
 	_currentSprite.setPosition(_position);
 	_currentSprite.update(_frameTime);
@@ -68,4 +93,7 @@ void 		Ship::update(const sf::Event& e) {
 
 void		Ship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(_currentSprite, states);
+	for (auto& item : _missiles) {
+		item.draw(target, states);
+	}
 }
