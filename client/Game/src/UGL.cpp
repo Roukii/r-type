@@ -22,9 +22,8 @@ void UGL::loadFont(const std::string &path) {
 }
 
 void UGL::loadText(int x, int y, int size, const std::string &str, const std::string &name) {
-	_texts[name] = std::make_shared<std::string>(str);
+	_texts[name] = std::make_shared<sf::Text>(str, _font);
 
-	_texts[name]->setFont(_font);
 	_texts[name]->setPosition(x, y);
 	_texts[name]->setCharacterSize(size);
 }
