@@ -29,7 +29,7 @@ public:
     void run();
     void send(const std::string &message);
     static bool checkPort(unsigned short port);
-
+    std::thread &getThread() { return _serviceThread;}
 
 private:
     void startReceive();

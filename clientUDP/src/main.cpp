@@ -34,5 +34,7 @@ int main(int ac,char **av)
         std::getline(std::cin, shell);
         client.send(shell);
     }
+    std::cout << "end thread" << std::endl;
+    client.getThread().join();
     return 0;
 }

@@ -10,7 +10,7 @@ ClientUdp::ClientUdp(const std::string &host,
                      unsigned short localPort)
     : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), localPort)),
       _serviceThread(&ClientUdp::run, this),
-      _isRunning(false), _host(host), _serverPort(serverPort), _localPort(localPort)
+      _isRunning(true), _host(host), _serverPort(serverPort), _localPort(localPort)
 {
 }
 
@@ -22,6 +22,7 @@ ClientUdp::~ClientUdp()
 
 void ClientUdp::run()
 {
+    std::cout << "run bro" << std::endl;
     _data = new char[MAX_SIZE_MSG];
     for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
         _data[i] = 0;
@@ -64,6 +65,7 @@ void ClientUdp::startReceive()
                               [this](const boost::system::error_code &ec,
                                      std::size_t bytes)
                               {
+                                  std::cout << "receive smth" << std::endl;
                                   if (!ec)
                                   {
                                       std::string message(_data);
@@ -73,6 +75,7 @@ void ClientUdp::startReceive()
                                   {
                                       std::cout << "error : " << ec.message() << std::endl;
                                   }
+                                  startReceive();
                               });
 }
 
