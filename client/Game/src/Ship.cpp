@@ -62,7 +62,7 @@ void 		Ship::update(const sf::Event& e) {
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			std::cout << "Instanciation of projectile" << std::endl;
-			_missiles.emplace_back(_speed + 1.0f, sf::Vector2(_position.x + 90.f, _position.y + 23.f));
+			_missiles.emplace_back(_speed + 1.0f, sf::Vector2f(_position.x + 90.f, _position.y + 23.f));
 		}
 	/*} else
 		currentAnim = _animations[NONE];*/

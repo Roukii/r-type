@@ -11,22 +11,32 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <map>
+#include <functional>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio/Music.hpp>
+#include "ILib.hpp"
 
-class UGL {
+class UGL : public ILib {
 public:
 	UGL() = default;
 	~UGL() = default;
+protected:
+    void loadLib();
+    void loadSprite(const std::string &path, const std::string &name);
+    void loadFont(const std::string &path);
+    void loadText(int x, int y, int size, const std::string &str, const std::string &name);
+    void loadSound(const std::string &path, const std::string &name);
+    void loadMusic(const std::string &path, const std::string &name);
 
-	//Todo: function creating and loading sprites sprites
-	sf::Sprite		loadSprite(const std::string&);
-	void 			setSpriteScale(sf::Sprite& sprite, sf::Vector2f& size) { sprite.setScale(size); }
-	void 			setSpritePosition(sf::Sprite& sprite, sf::Vector2f& size) { sprite.setPosition(size); }
-	void 			drawSprite(sf::Sprite& sprite) { _window.draw(sprite); }
-	//Todo: function handling sound
-
-private:
 	sf::RenderWindow	_window;
-	std::vector<std::shared_ptr<sf::Texture>>	_textures;
+    sf::Font _font;
+    std::map<std::string, std::pair<std::shared_ptr<sf::Sprite>, std::shared_ptr<sf::Texture>>> _sprites;
+    std::map<std::string, std::pair<std::shared_ptr<sf::Sound>, std::shared_ptr<sf::SoundBuffer>>> _sound;
+    std::map<std::string, std::shared_ptr<sf::Music>> _music;
+    std::map<std::string, std::shared_ptr<sf::Text>> _texts;
 };
 
 
