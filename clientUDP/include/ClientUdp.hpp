@@ -9,7 +9,6 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "Random.h"
 
 #define MAX_SIZE_MSG 2048
 
@@ -17,8 +16,8 @@ class ClientUdp
 {
 public:
     ClientUdp(const std::string &,
-              unsigned int,
-              unsigned int);
+              unsigned short,
+              unsigned short);
 
     ~ClientUdp();
 
@@ -29,9 +28,11 @@ public:
     bool isRunning() { return _isRunning;}
     void run();
     void send(const std::string &message);
+    static bool checkPort(unsigned short port);
+
+
 private:
     void startReceive();
-    bool checkPort();
 
 private:
     boost::asio::io_service io_service;
@@ -41,6 +42,9 @@ private:
     char *_data;
     std::thread _serviceThread;
     bool _isRunning;
+    const std::string &_host;
+    unsigned short _serverPort;
+    unsigned short _localPort;
 };
 
 

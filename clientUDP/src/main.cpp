@@ -5,6 +5,7 @@
 #include "ClientUdp.hpp"
 #include <cstdlib>
 #include <iostream>
+#include "Random.h"
 
 int main(int ac,char **av)
 {
@@ -14,7 +15,18 @@ int main(int ac,char **av)
         return 0;
     }
 
-    ClientUdp client(av[1], atoi(av[2]), 4343);
+    Random random;
+    unsigned short port = random.GenerateRandomNumber(4000, 5000);
+    while (ClientUdp::checkPort(port))
+    {
+        port = random.GenerateRandomNumber(4000, 5000);
+    }
+
+    std::cout << "port = " << port << std::endl;
+
+    ClientUdp client(av[1], atoi(av[2]), port);
+
+    std::cout << "shell " << std::endl;
 
     while (client.isRunning())
     {

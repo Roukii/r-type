@@ -6,31 +6,29 @@
 
 
 ClientUdp::ClientUdp(const std::string &host,
-                     unsigned int serverPort,
-                     unsigned int localPort)
+                     unsigned short serverPort,
+                     unsigned short localPort)
     : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), localPort)),
       _serviceThread(&ClientUdp::run, this),
-      _isRunning(false)
+      _isRunning(false), _host(host), _serverPort(serverPort), _localPort(localPort)
+{
+}
+
+ClientUdp::~ClientUdp()
+{
+    delete _data;
+    _socket.close();
+}
+
+void ClientUdp::run()
 {
     _data = new char[MAX_SIZE_MSG];
     for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
         _data[i] = 0;
 
     boost::asio::ip::udp::resolver resolver(io_service);
-    boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), host, std::to_string(serverPort));
+    boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), _host, std::to_string(_serverPort));
     _serverEndpoint = *resolver.resolve(query);
-
-}
-
-ClientUdp::~ClientUdp()
-{
-    delete _data;
-}
-
-void ClientUdp::run()
-{
-
-    std::cout << "debug lele run data shit" << std::endl;
 
     if (!_isRunning)
     {
@@ -61,13 +59,11 @@ void ClientUdp::send(const std::string &message)
 
 void ClientUdp::startReceive()
 {
-    std::cout << "debug lele receu" << std::endl;
     _socket.async_receive_from(boost::asio::buffer(_data, MAX_SIZE_MSG),
                                _remoteEndpoint,
                               [this](const boost::system::error_code &ec,
                                      std::size_t bytes)
                               {
-                                  std::cout << "debug lele inside" << std::endl;
                                   if (!ec)
                                   {
                                       std::string message(_data);
@@ -80,12 +76,13 @@ void ClientUdp::startReceive()
                               });
 }
 
-bool ClientUdp::checkPort()
+bool ClientUdp::checkPort(unsigned short port)
 {
-    boost::asio::ip::tcp::acceptor a(io_service);
+    boost::asio::io_service service;
+    boost::asio::ip::tcp::acceptor a(service);
 
     boost::system::error_code ec;
     a.open(boost::asio::ip::tcp::v4(), ec) || a.bind({boost::asio::ip::tcp::v4(), port }, ec);
 
-    return ec == error::address_in_use;
+    return ec == boost::asio::error::address_in_use;
 }

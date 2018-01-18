@@ -1,21 +1,17 @@
-#include "stdafx.h"
 #include "Random.h"
 #include <time.h>
 
-namespace Gomoku
+Random::Random()
 {
-	Random::Random()
-	{
-		srand((unsigned int)time(NULL));
-	}
+	srand((unsigned int)time(NULL));
+}
 
-	Random::~Random()
-	{
+Random::~Random()
+{
 
-	}
+}
 
-	int Random::GenerateRandomNumber(int min, int max)
-	{
-		return rand() % max + min;
-	}
+int Random::GenerateRandomNumber(int min, int max)
+{
+	return rand() % max + min;
 }
