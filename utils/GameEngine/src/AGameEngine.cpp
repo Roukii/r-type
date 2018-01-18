@@ -13,7 +13,7 @@ void UgandaEngine::AGameEngine::start() {
 
 UgandaEngine::AGameEngine::AGameEngine() {
         // Get the screen resolution and create an SFML window and View
-        drawWindow();
+        //drawWindow();
 }
 
 //void UgandaEngine::AGameEngine::update(float deltaTime, KeyInput keyInput) {
@@ -24,5 +24,5 @@ UgandaEngine::AGameEngine::AGameEngine() {
 //}
 
 void UgandaEngine::AGameEngine::addEntity(const UgandaEngine::AEntity &newEntity) {
-    _Entities.push_back(newEntity);
+//    _Entities.push_back(newEntity);
 }

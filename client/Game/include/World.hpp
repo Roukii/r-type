@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Ship.hpp"
-#include "MapConfHandler.hpp"
+#include "../../../utils/GameEngine/include/MapConfHandler.hpp"
 
 class World {
 public:

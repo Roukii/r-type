@@ -12,21 +12,28 @@ namespace UgandaEngine {
         /*
          * Variables
          */
-        int id;
-        ComponentType  _ComponentType;
+
+    private:
+        //Type of the entity
+        int _Type;
+
 
         /*
          * Constructor and destructor
          */
-    protected:
-        AComponent(int id = -1, ComponentType componentType = DEFAULT) = default;
+
+    public:
+        AComponent(int type = -1) { _Type = type; }
         virtual ~AComponent() = default;
+
 
         /*
          * Function and methods
          */
-        //TODO: a update func?
-        void update();
+    public:
+        //Getters and setters
+        int getType() { return _Type; }
+        void setType(int newType) { _Type = newType; }
     };
 }
 

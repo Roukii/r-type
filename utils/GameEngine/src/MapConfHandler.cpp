@@ -8,7 +8,7 @@ void UgandaEngine::MapConfHandler::loadMap(const std::string &file) {
     std::ifstream fileStream(file);
 
     if (!fileStream)
-        throw ("[X] Error on loading json " + file);
+        throw std::invalid_argument("[X] Error on loading json " + file);
 
     const unsigned int BUFFERSIZE = 256;
     char buffer[BUFFERSIZE];
@@ -51,7 +51,7 @@ void UgandaEngine::MapConfHandler::Map::loadMapTile(const std::string &file){
     std::ifstream fileStream(file);
 
     if (!fileStream)
-        throw ("[X] Error on loading json " + file);
+        throw std::invalid_argument("[X] Error on loading json " + file);
 
     const unsigned int BUFFERSIZE = 256;
     char buffer[BUFFERSIZE];
@@ -91,32 +91,28 @@ void UgandaEngine::MapConfHandler::Map::loadMapTile(const std::string &file){
 
         std::cout << "[!] Read mapTile value: " << pairValue.first<< " = " << pairValue.second<< std::endl;
     }
-    _mapTiles.push_back(tile);
+    _mapTiles.push_back(std::make_shared<MapTile>(tile));
 }
 
 void UgandaEngine::MapConfHandler::Map::createMap(const std::string &file) {
     std::ifstream fileStream(file);
 
     if (!fileStream)
-        throw ("[X] Error on loading json " + file);
+        throw std::invalid_argument("[X] Error on loading json " + file);
 
     std::string line;
     while (std::getline(fileStream, line)) {
-        std::vector<MapTile> mapLine;
+        std::vector<std::weak_ptr<MapTile> > mapLine;
         std::cout << "[!] Read lineMap value : " << line << std::endl;
         int i = 0;
         while (line[i]) {
             if (line[i] != ',') {
-                MapTile mapTile = MapTile();
-                mapTile._id = line[i] - '0';
-                for (MapTile mt : _mapTiles) {
-                    if (mt._id == mapTile._id) {
-                        mapTile._isEvent = mt._isEvent;
-                        mapTile._isWalkable = mt._isWalkable;
-                        mapTile._texture = mt._texture;
+                for (const std::shared_ptr<MapTile> &mt : _mapTiles) {
+                    if (mt->_id == line[i]) {
+                        std::weak_ptr<MapTile> cpy = mt;
+                        mapLine.push_back(cpy);
                     }
                 }
-                mapLine.push_back(mapTile);
             }
             ++i;
         }

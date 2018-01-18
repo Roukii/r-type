@@ -5,20 +5,21 @@
 #ifndef R_TYPE_GAMEENGINE_HPP
 #define R_TYPE_GAMEENGINE_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
 #include "AEntity.hpp"
 #include "EngineDefinitions.hpp"
 
 namespace UgandaEngine {
+
+    //TODO: Ajouter le chargement de la lib graphique, des lua, conf etc... Pour faciliter le taff
     class AGameEngine {
         /*
          * Variables
          */
-    private:
+
+    protected:
         //List of entities
         std::vector<AEntity> _Entities;
+
 
         /*
          * Constructor and destructor
@@ -27,13 +28,23 @@ namespace UgandaEngine {
         AGameEngine();
         ~AGameEngine() = default;
 
+
         /*
          * Function and methods
          */
+
         //Start function
     public:
         void start();
 
+        //Event functions
+        void addEntity(const AEntity &newEntity);
+
+
+        /*
+         * Virtual functions
+         */
+    public:
         //Game Loop
         virtual void gameLoop() = 0;
 
@@ -41,14 +52,11 @@ namespace UgandaEngine {
         virtual bool isAlive() = 0;
 
         //Generic functions to draw
+        //TODO: Peut-être foutre ça dans une classe dédiée au graphique qu'on charge celon une lib graphique justement
         virtual void drawWindow() = 0;
 
         //Key handling
         virtual KeyInput input() = 0;
-
-        //Event functions
-        //void update(float deltaTime, KeyInput keyInput);
-        void addEntity(const AEntity &newEntity);
     };
 }
 
