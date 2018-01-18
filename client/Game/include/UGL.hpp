@@ -27,7 +27,7 @@ protected:
     void loadLib();
     void loadSprite(const std::string &path, const std::string &name);
     void loadFont(const std::string &path);
-    void loadText(int x, int y, int size, const std::string &str, const std::string &name);
+    void loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name);
     void loadSound(const std::string &path, const std::string &name);
     void loadMusic(const std::string &path, const std::string &name);
 

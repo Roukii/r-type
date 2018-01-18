@@ -21,7 +21,7 @@ void UGL::loadFont(const std::string &path) {
 		throw ("error loading font");
 }
 
-void UGL::loadText(int x, int y, int size, const std::string &str, const std::string &name) {
+void UGL::loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) {
 	_texts[name] = std::make_shared<sf::Text>(str, _font);
 
 	_texts[name]->setPosition(x, y);
