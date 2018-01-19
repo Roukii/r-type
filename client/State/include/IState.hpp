@@ -8,8 +8,6 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 
-class Core;
-
 class IState {
 public:
     virtual void splash(std::shared_ptr<IState> &state) = 0;

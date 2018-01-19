@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
+#include <memory>
 
 
 namespace UgandaEngine {
@@ -28,8 +29,8 @@ namespace UgandaEngine {
         };
         class Map {
         public:
-            std::vector<MapTile> _mapTiles;
-            std::vector<std::vector<MapTile> > _map;
+            std::vector<std::shared_ptr<MapTile> > _mapTiles;
+            std::vector<std::vector<std::weak_ptr<MapTile> > > _map;
             std::string _bgTexture;
 
             Map() = default;

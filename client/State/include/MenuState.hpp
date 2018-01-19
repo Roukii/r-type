@@ -12,8 +12,8 @@
 class MenuState : public IState {
     Menu m;
 public:
-    MenuState();
-    virtual ~MenuState(){};
+    MenuState() = default;
+    virtual ~MenuState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);

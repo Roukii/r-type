@@ -10,8 +10,8 @@
 
 class SplashState : public IState {
 public:
-    SplashState(){};
-    virtual ~SplashState(){};
+    SplashState() = default;
+    virtual ~SplashState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);

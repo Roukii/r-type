@@ -15,6 +15,8 @@
 #include <string>
 #include "IServerUdpSocket.hpp"
 #include "MessageQueue.hpp"
+#include "Message.hpp"
+#include "RFCHandler.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
 
@@ -50,7 +52,7 @@ namespace RTypeServer
         MessageQueue<std::string> &_messageQueue;
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
-        char *_data;
+        Message _msg;
     };
 }
 
