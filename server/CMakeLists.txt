@@ -20,7 +20,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 include_directories(include)
 
 #Add sources
-set(SERVER_SOURCE_FILES src/Rtype.cpp include/ServerUdp.hpp src/ServerUdp.cpp)
+file(GLOB SERVER_SOURCE_FILES src/*.cpp include/*.h include/*.hpp)
+#set(SERVER_SOURCE_FILES src/Rtype.cpp include/ServerUdp.hpp src/ServerUdp.cpp src/Network.cpp include/Network.h src/ServerCore.cpp include/ServerCore.hpp)
 
 #Create executable
 add_executable(Server ${SERVER_SOURCE_FILES})

@@ -22,7 +22,6 @@ ClientUdp::~ClientUdp()
 
 void ClientUdp::run()
 {
-    std::cout << "run bro" << std::endl;
     _data = new char[MAX_SIZE_MSG];
     for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
         _data[i] = 0;
@@ -31,24 +30,22 @@ void ClientUdp::run()
     boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), _host, std::to_string(_serverPort));
     _serverEndpoint = *resolver.resolve(query);
 
-    if (!_isRunning)
+    startReceive();
+    while (!io_service.stopped())
     {
-        _isRunning = true;
-        startReceive();
-        while (!io_service.stopped())
+        try
         {
-            try
-            {
-                io_service.run();
-            }
-            catch (const std::exception& e)
-            {
-                std::cout << "Client: network exception: " << e.what() << std::endl;
-            }
-            catch (...)
-            {
-                std::cout << "Unknown exception in client network thread" << std::endl;
-            }
+            io_service.run();
+        }
+        catch (const std::exception &e)
+        {
+            std::cout << "Client: network exception: " << e.what() << std::endl;
+            _isRunning = false;
+        }
+        catch (...)
+        {
+            std::cout << "Unknown exception in client network thread" << std::endl;
+            _isRunning = false;
         }
     }
 }
@@ -65,7 +62,6 @@ void ClientUdp::startReceive()
                               [this](const boost::system::error_code &ec,
                                      std::size_t bytes)
                               {
-                                  std::cout << "receive smth" << std::endl;
                                   if (!ec)
                                   {
                                       std::string message(_data);
@@ -88,4 +84,10 @@ bool ClientUdp::checkPort(unsigned short port)
     a.open(boost::asio::ip::tcp::v4(), ec) || a.bind({boost::asio::ip::tcp::v4(), port }, ec);
 
     return ec == boost::asio::error::address_in_use;
+}
+
+void ClientUdp::cleanBuffer()
+{
+    for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
+        _data[i] = 0;
 }

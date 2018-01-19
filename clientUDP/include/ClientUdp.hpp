@@ -26,13 +26,14 @@ public:
     ClientUdp &operator=(const ClientUdp &) = delete;
 
     bool isRunning() { return _isRunning;}
-    void run();
     void send(const std::string &message);
     static bool checkPort(unsigned short port);
     std::thread &getThread() { return _serviceThread;}
 
 private:
+    void run();
     void startReceive();
+    void cleanBuffer();
 
 private:
     boost::asio::io_service io_service;

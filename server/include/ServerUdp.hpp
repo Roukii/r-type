@@ -9,22 +9,21 @@
 #define MAX_SIZE_MSG 2048
 
 #include <boost/asio.hpp>
-#include <boost/array.hpp>
-#include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
 #include <functional>
 #include <memory>
 #include <vector>
 #include <string>
+#include "IServerUdpSocket.hpp"
+#include "MessageQueue.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
 
 namespace RTypeServer
 {
-    class ServerUdp
+    class ServerUdp : public IServerUdpSocket
     {
     public:
-        ServerUdp(boost::asio::io_service &);
+        ServerUdp(MessageQueue<std::string> &);
 
         ~ServerUdp();
 
@@ -32,18 +31,23 @@ namespace RTypeServer
 
         ServerUdp &operator=(const ServerUdp &) = delete;
 
-        void SendToClient(const std::string &, unsigned int);
+        void SendToClient(const std::string &, std::size_t);
         void SendToAll(const std::string &);
-        void SendToAllExcept(const std::string &, unsigned int);
+        void SendToAllExcept(const std::string &, std::size_t);
+
+        void runServer() override;
 
     private:
-        void startReceive();
         void send(const std::string &, endpoint);
+        void startReceive();
         void handleError(const boost::system::error_code &, endpoint);
         void removeDisconnectedClient(endpoint);
+        void cleanBuffer();
 
     private:
+        boost::asio::io_service io_service;
         boost::asio::ip::udp::socket    _socket;
+        MessageQueue<std::string> &_messageQueue;
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
         char *_data;

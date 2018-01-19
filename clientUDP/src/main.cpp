@@ -28,9 +28,10 @@ int main(int ac,char **av)
 
     std::cout << "shell " << std::endl;
 
-    while (client.isRunning())
+    std::string shell;
+
+    while (client.isRunning() || shell == "exit")
     {
-        std::string shell;
         std::getline(std::cin, shell);
         client.send(shell);
     }

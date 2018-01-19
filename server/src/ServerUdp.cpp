@@ -7,16 +7,14 @@
 
 namespace RTypeServer
 {
-    ServerUdp::ServerUdp(boost::asio::io_service &io_service)
-        : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT_SERVER))
+    ServerUdp::ServerUdp(MessageQueue<std::string> &queue)
+        : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT_SERVER)),
+          _messageQueue(queue)
     {
         _data = new char[MAX_SIZE_MSG];
-        for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
-            _data[i] = 0;
+        cleanBuffer();
 
         std::cout << _socket.local_endpoint().address().to_string() << std::endl;
-        std::cout << "start receive" << std::endl;
-        startReceive();
     }
 
     ServerUdp::~ServerUdp()
@@ -24,7 +22,7 @@ namespace RTypeServer
         delete _data;
     }
 
-    void ServerUdp::SendToClient(const std::string &message, unsigned int clientId)
+    void ServerUdp::SendToClient(const std::string &message, std::size_t clientId)
     {
         if (clientId < _clientsList.size())
            send(message, _clientsList[clientId]);
@@ -36,7 +34,7 @@ namespace RTypeServer
             send(message, _clientsList[i]);
     }
 
-    void ServerUdp::SendToAllExcept(const std::string &message, unsigned int clientId)
+    void ServerUdp::SendToAllExcept(const std::string &message, std::size_t clientId)
     {
         for (auto i = 0; i < _clientsList.size(); i++)
             if (i != clientId)
@@ -59,8 +57,9 @@ namespace RTypeServer
                         std::cout << "port endpoint = " << _lastEndpoint.port() << std::endl;
 
                         std::cout << std::string(_data) << std::endl;
+                        _messageQueue.addMessage(std::string(_data), _clientsList.size() - 1);
+                        cleanBuffer();
                         SendToClient("Wilkomen WARLD !", _clientsList.size() - 1);
-                        SendToAllExcept("New client", _clientsList.size() - 1);
                     }
                     else
                     {
@@ -93,5 +92,16 @@ namespace RTypeServer
             if (_clientsList[i] == target)
                 _clientsList.erase(_clientsList.begin() + i);
         }
+    }
+
+    void ServerUdp::cleanBuffer()
+    {
+        for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
+            _data[i] = 0;
+    }
+
+    void ServerUdp::runServer()
+    {
+        startReceive();
     }
 }

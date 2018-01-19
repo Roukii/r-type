@@ -2,13 +2,14 @@
 // Created by Alexandre on 1/10/2018.
 //
 
-#include "ServerUdp.hpp"
-
-#include <iostream>
-#include <boost/asio.hpp>
+#include "ServerCore.hpp"
 
 int main(int ac, char **av)
 {
+    RTypeServer::ServerCore core;
+
+    core.start();
+    /*
     try
     {
         boost::asio::io_service io_service;
@@ -19,7 +20,7 @@ int main(int ac, char **av)
     {
         std::cerr << e.what() << std::endl;
     }
+*/
 
-    std::cout << "hello world !" << std::endl;
     return 0;
 }
