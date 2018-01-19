@@ -5,22 +5,31 @@
 #ifndef R_TYPE_GAMEENGINE_HPP
 #define R_TYPE_GAMEENGINE_HPP
 
-#include "AEntity.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <map>
+#include <functional>
+#include <memory>
+#include "Entity.hpp"
 #include "EngineDefinitions.hpp"
+#include "LibGraph.hpp"
+#include "FactoryEntity.hpp"
+
 
 namespace UgandaEngine {
 
-    //TODO: Ajouter le chargement de la lib graphique, des lua, conf etc... Pour faciliter le taff
-    class AGameEngine {
+    static class AGameEngine {
         /*
          * Variables
          */
-
-    protected:
+    private:
         //List of entities
-        std::vector<AEntity> _Entities;
+        std::vector<Entity> _Entities;
 
-
+    public:
+        std::shared_ptr<LibGraph>                   graph;
+        std::shared_ptr<Factory::FactoryEntity>     factory;
         /*
          * Constructor and destructor
          */
@@ -28,23 +37,13 @@ namespace UgandaEngine {
         AGameEngine();
         ~AGameEngine() = default;
 
-
         /*
          * Function and methods
          */
-
         //Start function
     public:
         void start();
 
-        //Event functions
-        void addEntity(const AEntity &newEntity);
-
-
-        /*
-         * Virtual functions
-         */
-    public:
         //Game Loop
         virtual void gameLoop() = 0;
 
@@ -52,13 +51,21 @@ namespace UgandaEngine {
         virtual bool isAlive() = 0;
 
         //Generic functions to draw
-        //TODO: Peut-être foutre ça dans une classe dédiée au graphique qu'on charge celon une lib graphique justement
         virtual void drawWindow() = 0;
 
         //Key handling
         virtual KeyInput input() = 0;
-    };
-}
 
+        //Event functions
+        //void update(float deltaTime, KeyInput keyInput);
+        void addEntity(const Entity &newEntity);
+
+        void init(const std::vector<std::string> &component,
+                  const std::map<std::string, std::vector<std::string>> &entity,
+                  const std::map<std::string, std::function> &action) const;
+
+    };
+
+}
 
 #endif //R_TYPE_GAMEENGINE_HPP

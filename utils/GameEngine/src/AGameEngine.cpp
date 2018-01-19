@@ -2,6 +2,7 @@
 // Created by sentrance on 10/01/18.
 //
 
+
 #include "../include/AGameEngine.hpp"
 
 void UgandaEngine::AGameEngine::start() {
@@ -13,16 +14,25 @@ void UgandaEngine::AGameEngine::start() {
 
 UgandaEngine::AGameEngine::AGameEngine() {
         // Get the screen resolution and create an SFML window and View
-        //drawWindow();
+        drawWindow();
 }
 
 //void UgandaEngine::AGameEngine::update(float deltaTime, KeyInput keyInput) {
 //    //Call every update entities event
-//    for (AEntity e : _Entities) {
+//    for (Entity e : _Entities) {
 //        e.update(deltaTime, keyInput);
 //    }
 //}
 
-void UgandaEngine::AGameEngine::addEntity(const UgandaEngine::AEntity &newEntity) {
-//    _Entities.push_back(newEntity);
+void UgandaEngine::AGameEngine::addEntity(const UgandaEngine::Entity &newEntity) {
+    _Entities.push_back(newEntity);
+}
+
+void UgandaEngine::AGameEngine::init(const std::vector<std::string> &component,
+                                     const std::map<std::string, std::vector<std::string>> &entity,
+                                     const std::map<std::string, std::function> &action) const
+{
+    //TODO LibGraph à implémenter
+    factory = std::make_shared<Factory::FactoryEntity>(entity, action);
+
 }
