@@ -10,8 +10,8 @@
 
 class OptionsState : public IState {
 public:
-    OptionsState(){};
-    virtual ~OptionsState(){};
+    OptionsState() = default;
+    virtual ~OptionsState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);

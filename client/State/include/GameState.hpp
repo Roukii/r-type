@@ -10,8 +10,8 @@
 
 class GameState : public IState {
 public:
-    GameState(){};
-    virtual ~GameState(){};
+    GameState() = default;
+    virtual ~GameState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);

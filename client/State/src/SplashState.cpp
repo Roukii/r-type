@@ -8,8 +8,7 @@
 #include "../include/GameState.hpp"
 #include "../include/OptionsState.hpp"
 
-void	SplashState::splash(std::shared_ptr<IState> &state) {
-}
+void	SplashState::splash(std::shared_ptr<IState> &state) {}
 
 void	SplashState::menu(std::shared_ptr<IState> &state) {
     state = std::make_shared<MenuState>();
@@ -28,6 +27,4 @@ int    SplashState::exec(sf::RenderWindow &win) {
     return -1;
 }
 
-void   SplashState::init() {
-
-}
+void   SplashState::init() {}

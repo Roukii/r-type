@@ -7,6 +7,9 @@
 #include "../include/SplashState.hpp"
 #include "../include/MenuState.hpp"
 
+Core::Core()
+        : _state(std::make_shared<MenuState>()) {}
+
 //void	Core::initLib(int x, int y)
 //{
 //    ILib *(*external_creator)(int, int);
@@ -20,7 +23,7 @@
 //}
 
 void    Core::start() {
-    this->_state = std::make_shared<MenuState>();
+    //this->_state = std::make_shared<MenuState>();
     sf::RenderWindow	win(sf::VideoMode(1920, 1080), "R-Type");
     while (1) {
       int ret =  _state->exec(win);

@@ -25,7 +25,6 @@ FILE(GLOB CLIENT_GAME_SOURCES client/Game/include/*.hpp client/Game/src/*.cpp cl
 #Create executable
 add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
 
-
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 #Find any version 2.X of SFML
@@ -49,5 +48,5 @@ if(Boost_FOUND)
     target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
 endif()
 
-add_subdirectory(server)
-add_subdirectory(clientUDP)
+#add_subdirectory(server)
+#add_subdirectory(clientUDP)

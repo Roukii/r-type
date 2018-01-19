@@ -6,13 +6,11 @@
 
 #include <iostream>
 #include <SFML/Graphics/RenderWindow.hpp>
+
 #include "../include/SplashState.hpp"
 #include "../include/GameState.hpp"
 #include "../include/OptionsState.hpp"
 #include "../../Game/include/Menu.hpp"
-
-MenuState::MenuState() {
-}
 
 void	MenuState::splash(std::shared_ptr<IState> &state) {
     state = std::make_shared<SplashState>();

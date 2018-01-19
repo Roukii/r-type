@@ -9,23 +9,23 @@
 #include "IState.hpp"
 
 class Core {
-    std::shared_ptr<IState>			_state;
+    std::shared_ptr<IState>	_state;
 public:
-	Core(){};
-	~Core(){};
+	Core();
+	~Core() = default;
 
 	//Initialisation
 //    void		initLib(int x, int y);
-	void        start();
+	void		start();
 
 	//States
-    void        splash();
+	void		splash();
 	void		menu();
 	void		options();
 	void		game();
 
 	//Setters and getters
-	void        setState(std::shared_ptr<IState> newState) {this->_state = newState;};
+	void		setState(std::shared_ptr<IState> newState) { this->_state = newState; }
 };
 
 
