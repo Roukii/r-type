@@ -2,7 +2,7 @@
 // Created by alex on 1/18/18.
 //
 
-#include "UGL.hpp"
+#include "../include/UGL.hpp"
 
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	_sprites.try_emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));
@@ -33,4 +33,13 @@ void		UGL::loadMusic(const std::string &path, const std::string &name) {
 	_musics[name] = std::make_shared<sf::Music>();
 	if (!_musics[name]->openFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Music " + path);
+}
+
+extern "C"
+{
+std::shared_ptr<ILib> create_lib()
+{
+
+    return std::make_shared<UGL>();
+}
 }

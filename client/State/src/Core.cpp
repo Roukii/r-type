@@ -4,11 +4,10 @@
 
 #include <iostream>
 #include "../include/Core.hpp"
-#include "../include/SplashState.hpp"
 #include "../include/MenuState.hpp"
 
-Core::Core()
-        : _state(std::make_shared<MenuState>()) {}
+
+Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>()) {}
 
 //void	Core::initLib(int x, int y)
 //{
@@ -23,11 +22,8 @@ Core::Core()
 //}
 
 void    Core::start() {
-    //this->_state = std::make_shared<MenuState>();
-    sf::RenderWindow	win(sf::VideoMode(1920, 1080), "R-Type");
-    while (1) {
-      int ret =  _state->exec(win);
-        std::cout << ret << std::endl;
+    while (_ugl->getWindow().isOpen()) {
+        int ret =  _state->exec(_ugl->getWindow());
         if (ret == 0)
             splash();
         else if (ret == 1)

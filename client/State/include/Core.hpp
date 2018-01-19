@@ -6,10 +6,12 @@
 #define R_TYPE_CORE_HPP
 
 #include <memory>
+#include "../../Lib/include/UGL.hpp"
 #include "IState.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
+	std::shared_ptr<UGL> _ugl;
 public:
 	Core();
 	~Core() = default;

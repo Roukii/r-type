@@ -11,8 +11,9 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Audio.hpp>
+#include "../../Lib/include/UGL.hpp"
 
-class Menu {
+class Menu : public UGL {
     sf::Texture	_background;
     sf::Texture _cursor;
     sf::Sprite  _sprite[5];
