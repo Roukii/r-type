@@ -15,17 +15,18 @@
 #include "Entity.hpp"
 
 namespace UgandaEngine {
-    namespace Factory {
-        class FactoryEntity {
-        public:
-            FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
-                          const std::map<std::string, std::function> &action);
-            std::shared_ptr<Entity> create(const std::string &name);
-        private:
-            std::map<std::string, std::vector<std::string>>     _entity;
-            std::map<std::string, std::function>                _action;
-        };
-    }
+    //TODO: bugfix de compilation
+//    namespace Factory {
+//        class FactoryEntity {
+//        public:
+//            FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
+//                          const std::map<std::string, std::function> &action);
+//            std::shared_ptr<Entity> create(const std::string &name);
+//        private:
+//            std::map<std::string, std::vector<std::string>>     _entity;
+//            std::map<std::string, std::function>                _action;
+//        };
+//    }
 }
 
 #endif //R_TYPE_FACTORYENTITY_HPP
