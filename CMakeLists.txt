@@ -39,6 +39,7 @@ find_package(SFML 2 REQUIRED network audio graphics window system)
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(UgandaPilote ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_link_libraries(UGL ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif()
 
 add_definitions( -DBOOST_ALL_NO_LIB )
