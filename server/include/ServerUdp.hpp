@@ -16,6 +16,8 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include "Message.hpp"
+#include "RFCHandler.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
 
@@ -46,7 +48,7 @@ namespace RTypeServer
         boost::asio::ip::udp::socket    _socket;
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
-        char *_data;
+        Message _msg;
     };
 }
 

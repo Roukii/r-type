@@ -10,10 +10,6 @@ namespace RTypeServer
     ServerUdp::ServerUdp(boost::asio::io_service &io_service)
         : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT_SERVER))
     {
-        _data = new char[MAX_SIZE_MSG];
-        for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
-            _data[i] = 0;
-
         std::cout << _socket.local_endpoint().address().to_string() << std::endl;
         std::cout << "start receive" << std::endl;
         startReceive();
@@ -21,7 +17,6 @@ namespace RTypeServer
 
     ServerUdp::~ServerUdp()
     {
-        delete _data;
     }
 
     void ServerUdp::SendToClient(const std::string &message, unsigned int clientId)
@@ -46,7 +41,7 @@ namespace RTypeServer
     void ServerUdp::startReceive()
     {
         _socket.async_receive_from(
-                boost::asio::buffer(_data, MAX_SIZE_MSG), _lastEndpoint,
+                boost::asio::buffer(_msg._msg, sizeof(_msg._msg)), _lastEndpoint,
                 [this](const boost::system::error_code& error,
                        std::size_t bytes_transferred)
                 {
@@ -58,7 +53,7 @@ namespace RTypeServer
                         std::cout << "remote endpoint = " << _lastEndpoint.address() << std::endl;
                         std::cout << "port endpoint = " << _lastEndpoint.port() << std::endl;
 
-                        std::cout << std::string(_data) << std::endl;
+//                        std::cout << std::string(_data) << std::endl;
                         SendToClient("Wilkomen WARLD !", _clientsList.size() - 1);
                         SendToAllExcept("New client", _clientsList.size() - 1);
                     }
