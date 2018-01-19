@@ -4,6 +4,10 @@
 
 #include "../include/UGL.hpp"
 
+UGL::UGL() : _window(sf::VideoMode(1920, 1080), "R-Type") {}
+
+UGL::~UGL() {}
+
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	_sprites.try_emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));
 	if (!_sprites[name].second->loadFromFile(path))
@@ -14,6 +18,12 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 void		UGL::loadFont(const std::string &path) {
 	if (!_font.loadFromFile(path))
 		throw std::invalid_argument("error loading font");
+}
+
+void		UGL::loadLib() {}
+
+void		UGL::deleteSprite(const std::string& name) {
+	_sprites.erase(name);
 }
 
 void		UGL::loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) {
@@ -35,11 +45,8 @@ void		UGL::loadMusic(const std::string &path, const std::string &name) {
 		throw std::invalid_argument("Error: Unable to load Music " + path);
 }
 
-extern "C"
-{
-std::shared_ptr<ILib> create_lib()
-{
-
-    return std::make_shared<UGL>();
-}
+extern "C" {
+	std::shared_ptr<ILib>		create_lib() {
+    		return std::make_shared<UGL>();
+	}
 }

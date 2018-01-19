@@ -21,9 +21,15 @@ INCLUDE_DIRECTORIES(client/Game/include)
 #Add sources
 #set(SOURCE_FILES main.cpp utils client/State/src/Core.cpp client/State/src/GameScreen.cpp client/State/src/MenuState.cpp client/State/src/OptionsScreen.cpp client/State/src/SplashScreen.cpp)
 FILE(GLOB CLIENT_GAME_SOURCES client/Game/include/*.hpp client/Game/src/*.cpp client/State/include/*.hpp client/State/src/*.cpp utils/GameEngine/include/*.hpp utils/GameEngine/src/*.cpp)
+FILE(GLOB CLIENT_GRAPHIC_LIBRARY_SOURCES client/Lib/include/*.hpp client/Lib/src/*.cpp)
+
+#Create Shared Library
+add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
 
 #Create executable
 add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
+
+target_link_libraries(UgandaPilote UGL)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

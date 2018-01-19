@@ -22,13 +22,13 @@
 
 class UGL : public ILib {
 public:
-	UGL() : _window(sf::VideoMode(1920, 1080), "R-Type") {}
-	~UGL() override = default;
+	UGL();
+	~UGL() override;
 	sf::RenderWindow & getWindow() {return _window;}
 protected:
-	void		loadLib() override {}
+	void		loadLib() override;
 	void		loadSprite(const std::string &path, const std::string &name) override;
-	void		deleteSprite(const std::string& name) override { _sprites.erase(name); }
+	void		deleteSprite(const std::string& name) override;
 	void		loadFont(const std::string &path) override;
 	void		loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) override;
 	void		loadSound(const std::string &path, const std::string &name) override;
