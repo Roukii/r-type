@@ -18,8 +18,13 @@ namespace UgandaEngine {
          * Variables
          */
     public:
+        // LUA
         std::map<std::type_index, std::shared_ptr<AComponent> > _components;
+
+        // Factory
         std::map<std::string, std::function<void()>> func_comp;
+
+        //LUA
         std::string _type;
 
         /*

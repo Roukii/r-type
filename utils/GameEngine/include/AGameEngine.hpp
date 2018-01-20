@@ -18,6 +18,8 @@
 
 namespace UgandaEngine {
 //TODO: bugfix de compilation
+
+
     class AGameEngine {
         /*
          * Variables
@@ -33,7 +35,7 @@ namespace UgandaEngine {
          * Constructor and destructor
          */
     public:
-        AGameEngine();
+        AGameEngine() = default;
         ~AGameEngine() = default;
 
         /*
@@ -41,25 +43,27 @@ namespace UgandaEngine {
          */
         //Start function
     public:
-        void start();
+        //void start();
 
         //Game Loop
-        virtual void gameLoop() = 0;
+        //virtual void gameLoop();
 
         //Boolean to check loop condition
-        virtual bool isAlive() = 0;
+        //virtual bool isAlive();
 
         //Generic functions to draw
-        virtual void drawWindow() = 0;
+        //virtual void drawWindow();
 
         //Event functions
         //void update(float deltaTime, KeyInput keyInput);
-        void addEntity(const Entity &newEntity);
+        //void addEntity(const Entity &newEntity);
 
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
     };
+    AGameEngine engine;
+
 }
 
 #endif //R_TYPE_GAMEENGINE_HPP
