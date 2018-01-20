@@ -4,9 +4,14 @@
 
 #include "../include/UGL.hpp"
 
-UGL::UGL() : _window(sf::VideoMode(1920, 1080), "R-Type") {}
+UGL::UGL() : _window(sf::VideoMode(1920, 1080), "R-Type")
+{
+}
 
-UGL::~UGL() {}
+UGL::~UGL()
+{
+	_window.close();
+}
 
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	_sprites.emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));

@@ -9,30 +9,32 @@
 #include <string>
 #include "AComponent.hpp"
 
-class TestComponent : public UgandaEngine::AComponent {
-    /*
-     * Variables
-     */
-public:
-    std::string _phrase;
+namespace UgandaEngine {
+    class TestComponent : public AComponent {
+        /*
+         * Variables
+         */
+    public:
+        std::string _phrase;
 
-    /*
-     * Constructor and destructor
-     */
-public:
-    TestComponent() = default;
+        /*
+         * Constructor and destructor
+         */
+    public:
+        TestComponent() = default;
 
-    /*
-     * Function and methods
-     */
-public:
-    void setPhrase(const std::string &phrase) {
-        _phrase = phrase;
-    }
-    std::string getPhrase() const {
-        return _phrase;
-    }
-};
+        /*
+         * Function and methods
+         */
+    public:
+        void setPhrase(const std::string &phrase) {
+            _phrase = phrase;
+        }
 
+        std::string getPhrase() const {
+            return _phrase;
+        }
+    };
+}
 
 #endif //R_TYPE_TESTCOMPONENT_HPP
