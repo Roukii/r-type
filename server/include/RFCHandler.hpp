@@ -15,9 +15,15 @@ namespace RTypeServer
         OK,
         LOGIN,
         STATUS,
+        WAITING,
         NEWENTITY,
         MOVENTITY,
-        DELENTITY
+        DELENTITY,
+        NBROOM,
+        NBPLAYERROOM,
+        MAXNBROOM,
+        NEWGAME,
+        ENDGAME,
     };
 
 

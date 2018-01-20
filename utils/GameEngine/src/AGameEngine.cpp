@@ -35,5 +35,4 @@ void UgandaEngine::AGameEngine::init(const std::vector<std::string> &component,
 {
     //TODO LibGraph à implémenter
     factory = std::make_shared<Factory::FactoryEntity>(entity, action);
-
 }

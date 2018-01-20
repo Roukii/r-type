@@ -59,9 +59,7 @@ namespace UgandaEngine {
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
-
     };
-
 }
 
 #endif //R_TYPE_GAMEENGINE_HPP
