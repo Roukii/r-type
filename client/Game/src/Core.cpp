@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "../include/Core.hpp"
-#include "../include/MenuState.hpp"
+#include "Core.hpp"
+#include "../../State/include/MenuState.hpp"
 
 
 Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>()) {}
@@ -22,8 +22,9 @@ Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>
 //}
 
 void    Core::start() {
-    while (_ugl->getWindow().isOpen()) {
-        int ret =  _state->exec(_ugl->getWindow());
+    int ret = 0;
+    while (_ugl->getWindow().isOpen() && ret != -2) {
+        ret =  _state->exec(_ugl->getWindow());
         if (ret == 0)
             splash();
         else if (ret == 1)
