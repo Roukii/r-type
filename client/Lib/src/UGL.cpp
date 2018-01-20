@@ -9,7 +9,7 @@ UGL::UGL() : _window(sf::VideoMode(1920, 1080), "R-Type") {}
 UGL::~UGL() {}
 
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
-	_sprites.try_emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));
+	_sprites.emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));
 	if (!_sprites[name].second->loadFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Texture " + path);
 	_sprites[name].first->setTexture(*_sprites[name].second);
@@ -33,7 +33,7 @@ void		UGL::loadText(float x, float y, unsigned int size, const std::string &str,
 }
 
 void		UGL::loadSound(const std::string &path, const std::string &name) {
-	_sounds.try_emplace(name, std::make_pair(std::make_shared<sf::Sound>(), std::make_shared<sf::SoundBuffer>()));
+	_sounds.emplace(name, std::make_pair(std::make_shared<sf::Sound>(), std::make_shared<sf::SoundBuffer>()));
 	if (!_sounds[name].second->loadFromFile(path))
 		throw std::invalid_argument("Error: Unable to load SoundBuffer " + path);
 	_sounds[name].first->setBuffer(*_sounds[name].second);
