@@ -35,7 +35,7 @@ protected:
 	void		loadMusic(const std::string &path, const std::string &name) override;
 
 	sf::RenderWindow	_window;
-	sf::Font		_font;
+	sf::Font			_font;
 	std::map<std::string, std::pair<std::shared_ptr<sf::Sprite>, std::shared_ptr<sf::Texture>>>	_sprites;
 	std::map<std::string, std::pair<std::shared_ptr<sf::Sound>, std::shared_ptr<sf::SoundBuffer>>> 	_sounds;
 	std::map<std::string, std::shared_ptr<sf::Music>>	_musics;

@@ -18,8 +18,13 @@ namespace UgandaEngine {
          * Variables
          */
     public:
+        // LUA
         std::map<std::type_index, std::shared_ptr<AComponent> > _components;
+
+        // Factory
         std::map<std::string, std::function<void()>> func_comp;
+
+        //LUA
         std::string _type;
 
         /*
@@ -36,12 +41,14 @@ namespace UgandaEngine {
         virtual void addComponent(std::type_index type, std::shared_ptr<AComponent> component);
 
         template <typename T>
-        T* get() {
-            auto it = _components.find(std::type_index(typeid(T)));
+        std::shared_ptr<T> get() {
+            std::map<std::type_index, std::shared_ptr<UgandaEngine::AComponent>>::iterator it = _components.find(std::type_index(typeid(T)));
+            std::shared_ptr<T> hey;
             if (it != _components.end()) {
-                return static_cast<T*>(it->second.get());
+                hey = std::dynamic_pointer_cast<T>(it->second);
+                return hey;
             }
-            return nullptr;
+            return hey;
         }
         void setType(const std::string &type) { _type = type; }
         std::string getType() const { return _type; }

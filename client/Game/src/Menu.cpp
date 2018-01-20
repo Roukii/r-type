@@ -93,7 +93,7 @@ int Menu::handleKeys(const sf::Event&e) {
             else if (selected == 1)
                 ret = 2;
             else
-                exit(0);
+                ret = -2;
         }
     }
     return ret;

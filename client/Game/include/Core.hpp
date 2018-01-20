@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "../../Lib/include/UGL.hpp"
-#include "IState.hpp"
+#include "../../State/include/IState.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
