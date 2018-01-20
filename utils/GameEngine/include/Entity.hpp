@@ -18,6 +18,7 @@ namespace UgandaEngine {
          */
     public:
         std::map<std::type_index, std::shared_ptr<AComponent> > _components;
+        std::map<std::string, std::function<void()>> func_comp;
         std::string _type;
 
         /*
@@ -39,7 +40,7 @@ namespace UgandaEngine {
 
         template <typename T>
         T* get() {
-            auto it = _components.find(std::type_index(typeid(T)));
+            std::map<std::type_index, std::shared_ptr<UgandaEngine::AComponent>>::iterator it = _components.find(std::type_index(typeid(T)));
             if (it != _components.end())
                 return dynamic_cast<T*>(it->second);
             return nullptr;
