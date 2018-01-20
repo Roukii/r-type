@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include "AComponent.hpp"
+#include "TestComponent.hpp"
 
 namespace UgandaEngine {
     class Entity {
@@ -31,19 +32,15 @@ namespace UgandaEngine {
         /*
          * Function and methods
          */
-
-        //Moving functions. Position should have the calcul: pos += _Speed * elapsedTime.
-        //Update Entity function
-        //virtual void update(float elapsedTime, KeyInput keyInput) = 0;
     public:
         virtual void addComponent(std::type_index type, std::shared_ptr<AComponent> component);
 
         template <typename T>
-        T* get() {
-            std::map<std::type_index, std::shared_ptr<UgandaEngine::AComponent>>::iterator it = _components.find(std::type_index(typeid(T)));
+        std::weak_ptr<T> get() {
+            auto it = _components.find(std::type_index(typeid(T)));
             if (it != _components.end())
-                return dynamic_cast<T*>(it->second);
-            return nullptr;
+                return it->second;
+            return std::weak_ptr<T>();
         }
 
         void setType(const std::string &type) { _type = type; }
