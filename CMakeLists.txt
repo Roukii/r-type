@@ -55,5 +55,5 @@ if(Boost_FOUND)
     target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
 endif()
 
-#add_subdirectory(server)
+add_subdirectory(server)
 #add_subdirectory(clientUDP)

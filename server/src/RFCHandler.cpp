@@ -4,48 +4,69 @@
 
 #include "RFCHandler.hpp"
 
-void RTypeServer::RFCHandler::initMapOfCommandHandler()
-{
-    _CommandHandler.insert({RTypeServer::ERR, &RFCError});
-    _CommandHandler.insert({RTypeServer::LOGIN, &RFCOk});
-    _CommandHandler.insert({RTypeServer::OK, &RFCLogin});
-    _CommandHandler.insert({RTypeServer::STATUS, &RFCStatus});
-    _CommandHandler.insert({RTypeServer::NEWENTITY, &RFCNewEntity});
-    _CommandHandler.insert({RTypeServer::MOVENTITY, &RFCMovEntity});
-    _CommandHandler.insert({RTypeServer::DELENTITY, &RFCDelEntity});
-}
-
-void RTypeServer::RFCHandler::RFCError()
+namespace RTypeServer
 {
 
-}
+    RFCHandler::RFCHandler(std::shared_ptr<IServerUdpSocket> &socket)
+            : _socket(socket)
+    {
+        initMapOfCommandHandler();
+    }
 
-void RTypeServer::RFCHandler::RFCLogin()
-{
+    void RFCHandler::initMapOfCommandHandler()
+    {
+        _CommandHandler[ERR] = &RFCHandler::RFCError;
+        _CommandHandler.insert({ERR, &RFCHandler::RFCError});
+        _CommandHandler.insert({LOGIN, &RFCHandler::RFCOk});
+        _CommandHandler.insert({OK, &RFCHandler::RFCLogin});
+        _CommandHandler.insert({STATUS, &RFCHandler::RFCStatus});
+        _CommandHandler.insert({NEWENTITY, &RFCHandler::RFCNewEntity});
+        _CommandHandler.insert({MOVENTITY, &RFCHandler::RFCMovEntity});
+        _CommandHandler.insert({DELENTITY, &RFCHandler::RFCDelEntity});
+    }
 
-}
+    void RFCHandler::RFCError(Message &currentMessage, std::size_t _currentOwnerID)
+    {
 
-void RTypeServer::RFCHandler::RFCOk()
-{
+    }
 
-}
+    void RFCHandler::RFCLogin(Message &currentMessage, std::size_t _currentOwnerID)
+    {
 
-void RTypeServer::RFCHandler::RFCStatus()
-{
+    }
 
-}
+    void RFCHandler::RFCOk(Message &currentMessage, std::size_t _currentOwnerID)
+    {
 
-void RTypeServer::RFCHandler::RFCNewEntity()
-{
+    }
 
-}
+    void RFCHandler::RFCStatus(Message &currentMessage, std::size_t _currentOwnerID)
+    {
 
-void RTypeServer::RFCHandler::RFCMovEntity()
-{
+    }
 
-}
+    void RFCHandler::RFCNewEntity(Message &currentMessage, std::size_t _currentOwnerID)
+    {
 
-void RTypeServer::RFCHandler::RFCDelEntity()
-{
+    }
 
+    void RFCHandler::RFCMovEntity(Message &currentMessage, std::size_t _currentOwnerID)
+    {
+
+    }
+
+    void RFCHandler::RFCDelEntity(Message &currentMessage, std::size_t _currentOwnerID)
+    {
+
+    }
+
+    void RFCHandler::executeCommand(Message &msg, std::size_t ownerID)
+    {
+        code codeCommand = (code) msg._msg->_header._code;
+        if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
+        {
+            (this->*_CommandHandler[codeCommand])(msg, ownerID);
+            //_CommandHandler[codeCommand](msg, ownerID);
+        }
+    }
 }

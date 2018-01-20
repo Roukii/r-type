@@ -13,6 +13,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <thread>
 #include "IServerUdpSocket.hpp"
 #include "MessageQueue.hpp"
 #include "Message.hpp"
@@ -25,7 +26,7 @@ namespace RTypeServer
     class ServerUdp : public IServerUdpSocket
     {
     public:
-        ServerUdp(MessageQueue<std::string> &);
+        ServerUdp(MessageQueue<Message> &);
 
         ~ServerUdp();
 
@@ -33,11 +34,14 @@ namespace RTypeServer
 
         ServerUdp &operator=(const ServerUdp &) = delete;
 
-        void SendToClient(const std::string &, std::size_t);
-        void SendToAll(const std::string &);
-        void SendToAllExcept(const std::string &, std::size_t);
+        void SendToClient(const std::string &, std::size_t) override;
+        void SendToAll(const std::string &) override;
+        void SendToAllExcept(const std::string &, std::size_t) override;
 
         void runServer() override;
+        void runServerWithThread() override;
+        bool isRunning() const override;
+        std::thread &getThread() override;
 
     private:
         void send(const std::string &, endpoint);
@@ -45,14 +49,19 @@ namespace RTypeServer
         void handleError(const boost::system::error_code &, endpoint);
         void removeDisconnectedClient(endpoint);
         void cleanBuffer();
+        bool endpointExist(endpoint) const;
+        std::size_t clientIDFromEndpoint(endpoint) const;
 
     private:
         boost::asio::io_service io_service;
         boost::asio::ip::udp::socket    _socket;
-        MessageQueue<std::string> &_messageQueue;
+        MessageQueue<Message> &_messageQueue;
+        std::thread _serviceThread;
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
         Message _msg;
+        char *_data;
+        bool _running;
     };
 }
 

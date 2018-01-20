@@ -23,16 +23,21 @@ namespace RTypeServer
 
         MessageQueue &operator=(const MessageQueue &) = delete;
 
-        void addMessage(T elem, unsigned short ownerID);
+        void addMessage(T elem, std::size_t ownerID);
 
-        std::pair<T, unsigned short> getMessage();
+        std::pair<T, std::size_t> getMessage();
+
+        T &peekMessage();
+        std::size_t peekOwnerID() const;
+
+        void pop();
 
         bool isEmpty() const;
 
         unsigned int size() const;
 
     private:
-        std::queue<std::pair<T, unsigned short>> _queue;
+        std::queue<std::pair<T, std::size_t>> _queue;
     };
 
 
@@ -41,17 +46,35 @@ namespace RTypeServer
     {}
 
     template<class T>
-    void MessageQueue<T>::addMessage(T elem, unsigned short ownerID)
+    void MessageQueue<T>::addMessage(T elem, std::size_t ownerID)
     {
         _queue.push(std::make_pair(elem, ownerID));
     }
 
     template<class T>
-    std::pair<T, unsigned short> MessageQueue<T>::getMessage()
+    std::pair<T, std::size_t> MessageQueue<T>::getMessage()
     {
-        std::pair<T, unsigned short> tmpPair = _queue.front();
+        std::pair<T, std::size_t> tmpPair = _queue.front();
         _queue.pop();
         return tmpPair;
+    }
+
+    template<class T>
+    T &MessageQueue<T>::peekMessage()
+    {
+        return _queue.front().first;
+    }
+
+    template<class T>
+    std::size_t MessageQueue<T>::peekOwnerID() const
+    {
+        return _queue.front().second;
+    }
+
+    template<class T>
+    void MessageQueue<T>::pop()
+    {
+        _queue.pop();
     }
 
     template<class T>

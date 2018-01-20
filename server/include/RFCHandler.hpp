@@ -7,89 +7,38 @@
 
 #include <iostream>
 #include <map>
+#include "IServerUdpSocket.hpp"
+#include "Message.hpp"
+#include "RFCProtocol.hpp"
 
 namespace RTypeServer
 {
-    enum code {
-        ERR = 1,
-        OK,
-        LOGIN,
-        STATUS,
-        WAITING,
-        NEWENTITY,
-        MOVENTITY,
-        DELENTITY,
-        NBROOM,
-        NBPLAYERROOM,
-        MAXNBROOM,
-        NEWGAME,
-        ENDGAME,
-    };
-
-
-    struct header
-    {
-        char _code;
-        char _owner;
-    };
-
-    struct error
-    {
-        char _errornb;
-    };
-
-    struct status
-    {
-        char _id[4];
-        char _username[16];
-        char _stat;
-    };
-
-    struct pos
-    {
-        int _x;
-        int _y;
-    };
-
-    struct entity
-    {
-        pos _pos;
-        char id[4];
-    };
-
-    struct msg
-    {
-        header _header;
-        union Data
-        {
-            error _error;
-            status _status;
-            entity _entity;
-        } data;
-    };
-
     class RFCHandler
     {
-        typedef void (RFCHandler::*function)();
-        using mapOfCommand = std::map<RTypeServer::code, function>;
+        typedef void (RFCHandler::*function)(Message &, std::size_t);
+        using mapOfCommand = std::map<code, function>;
 
     public:
-        RFCHandler() {initMapOfCommandHandler();}
-        ~RFCHandler() {}
+        RFCHandler(std::shared_ptr<IServerUdpSocket> &socket);
+        ~RFCHandler() = default;
         RFCHandler(const RFCHandler &) = delete;
         RFCHandler &operator=(const RFCHandler &) = delete;
 
+
+        void executeCommand(Message &currentMessage, std::size_t _currentOwnerID);
+
+        void RFCError(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCOk(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCLogin(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCStatus(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCNewEntity(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCMovEntity(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCDelEntity(Message &currentMessage, std::size_t _currentOwnerID);
+
         void initMapOfCommandHandler();
 
-        void RFCError();
-        void RFCOk();
-        void RFCLogin();
-        void RFCStatus();
-        void RFCNewEntity();
-        void RFCMovEntity();
-        void RFCDelEntity();
-
     private:
+        std::shared_ptr<IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };
 

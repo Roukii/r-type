@@ -8,6 +8,7 @@
 #include "IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
+#include "RFCHandler.hpp"
 
 namespace RTypeServer
 {
@@ -25,7 +26,7 @@ namespace RTypeServer
         void start();
 
     private:
-        MessageQueue<std::string> _messageQueue;
+        MessageQueue<Message> _messageQueue;
         std::shared_ptr<IServerUdpSocket> _lobbyServer;
     };
 }

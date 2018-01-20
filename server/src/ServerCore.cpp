@@ -17,6 +17,18 @@ namespace RTypeServer
 
     void ServerCore::start()
     {
-        _lobbyServer.get()->runServer();
+        RFCHandler rfcHandler(_lobbyServer);
+
+        _lobbyServer.get()->runServerWithThread();
+        while(_lobbyServer.get()->isRunning())
+        {
+            if (!_messageQueue.isEmpty())
+            {
+                std::cout << "is not empty" << std::endl;
+                rfcHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
+                _messageQueue.pop();
+            }
+        }
+        _lobbyServer.get()->getThread().join();
     }
 }

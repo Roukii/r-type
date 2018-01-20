@@ -5,23 +5,40 @@
 #ifndef R_TYPE_MESSAGE_HPP
 #define R_TYPE_MESSAGE_HPP
 
-#include "RFCHandler.hpp"
+#include "RFCProtocol.hpp"
+#include <string>
 
 namespace RTypeServer {
     class Message {
 
     public:
         Message() : _msg(new RTypeServer::msg) {}
-        ~Message() {delete _msg;}
-        Message(const Message &) = delete;
-        Message &operator=(const Message &) = delete;
+        ~Message() = default;
 
-        const size_t getSizeMsg() const {return _sizeMsg;}
-        void setSizeMsg(size_t size) { _sizeMsg = size;}
+        Message(const Message &o) : _msg(new RTypeServer::msg), _sizeMsg(o._sizeMsg)
+        {
+            _msg.get()->_header = o._msg.get()->_header;
+            _msg.get()->data = o._msg.get()->data;
+        }
 
-        RTypeServer::msg *_msg;
+        Message &operator=(const Message &o)
+        {
+            if (this != &o)
+            {
+                _msg.get()->_header = o._msg.get()->_header;
+                _msg.get()->data = o._msg.get()->data;
+                _sizeMsg = o.getSizeMsg();
+            }
+            return *this;
+        };
+
+        const std::size_t getSizeMsg() const {return _sizeMsg;}
+        void setSizeMsg(std::size_t size) { _sizeMsg = size;}
+
+        std::shared_ptr<msg> _msg;
+
     private:
-        size_t _sizeMsg;
+        std::size_t _sizeMsg;
 
     };
 }

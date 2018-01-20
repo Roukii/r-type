@@ -7,9 +7,10 @@
 
 namespace RTypeServer
 {
-    ServerUdp::ServerUdp(MessageQueue<std::string> &queue)
+    ServerUdp::ServerUdp(MessageQueue<Message> &queue)
         : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), PORT_SERVER)),
-          _messageQueue(queue)
+          _messageQueue(queue),
+          _running(false)
     {
         std::cout << _socket.local_endpoint().address().to_string() << std::endl;
     }
@@ -39,26 +40,34 @@ namespace RTypeServer
 
     void ServerUdp::startReceive()
     {
+        std::cout << "start receive" << std::endl;
         _socket.async_receive_from(
-                boost::asio::buffer(_msg._msg, sizeof(_msg._msg)), _lastEndpoint,
+                boost::asio::buffer(_msg._msg.get(), sizeof(_msg._msg)), _lastEndpoint,
                 [this](const boost::system::error_code& error,
                        std::size_t bytes_transferred)
                 {
                     std::cout << "nb client = " << _clientsList.size() << std::endl;
                     if (!error || error == boost::asio::error::message_size)
                     {
-                        _clientsList.push_back(_lastEndpoint);
-
+                        if (endpointExist(_lastEndpoint))
+                        {
+                            _clientsList.push_back(_lastEndpoint);
+                            SendToClient("Wilkomen WARLD !", _clientsList.size() - 1);
+                        }
+                        else
+                        {
+                        }
+                        _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
                         std::cout << "remote endpoint = " << _lastEndpoint.address() << std::endl;
                         std::cout << "port endpoint = " << _lastEndpoint.port() << std::endl;
 
                         //std::cout << std::string(_data) << std::endl;
                         //_messageQueue.addMessage(std::string(_data), _clientsList.size() - 1);
                         cleanBuffer();
-                        SendToClient("Wilkomen WARLD !", _clientsList.size() - 1);
                     }
                     else
                     {
+                        std::cout << "error : " << std::endl;
                         std::cout << error.message() << std::endl;
                         handleError(error, _lastEndpoint);
                     }
@@ -79,11 +88,15 @@ namespace RTypeServer
         {
             removeDisconnectedClient(_lastEndpoint);
         }
+        else
+        {
+            _running = false;
+        }
     }
 
     void ServerUdp::removeDisconnectedClient(endpoint target)
     {
-        for (unsigned int i = 0; i < _clientsList.size(); i++)
+        for (auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
                 _clientsList.erase(_clientsList.begin() + i);
@@ -98,6 +111,44 @@ namespace RTypeServer
 
     void ServerUdp::runServer()
     {
+        _running = true;
         startReceive();
+        io_service.run();
+    }
+
+    bool ServerUdp::endpointExist(endpoint target) const
+    {
+        for(auto i = 0; i < _clientsList.size(); i++)
+        {
+            if (_clientsList[i] == target)
+                return true;
+        }
+        std::cout << "new client" << std::endl;
+        return false;
+    }
+
+    std::size_t ServerUdp::clientIDFromEndpoint(endpoint target) const
+    {
+        for(auto i = 0; i < _clientsList.size(); i++)
+        {
+            if (_clientsList[i] == target)
+                return i;
+        }
+        return -1;
+    }
+
+    bool ServerUdp::isRunning() const
+    {
+        return _running;
+    }
+
+    void ServerUdp::runServerWithThread()
+    {
+        _serviceThread = std::thread(&ServerUdp::runServer, this);
+    }
+
+    std::thread &ServerUdp::getThread()
+    {
+        return _serviceThread;
     }
 }
