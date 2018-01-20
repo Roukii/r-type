@@ -36,13 +36,13 @@ namespace UgandaEngine {
         virtual void addComponent(std::type_index type, std::shared_ptr<AComponent> component);
 
         template <typename T>
-        std::weak_ptr<T> get() {
+        T* get() {
             auto it = _components.find(std::type_index(typeid(T)));
-            if (it != _components.end())
-                return it->second;
-            return std::weak_ptr<T>();
+            if (it != _components.end()) {
+                return static_cast<T*>(it->second.get());
+            }
+            return nullptr;
         }
-
         void setType(const std::string &type) { _type = type; }
         std::string getType() const { return _type; }
     };

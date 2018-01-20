@@ -10,7 +10,7 @@ endif()
 #Project's name
 project(r-type)
 
-#Set lang to C++ 14
+#Set lang to C++ 17
 set(CMAKE_CXX_STANDARD 17)
 
 #Set executable at cmake dir
