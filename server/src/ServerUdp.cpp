@@ -61,9 +61,15 @@ namespace RTypeServer
                         std::cout << "remote endpoint = " << _lastEndpoint.address() << std::endl;
                         std::cout << "port endpoint = " << _lastEndpoint.port() << std::endl;
 
+                        std::cout << "error code : " << _msg._msg.get()->_header._code + '0' << std::endl;
                         //std::cout << std::string(_data) << std::endl;
-                        //_messageQueue.addMessage(std::string(_data), _clientsList.size() - 1);
-                        cleanBuffer();
+                        _messageQueue.addMessage(_msg, _clientsList.size() - 1);
+                        _msg._msg.get()->_header._code++;
+                        _messageQueue.addMessage(_msg, _clientsList.size() - 1);
+                        _messageQueue.addMessage(_msg, _clientsList.size() - 1);
+                        _messageQueue.addMessage(_msg, _clientsList.size() - 1);
+                        _messageQueue.addMessage(_msg, _clientsList.size() - 1);
+                        //cleanBuffer();
                     }
                     else
                     {
@@ -144,6 +150,7 @@ namespace RTypeServer
 
     void ServerUdp::runServerWithThread()
     {
+        _running = true;
         _serviceThread = std::thread(&ServerUdp::runServer, this);
     }
 

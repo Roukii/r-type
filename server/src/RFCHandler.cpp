@@ -27,36 +27,39 @@ namespace RTypeServer
 
     void RFCHandler::RFCError(Message &currentMessage, std::size_t _currentOwnerID)
     {
-
+        std::cout << "RFCERROR wala c gg wp" << std::endl;
     }
 
     void RFCHandler::RFCLogin(Message &currentMessage, std::size_t _currentOwnerID)
     {
-
+        std::cout << "RFCLogin lagin" << std::endl;
     }
 
     void RFCHandler::RFCOk(Message &currentMessage, std::size_t _currentOwnerID)
     {
-
+        std::cout << "RFCOk lol" << std::endl;
     }
 
     void RFCHandler::RFCStatus(Message &currentMessage, std::size_t _currentOwnerID)
     {
+        std::cout << "RFCStatus lol" << std::endl;
 
     }
 
     void RFCHandler::RFCNewEntity(Message &currentMessage, std::size_t _currentOwnerID)
     {
-
+        std::cout << "RFCentitaie lol" << std::endl;
     }
 
     void RFCHandler::RFCMovEntity(Message &currentMessage, std::size_t _currentOwnerID)
     {
+        std::cout << "RFCmoveantitai lol" << std::endl;
 
     }
 
     void RFCHandler::RFCDelEntity(Message &currentMessage, std::size_t _currentOwnerID)
     {
+        std::cout << "RFCdelentitaie lol" << std::endl;
 
     }
 

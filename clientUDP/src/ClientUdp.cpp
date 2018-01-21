@@ -12,6 +12,9 @@ ClientUdp::ClientUdp(const std::string &host,
       _serviceThread(&ClientUdp::run, this),
       _isRunning(true), _host(host), _serverPort(serverPort), _localPort(localPort)
 {
+    std::cout << "size of msg : " << sizeof(_msg._msg.get()) << std::endl;
+    _msg._msg.get()->_header._code = code::ERR;
+    _msg._msg.get()->_header._owner = 1;
 }
 
 ClientUdp::~ClientUdp()
@@ -52,12 +55,13 @@ void ClientUdp::run()
 
 void ClientUdp::send(const std::string &message)
 {
-    _socket.send_to(boost::asio::buffer(message), _serverEndpoint);
+    _socket.send_to(boost::asio::buffer(_msg._msg.get(), sizeof(_msg._msg.get())), _serverEndpoint);
+    _msg._msg.get()->_header._code++;
 }
 
 void ClientUdp::startReceive()
 {
-    _socket.async_receive_from(boost::asio::buffer(_data, MAX_SIZE_MSG),
+    _socket.async_receive_from(boost::asio::buffer(_msg._msg.get(), sizeof(_msg._msg.get())),
                                _remoteEndpoint,
                               [this](const boost::system::error_code &ec,
                                      std::size_t bytes)

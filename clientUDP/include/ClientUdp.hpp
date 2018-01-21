@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include "RFCProtocol.hpp"
+#include "Message.hpp"
 
 #define MAX_SIZE_MSG 2048
 
@@ -41,6 +43,7 @@ private:
     boost::asio::ip::udp::endpoint _remoteEndpoint;
     boost::asio::ip::udp::endpoint _serverEndpoint;
     char *_data;
+    Message _msg;
     std::thread _serviceThread;
     bool _isRunning;
     const std::string &_host;

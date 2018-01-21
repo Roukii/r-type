@@ -6,6 +6,7 @@
 #define R_TYPE_MESSAGEQUEUE_HPP
 
 #include <queue>
+#include <iostream>
 
 #define MAX_SIZE 50
 

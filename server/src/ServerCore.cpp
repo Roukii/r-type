@@ -24,7 +24,6 @@ namespace RTypeServer
         {
             if (!_messageQueue.isEmpty())
             {
-                std::cout << "is not empty" << std::endl;
                 rfcHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
                 _messageQueue.pop();
             }
