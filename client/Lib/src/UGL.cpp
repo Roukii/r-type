@@ -13,11 +13,43 @@ UGL::~UGL()
 	_window.close();
 }
 
+void 		UGL::init() {
+	/*_texture = new sf::Texture;
+	if (!_texture->loadFromFile("assets/ship_1.png"))
+		throw std::invalid_argument("Error: Cannot load image");*/
+
+	loadSprite("assets/ship_1.png", "Ship1");
+	// UP ANIM
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_up");
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(8, 11, 23, 15));
+
+	// DOWN ANIM
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_down");
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
+
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_none");
+	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
+}
+
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	_sprites.emplace(name, std::make_pair(std::make_shared<sf::Sprite>(), std::make_shared<sf::Texture>()));
 	if (!_sprites[name].second->loadFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Texture " + path);
 	_sprites[name].first->setTexture(*_sprites[name].second);
+}
+
+std::shared_ptr<sf::Sprite>	UGL::spriteFactory(const std::string& entityName) {
+	/*switch (entityName) {
+		case "Ship":
+			getSprite("Ship1");
+			break;
+	};*/
 }
 
 void		UGL::loadFont(const std::string &path) {
@@ -48,6 +80,11 @@ void		UGL::loadMusic(const std::string &path, const std::string &name) {
 	_musics[name] = std::make_shared<sf::Music>();
 	if (!_musics[name]->openFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Music " + path);
+}
+
+void 		UGL::loadAnimation(const std::shared_ptr<sf::Texture>& texture, const std::string& name) {
+	_animations[name] = std::make_shared<Animation>();
+	_animations[name]->setSpriteSheet(*texture);
 }
 
 extern "C" {

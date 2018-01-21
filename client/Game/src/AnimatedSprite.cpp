@@ -5,13 +5,16 @@
 #include "AnimatedSprite.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
-	: _animation(NULL), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(NULL) {
+	: _animation(nullptr), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(NULL) {
 
 }
 
 void		AnimatedSprite::setAnimation(const Animation& animation) {
-	_animation = &animation;
-	_texture = _animation->getSpriteSheet();
+	std::const_pointer_cast<Animation>(_animation) = std::make_shared<Animation>(animation);
+	if (_animation == nullptr) {
+		throw std::invalid_argument("Error: AnimatedSprite.cpp : Failed to load texture");
+	}
+	std::const_pointer_cast<sf::Texture>(_texture) = _animation->getSpriteSheet();
 	_currentFrame = 0;
 	setFrame(_currentFrame);
 }
@@ -25,7 +28,7 @@ void		AnimatedSprite::play() {
 }
 
 void		AnimatedSprite::play(const Animation& animation) {
-	if (getAnimation() != &animation)
+	if (getAnimation() != std::make_shared<Animation>(animation))
 		setAnimation(animation);
 	play();
 }
@@ -52,7 +55,7 @@ void		AnimatedSprite::setColor(const sf::Color& color) {
 	_vertices[3].color = color;
 }
 
-const Animation*	AnimatedSprite::getAnimation() const {
+const std::shared_ptr<Animation>	AnimatedSprite::getAnimation() const {
 	return _animation;
 }
 
@@ -136,7 +139,7 @@ void		AnimatedSprite::update(sf::Time deltaTime) {
 void		AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (_animation && _texture) {
 		states.transform *= getTransform();
-		states.texture = _texture;
+		states.texture = _texture.get();
 		target.draw(_vertices, 4, sf::Quads, states);
 	}
 }

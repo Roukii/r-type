@@ -11,10 +11,12 @@ void 			Animation::addFrame(const sf::IntRect& rect) {
 }
 
 void 			Animation::setSpriteSheet(const sf::Texture& texture) {
-	_texture = &texture;
+	std::const_pointer_cast<sf::Texture>(_texture) = std::make_shared<sf::Texture>(texture);
+	if (_texture == nullptr)
+		throw std::invalid_argument("Error: Animation.cpp : Failed to load texture");
 }
 
-const sf::Texture*	Animation::getSpriteSheet() const {
+const std::shared_ptr<sf::Texture>	Animation::getSpriteSheet() const {
 	return _texture;
 }
 

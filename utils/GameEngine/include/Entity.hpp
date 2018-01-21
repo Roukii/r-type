@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include <AnimatedSprite.hpp>
+#include <functional>
 #include "AComponent.hpp"
 
 namespace UgandaEngine {

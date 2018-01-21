@@ -26,7 +26,7 @@ public:
 	void		stop();
 	void		setLooped(bool looped);
 	void		setColor(const sf::Color& color);
-	const Animation*	getAnimation() const;
+	const std::shared_ptr<Animation>	getAnimation() const;
 	sf::FloatRect	getLocalBounds() const;
 	sf::FloatRect	getGlobalBounds() const;
 	bool		isLooped() const;
@@ -35,13 +35,13 @@ public:
 	void		setFrame(std::size_t newFrame, bool resetTime = true);
 
 private:
-	const Animation*	_animation;
+	const std::shared_ptr<Animation>	_animation;
 	sf::Time		_frameTime;
 	sf::Time		_currentTime;
 	std::size_t		_currentFrame;
 	bool			_isPaused;
 	bool			_isLooped;
-	const sf::Texture*	_texture;
+	const std::shared_ptr<sf::Texture>	_texture;
 	sf::Vertex		_vertices[4];
 
 	virtual void		draw(sf::RenderTarget& target, sf::RenderStates states) const;
