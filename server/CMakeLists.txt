@@ -30,3 +30,7 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(Server ${Boost_LIBRARIES})
 endif()
+
+if (UNIX)
+    target_link_libraries(ClientTest ${CMAKE_THREAD_LIBS_INIT})
+endif()
