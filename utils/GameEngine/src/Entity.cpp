@@ -4,6 +4,6 @@
 
 #include "../include/Entity.hpp"
 
-void UgandaEngine::Entity::addComponent(std::type_index type, std::shared_ptr<UgandaEngine::AComponent> component) {
+void UgandaEngine::entity::Entity::addComponent(std::type_index type, std::shared_ptr<UgandaEngine::AComponent> component) {
     _components[type] = component;
 }

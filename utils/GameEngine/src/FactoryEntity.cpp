@@ -15,15 +15,17 @@ namespace UgandaEngine {
             _action = action;
         }
 
-        std::shared_ptr<Entity> FactoryEntity::create(const std::string &name) {
+        std::shared_ptr<entity::Entity> FactoryEntity::create(const std::string &name) {
             if (_entity.find(name) == _entity.end()) {
                 std::cout << "error name not found" << std::endl;
                 return NULL;
             }
-            std::shared_ptr<Entity> newEntity = std::make_shared<Entity>();
+            std::shared_ptr<entity::Entity> newEntity = std::make_shared<entity::Entity>();
             for (auto e : _entity[name]) {
-                newEntity->func_comp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
+                newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
             }
+            // LibGraĥique => pour récupérer toutes les données lié à l'affichage
+            // Initialiser par défaut de la vitesse / direction / position
             return newEntity;
         }
     }

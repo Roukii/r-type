@@ -22,6 +22,9 @@
 
 class UGL : public ILib {
 public:
+	// TODO : 1. Rajouter en paramètre constructeur ou une fonction init, les données nécessaires pour remplir les map
+	// TODO : 2. Créer une fonction / factory sur chaque map
+	// TODO : 3. Créer une focntion / factory qui renvoie une class qui comporte toutes les données Graphique des Entité (elle prend en paramètre un std::string du nomd e l'entité)
 	UGL();
 	~UGL() override;
 	sf::RenderWindow & getWindow() {return _window;}

@@ -7,7 +7,11 @@
 #include "../../State/include/MenuState.hpp"
 
 
-Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>()) {}
+Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>())
+{
+    //Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
+
+}
 
 //void	Core::initLib(int x, int y)
 //{
