@@ -6,7 +6,6 @@
 #include "../include/FactoryEntity.hpp"
 
 namespace UgandaEngine {
-    //TODO: bugfix de compilation
     namespace Factory {
 
         FactoryEntity::FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,

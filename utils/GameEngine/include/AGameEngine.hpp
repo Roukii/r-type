@@ -62,7 +62,7 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
     };
-    AGameEngine engine;
+    AGameEngine g_engine;
 
 }
 

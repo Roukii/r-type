@@ -27,6 +27,7 @@ namespace UgandaEngine {
         //LUA
         std::string _type;
 
+        // TODO : position(vec2d) / vitesse(vec2d) / direction(enum)
         /*
          * Constructors / Destructor
          */
