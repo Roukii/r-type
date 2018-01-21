@@ -44,12 +44,20 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	_sprites[name].first->setTexture(*_sprites[name].second);
 }
 
-std::shared_ptr<sf::Sprite>	UGL::spriteFactory(const std::string& entityName) {
-	/*switch (entityName) {
-		case "Ship":
+eEntityType	UGL::getEntity(const std::string& entityType) {
+	if (entityType == "Ship")
+		return SHIP;
+	return NONE;
+}
+
+std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) {
+	switch (getEntity(entityName)) {
+		case SHIP:
 			getSprite("Ship1");
 			break;
-	};*/
+		default:
+			break;
+	};
 }
 
 void		UGL::loadFont(const std::string &path) {
@@ -85,6 +93,31 @@ void		UGL::loadMusic(const std::string &path, const std::string &name) {
 void 		UGL::loadAnimation(const std::shared_ptr<sf::Texture>& texture, const std::string& name) {
 	_animations[name] = std::make_shared<Animation>();
 	_animations[name]->setSpriteSheet(*texture);
+}
+
+std::vector<std::shared_ptr<Animation>>	UGL::animationFactory(const std::string& entityName) {
+	std::vector<std::string>	keys;
+	for (auto& item : _animations) {
+		keys.push_back(item.first);
+	}
+
+	std::vector<std::string>	corresp;
+	for (auto& key : keys) {
+		if (key.find(entityName))
+			corresp.push_back(key);
+	}
+
+	std::vector<std::shared_ptr<Animation>>	ret;
+
+	for (auto& item2 : corresp) {
+		ret.push_back(_animations[item2]);
+	}
+
+	return ret;
+}
+
+EntityFactoryData	UGL::factoryData(const std::string& entityName) {
+	return EntityFactoryData(textureFactory(entityName), animationFactory(entityName));
 }
 
 extern "C" {

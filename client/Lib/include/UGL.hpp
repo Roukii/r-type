@@ -21,6 +21,18 @@
 #include "Animation.hpp"
 #include "ILib.hpp"
 
+struct EntityFactoryData {
+	EntityFactoryData(std::shared_ptr<sf::Texture> texture, std::vector<std::shared_ptr<Animation>> anims)
+		: _texture(texture), _anims(anims) {}
+	std::shared_ptr<sf::Texture>	_texture;
+	std::vector<std::shared_ptr<Animation>>	_anims;
+};
+
+enum eEntityType {
+	NONE = 0,
+	SHIP
+};
+
 class UGL : public ILib {
 public:
 	// TODO : 1. Rajouter en paramètre constructeur ou une fonction init, les données nécessaires pour remplir les map
@@ -34,13 +46,19 @@ protected:
 	void		loadLib() override;
 	void		loadSprite(const std::string &path, const std::string &name) override;
 	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) { return _sprites[name].first; }
-	std::shared_ptr<sf::Sprite>	spriteFactory(const std::string&);
+	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
+	std::shared_ptr<sf::Texture>	textureFactory(const std::string&);
+	eEntityType	getEntity(const std::string&);
 	void		deleteSprite(const std::string& name) override;
 	void		loadFont(const std::string &path) override;
 	void		loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) override;
 	void		loadSound(const std::string &path, const std::string &name) override;
 	void		loadMusic(const std::string &path, const std::string &name) override;
 	void 		loadAnimation(const std::shared_ptr<sf::Texture>&, const std::string&);
+	std::shared_ptr<Animation>	getAnimation(const std::string& name) { return _animations[name]; }
+	std::vector<std::shared_ptr<Animation>>	animationFactory(const std::string&);
+	EntityFactoryData	factoryData(const std::string&);
+
 
 	sf::RenderWindow	_window;
 	sf::Font			_font;
