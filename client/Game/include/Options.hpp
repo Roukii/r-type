@@ -1,9 +1,9 @@
 //
-// Created by Samy on 11/01/2018.
+// Created by Samy on 20/01/2018.
 //
 
-#ifndef R_TYPE_MENU_HPP
-#define R_TYPE_MENU_HPP
+#ifndef R_TYPE_OPTIONS_HPP
+#define R_TYPE_OPTIONS_HPP
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window/Event.hpp>
@@ -12,7 +12,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Audio.hpp>
 
-class Menu {
+class Options {
     sf::Texture	_background;
     sf::Texture _cursor;
     sf::Sprite  _sprite[5];
@@ -22,8 +22,8 @@ class Menu {
     sf::Sound			_sound;
     int selected = 0;
 public:
-    Menu();
-    ~Menu(){_sound.stop();}
+    Options();
+    ~Options(){}
 
     sf::Text  *getText() {return text;};
     sf::Sprite *getSprite() {return _sprite;}
@@ -32,4 +32,5 @@ public:
     int handleKeys(const sf::Event&e);
 };
 
-#endif //R_TYPE_MENU_HPP
+
+#endif //R_TYPE_OPTIONS_HPP

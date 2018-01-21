@@ -25,8 +25,6 @@ void	GameState::game(std::shared_ptr<IState> &state) {
 }
 
 int    GameState::exec(sf::RenderWindow &win) {
-    std::cout << "GameScreen" << std::endl;
-    return -1;
 }
 
 void   GameState::init() {

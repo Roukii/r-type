@@ -46,5 +46,4 @@ private:
 	std::list<ShipProjectile>	_missiles;
 };
 
-
 #endif //DISPLAYTESTS_SHIP_HPP
