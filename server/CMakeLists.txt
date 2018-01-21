@@ -32,5 +32,5 @@ if(Boost_FOUND)
 endif()
 
 if (UNIX)
-    target_link_libraries(ClientTest ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(Server ${CMAKE_THREAD_LIBS_INIT})
 endif()
