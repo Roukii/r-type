@@ -20,13 +20,8 @@
 
 #include "Animation.hpp"
 #include "ILib.hpp"
+#include "EntityGraphique.hpp"
 
-struct EntityFactoryData {
-	EntityFactoryData(std::shared_ptr<sf::Texture> texture, std::vector<std::shared_ptr<Animation>> anims)
-		: _texture(texture), _anims(anims) {}
-	std::shared_ptr<sf::Texture>	_texture;
-	std::vector<std::shared_ptr<Animation>>	_anims;
-};
 
 enum eEntityType {
 	NONE = 0,
@@ -35,14 +30,13 @@ enum eEntityType {
 
 class UGL : public ILib {
 public:
-	// TODO : 1. Rajouter en paramètre constructeur ou une fonction init, les données nécessaires pour remplir les map
-	// TODO : 2. Créer une fonction / factory sur chaque map
-	// TODO : 3. Créer une focntion / factory qui renvoie une class qui comporte toutes les données Graphique des Entité (elle prend en paramètre un std::string du nomd e l'entité)
 	UGL();
 	~UGL() override;
-	sf::RenderWindow & getWindow() {return _window;}
+	// TODO : Sami, peux tu stp faire en sorte que cette fonction ne retourne pas un élément de la lib sfml :)
+	std::shared_ptr<sf::RenderWindow> getWindow() override
+	{return _window;}
 protected:
-	void 		init();
+	void 		init() override;
 	void		loadLib() override;
 	void		loadSprite(const std::string &path, const std::string &name) override;
 	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) { return _sprites[name].first; }
@@ -57,10 +51,10 @@ protected:
 	void 		loadAnimation(const std::shared_ptr<sf::Texture>&, const std::string&);
 	std::shared_ptr<Animation>	getAnimation(const std::string& name) { return _animations[name]; }
 	std::vector<std::shared_ptr<Animation>>	animationFactory(const std::string&);
-	EntityFactoryData	factoryData(const std::string&);
+	std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) override;
 
 
-	sf::RenderWindow	_window;
+	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;
 	std::map<std::string, std::pair<std::shared_ptr<sf::Sprite>, std::shared_ptr<sf::Texture>>>	_sprites;
 	std::map<std::string, std::pair<std::shared_ptr<sf::Sound>, std::shared_ptr<sf::SoundBuffer>>> 	_sounds;

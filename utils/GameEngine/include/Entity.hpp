@@ -9,9 +9,11 @@
 #include <typeindex>
 #include <map>
 #include <memory>
-#include <AnimatedSprite.hpp>
 #include <functional>
+
+#include "../../../client/Lib/include/AnimatedSprite.hpp"
 #include "AComponent.hpp"
+#include "../../../client/Lib/include/EntityGraphique.hpp"
 
 namespace UgandaEngine {
     namespace entity {
@@ -36,13 +38,10 @@ namespace UgandaEngine {
             //LUA
             std::string                                     _type;
 
-
             // créeer une classe graphique pour les entity
             // GraphEnt qui va contenir AnimatedSprite / Texture / vector<Animation>
-            AnimatedSprite                                  _currentSprite;
-            std::shared_ptr<sf::Texture>                    _texture;
-            std::vector<std::shared_ptr<Animation>>         _animations;
-
+            // TODO : ALEXIS CORRIGE TON CACA ICI, OUBLIE PAS
+            std::shared_ptr<EntityFactoryData>              myGraph;
 
             // les éléments de maniabilité
             Direction                                       _currentDirection;
@@ -52,7 +51,6 @@ namespace UgandaEngine {
             // les éléments rataché
             std::vector<Entity>                             _missiles;
 
-            // TODO : position(vec2d) / vitesse(vec2d) / direction(enum)
             /*
              * Constructors / Destructor
              */

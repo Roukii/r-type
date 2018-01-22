@@ -6,12 +6,12 @@
 #define R_TYPE_CORE_HPP
 
 #include <memory>
+#include <utility>
 #include "../../Lib/include/UGL.hpp"
 #include "../../State/include/IState.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
-	std::shared_ptr<UGL> _ugl;
 public:
 	Core();
 	~Core() = default;
@@ -27,7 +27,7 @@ public:
 	void		game();
 
 	//Setters and getters
-	void		setState(std::shared_ptr<IState> newState) { this->_state = newState; }
+	void		setState(std::shared_ptr<IState> newState) { this->_state = std::move(newState); }
 };
 
 

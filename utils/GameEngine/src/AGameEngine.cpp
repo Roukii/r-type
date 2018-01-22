@@ -3,10 +3,11 @@
 //
 
 
+#include <dlfcn.h>
 #include "../include/AGameEngine.hpp"
+#include "../../../client/Lib/include/ILib.hpp"
 
 namespace UgandaEngine {
-//TODO: bugfix de compilation
 //void UgandaEngine::AGameEngine::start() {
 //    while (isAlive()) {
 //        //Check if a key was input
@@ -30,10 +31,26 @@ namespace UgandaEngine {
 //    _Entities.push_back(newEntity);
 //}
 //
+
+
     void AGameEngine::init(const std::vector<std::string> &component,
-                                         const std::map<std::string, std::vector<std::string>> &entity,
-                                         const std::map<std::string, std::function<void()>> &action) {
+                           const std::map<std::string, std::vector<std::string>> &entity,
+                           const std::map<std::string, std::function<void()>> &action) {
         //TODO LibGraph à implémenter
+
+
         factory = std::make_shared<Factory::FactoryEntity>(entity, action);
+    }
+
+    AGameEngine::AGameEngine() {
+        ILib *(*external_creator)();
+        void *_handle = dlopen("../cmake-build-debug/client/libUGL.so", RTLD_LAZY);
+        if (_handle == NULL)
+            throw std::invalid_argument("[X]Failed to dlopen.");
+        external_creator = reinterpret_cast<ILib *(*)()>(dlsym(_handle, "create_lib"));
+        if (external_creator == NULL)
+            throw std::invalid_argument("[X]Fail to create external_creator.");
+        libGraph = external_creator();
+        libGraph->init();
     }
 }

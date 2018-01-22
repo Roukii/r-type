@@ -25,7 +25,7 @@ void	OptionsState::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameState>();
 }
 
-int    OptionsState::exec(sf::RenderWindow &win) {
+int    OptionsState::exec(std::shared_ptr<sf::RenderWindow> win) {
     std::cout << "OptionsScreen" << std::endl;
     return -1;
 }

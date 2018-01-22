@@ -14,6 +14,7 @@
 #include "Entity.hpp"
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
+#include "../../../client/Lib/include/ILib.hpp"
 
 
 namespace UgandaEngine {
@@ -29,13 +30,14 @@ namespace UgandaEngine {
         std::vector<entity::Entity> _Entities;
 
     public:
+        ILib                                        *libGraph;
         std::shared_ptr<LibGraph>                   graph;
         std::shared_ptr<Factory::FactoryEntity>     factory;
         /*
          * Constructor and destructor
          */
     public:
-        AGameEngine() = default;
+        AGameEngine();
         ~AGameEngine() = default;
 
         /*
@@ -62,7 +64,7 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
     };
-    AGameEngine g_engine;
+    static AGameEngine g_engine;
 
 }
 

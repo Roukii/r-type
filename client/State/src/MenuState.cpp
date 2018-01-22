@@ -23,28 +23,28 @@ void	MenuState::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameState>();
 }
 
-int    MenuState::exec(sf::RenderWindow &win) {
+int    MenuState::exec(std::shared_ptr<sf::RenderWindow> win) {
     // Process events
     sf::Event event;
     int ret;
-    while (win.pollEvent(event)) {
+    while (win->pollEvent(event)) {
         // Close window: exit
         if (event.type == sf::Event::Closed)
-            win.close();
+            win->close();
         if ((ret = m.handleKeys(event)) != 1)
             return ret;
     }
     // Clear screen
-    win.clear();
+    win->clear();
 
     // Update the window
-    win.draw(m.getSprite()[0]);
-    win.draw(m.getSprite()[1]);
-    win.draw(m.getText()[0]);
-    win.draw(m.getText()[1]);
-    win.draw(m.getText()[2]);
-    win.draw(m.getText()[3]);
-    win.display();
+    win->draw(m.getSprite()[0]);
+    win->draw(m.getSprite()[1]);
+    win->draw(m.getText()[0]);
+    win->draw(m.getText()[1]);
+    win->draw(m.getText()[2]);
+    win->draw(m.getText()[3]);
+    win->display();
     return -1;
 }
 
