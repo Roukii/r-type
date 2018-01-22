@@ -15,11 +15,11 @@ int main(int ac,char **av)
         return 0;
     }
 
-    Random random;
-    unsigned short port = random.GenerateRandomNumber(4000, 5000);
+    Random<unsigned short> random;
+    unsigned short port = random.Generate(4000, 5000);
     while (ClientUdp::checkPort(port))
     {
-        port = random.GenerateRandomNumber(4000, 5000);
+        port = random.Generate(4000, 5000);
     }
 
     std::cout << "port = " << port << std::endl;
