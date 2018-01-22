@@ -2,11 +2,13 @@
 // Created by Samy on 10/01/2018.
 //
 
-#include <iostream>
-#include "../include/SplashState.hpp"
-#include "../include/MenuState.hpp"
-#include "../include/GameState.hpp"
-#include "../include/OptionsState.hpp"
+#include "SplashState.hpp"
+
+#include "GameState.hpp"
+#include "OptionsState.hpp"
+#include "ConnexionState.hpp"
+#include "LobbyState.hpp"
+
 
 void	SplashState::splash(std::shared_ptr<IState> &state) {}
 
@@ -22,9 +24,17 @@ void	SplashState::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameState>();
 }
 
-int    SplashState::exec(std::shared_ptr<sf::RenderWindow> win) {
-    std::cout << "SplashScreen" << std::endl;
+void	SplashState::connexion(std::shared_ptr<IState> &state) {
+    state = std::make_shared<ConnexionState>();
+}
+
+void	SplashState::lobby(std::shared_ptr<IState> &state) {
+    state = std::make_shared<LobbyState>();
+}
+
+int    SplashState::exec() {
     return -1;
 }
 
-void   SplashState::init() {}
+void   SplashState::init(std::shared_ptr<ILib> &lib) {
+}

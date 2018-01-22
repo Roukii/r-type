@@ -1,17 +1,18 @@
 //
-// Created by Samy on 10/01/2018.
+// Created by Samy on 22/01/2018.
 //
 
-#ifndef R_TYPE_SPLASH_HPP
-#define R_TYPE_SPLASH_HPP
+#ifndef R_TYPE_CONNEXIONSTATE_HPP
+#define R_TYPE_CONNEXIONSTATE_HPP
 
 #include "IState.hpp"
 #include "Core.hpp"
 
-class SplashState : public IState {
+class ConnexionState : public IState {
+    std::shared_ptr<ILib> lib;
 public:
-    SplashState() = default;
-    virtual ~SplashState() = default;
+    ConnexionState() = default;
+    virtual ~ConnexionState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);
@@ -23,4 +24,4 @@ public:
     virtual void init(std::shared_ptr<ILib> &lib);
 };
 
-#endif //R_TYPE_SPLASH_HPP
+#endif //R_TYPE_CONNEXIONSTATE_HPP

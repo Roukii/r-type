@@ -38,6 +38,21 @@ void 		UGL::init() {
 
 	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_none");
 	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
+
+	loadSprite("../assets/Stars.jpg", "Background1");
+	getSprite("Background1")->setColor(sf::Color::Magenta);
+
+	loadSprite("../assets/HandCursor.gif", "Cursor1");
+	getSprite("Cursor1")->setPosition(90 * 20 / 6, 580);
+
+	loadSound("../assets/cursor.ogg", "Cursor2");
+
+	loadFont("../assets/Enter-The-Grid.ttf");
+
+	loadText(90 * 20 / 5, 550, 60, "New Game", "New Game");
+	loadText(90 * 20 / 5, 650, 60, "Options", "Options");
+	loadText(90 * 20 / 5, 750, 60, "Quit", "Quit");
+	loadText(90 * 20 / 2.8, 150, 200, "R TYPE", "R TYPE");
 }
 
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
@@ -45,7 +60,6 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	if (!_sprites[name].second->loadFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Texture " + path);
 	_sprites[name].first->setTexture(*_sprites[name].second);
-
 }
 
 eEntityType	UGL::getEntity(const std::string& entityType) {
@@ -77,7 +91,7 @@ void		UGL::deleteSprite(const std::string& name) {
 
 void		UGL::loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) {
 	_texts[name] = std::make_shared<sf::Text>(str, _font);
-	_texts[name]->setPosition(x, y);
+	_texts[name]->setPosition(sf::Vector2f(x, y));
 	_texts[name]->setCharacterSize(size);
 }
 

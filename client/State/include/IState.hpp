@@ -6,7 +6,7 @@
 #define R_TYPE_ISTATE_HPP
 
 #include <memory>
-#include <SFML/Graphics.hpp>
+#include "../../Lib/include/ILib.hpp"
 
 class IState {
 public:
@@ -14,9 +14,11 @@ public:
     virtual void menu(std::shared_ptr<IState> &state) = 0;
     virtual void options(std::shared_ptr<IState> &state) = 0;
     virtual void game(std::shared_ptr<IState> &state) = 0;
+    virtual void connexion(std::shared_ptr<IState> &state) = 0;
+    virtual void lobby(std::shared_ptr<IState> &state) = 0;
 
-    virtual int exec(std::shared_ptr<sf::RenderWindow> win) = 0;
-    virtual void init() = 0;
+    virtual int exec() = 0;
+    virtual void init(std::shared_ptr<ILib> &lib) = 0;
     template<typename T>
     IState* screen() {
         return new T();

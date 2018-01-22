@@ -23,6 +23,8 @@ public:
 	void		menu();
 	void		options();
 	void		game();
+	void		connexion();
+	void		lobby();
 
 	//Setters and getters
 	void		setState(std::shared_ptr<IState> newState) { this->_state = std::move(newState); }

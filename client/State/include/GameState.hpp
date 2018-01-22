@@ -9,6 +9,7 @@
 #include "Core.hpp"
 
 class GameState : public IState {
+    std::shared_ptr<ILib> lib;
 public:
     GameState() = default;
     virtual ~GameState() = default;
@@ -16,9 +17,11 @@ public:
     virtual void menu(std::shared_ptr<IState> &state);
     virtual void options(std::shared_ptr<IState> &state);
     virtual void game(std::shared_ptr<IState> &state);
+    virtual void connexion(std::shared_ptr<IState> &state);
+    virtual void lobby(std::shared_ptr<IState> &state);
 
-    virtual int exec(std::shared_ptr<sf::RenderWindow> win);
-    virtual void init();
+    virtual int exec();
+    virtual void init(std::shared_ptr<ILib> &lib);
 };
 
 #endif //R_TYPE_GAMESCREEN_HPP

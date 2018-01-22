@@ -20,7 +20,7 @@ Core::Core() : _state(std::make_shared<MenuState>())
 
 	entities["Ship"].emplace_back("Ship");
 
-	Menu	menu;
+//	Menu	menu;
 //
 //	functions["Menu_move_up"] = menu.moveUp();
 //	functions["Menu_move_down"] = menu.moveDown();
@@ -34,9 +34,9 @@ Core::Core() : _state(std::make_shared<MenuState>())
 
 void    Core::start() {
     int ret = 0;
-    std::shared_ptr<sf::RenderWindow> win = _engine->libGraph->getWindow();
-    while (win->isOpen() && ret != -2) {
-        ret =  _state->exec(win);
+    menu();
+    while (_engine->libGraph->getWindow()->isOpen() && ret != -2) {
+        ret =  _state->exec();
         if (ret == 0)
             splash();
         else if (ret == 1)
@@ -50,20 +50,30 @@ void    Core::start() {
 
 void	Core::splash(){
     this->_state->splash(_state);
-    this->_state->init();
+    this->_state->init(_engine->libGraph);
 }
 
 void	Core::menu() {
     this->_state->menu(_state);
-    this->_state->init();
+    this->_state->init(_engine->libGraph);
 }
 
 void	Core::options() {
     this->_state->options(_state);
-    this->_state->init();
+    this->_state->init(_engine->libGraph);
 }
 
 void	Core::game() {
     this->_state->game(_state);
-    this->_state->init();
+    this->_state->init(_engine->libGraph);
+}
+
+void	Core::connexion() {
+    this->_state->connexion(_state);
+    this->_state->init(_engine->libGraph);
+}
+
+void	Core::lobby() {
+    this->_state->lobby(_state);
+    this->_state->init(_engine->libGraph);
 }

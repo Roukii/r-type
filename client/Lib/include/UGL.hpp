@@ -10,13 +10,6 @@
 #include <memory>
 #include <map>
 #include <functional>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Audio/Sound.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Audio/Music.hpp>
 
 #include "Animation.hpp"
 #include "ILib.hpp"
@@ -25,7 +18,8 @@
 
 enum eEntityType {
 	NONE = 0,
-	SHIP
+	SHIP,
+	BACKGROUND
 };
 
 class UGL : public ILib {
@@ -39,16 +33,21 @@ protected:
 	void 		init() override;
 	void		loadLib() override;
 	void		loadSprite(const std::string &path, const std::string &name) override;
-	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) { return _sprites[name].first; }
-	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	std::shared_ptr<sf::Texture>	textureFactory(const std::string&);
+
+	sf::Sprite	*getSprite(const std::string& name) { return _sprites[name].first.get(); }
+	sf::Sound	*getSound(const std::string& name) {return _sounds[name].first.get();};
+	sf::Text	*getText(const std::string& name) {return _texts[name].get();};
+	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
+
 	void		deleteSprite(const std::string& name) override;
 	void		loadFont(const std::string &path) override;
 	void		loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) override;
 	void		loadSound(const std::string &path, const std::string &name) override;
 	void		loadMusic(const std::string &path, const std::string &name) override;
 	void 		loadAnimation(const std::shared_ptr<sf::Texture>&, const std::string&);
+
 	std::shared_ptr<Animation>	getAnimation(const std::string& name) { return _animations[name]; }
 	std::vector<std::shared_ptr<Animation>>	animationFactory(const std::string&);
 	std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) override;
