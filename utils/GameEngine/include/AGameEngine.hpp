@@ -30,7 +30,7 @@ namespace UgandaEngine {
         std::vector<entity::Entity> _Entities;
 
     public:
-        ILib                                        *libGraph;
+        std::shared_ptr<ILib>                       libGraph;
         std::shared_ptr<LibGraph>                   graph;
         std::shared_ptr<Factory::FactoryEntity>     factory;
         /*
@@ -43,22 +43,9 @@ namespace UgandaEngine {
         /*
          * Function and methods
          */
-        //Start function
+
     public:
-        //void start();
 
-        //Game Loop
-        //virtual void gameLoop();
-
-        //Boolean to check loop condition
-        //virtual bool isAlive();
-
-        //Generic functions to draw
-        //virtual void drawWindow();
-
-        //Event functions
-        //void update(float deltaTime, KeyInput keyInput);
-        //void addEntity(const Entity &newEntity);
 
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
