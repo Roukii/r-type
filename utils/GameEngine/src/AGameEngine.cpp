@@ -44,7 +44,9 @@ namespace UgandaEngine {
 
     AGameEngine::AGameEngine() {
         ILib *(*external_creator)();
-        void *_handle = dlopen("../cmake-build-debug/client/libUGL.so", RTLD_LAZY);
+        void *_handle = dlopen("../build/libUGL.so", RTLD_LAZY);
+        if (_handle == NULL)
+            _handle = dlopen("../build/libUGL.dll", RTLD_LAZY);
         if (_handle == NULL)
             throw std::invalid_argument("[X]Failed to dlopen.");
         external_creator = reinterpret_cast<ILib *(*)()>(dlsym(_handle, "create_lib"));
