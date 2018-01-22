@@ -5,19 +5,17 @@
 #ifndef R_TYPE_CORE_HPP
 #define R_TYPE_CORE_HPP
 
-#include <memory>
-#include <utility>
-#include "../../Lib/include/UGL.hpp"
 #include "../../State/include/IState.hpp"
+#include "../../State/include/MenuState.hpp"
+#include "../../../utils/GameEngine/include/AGameEngine.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
+	std::shared_ptr<UgandaEngine::AGameEngine> _engine;
 public:
 	Core();
 	~Core() = default;
 
-	//Initialisation
-//    void		initLib(int x, int y);
 	void		start();
 
 	//States

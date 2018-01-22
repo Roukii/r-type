@@ -38,7 +38,7 @@ namespace UgandaEngine {
          */
     public:
         AGameEngine();
-        ~AGameEngine() = default;
+        ~AGameEngine();
 
         /*
          * Function and methods
@@ -64,7 +64,6 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
     };
-    static AGameEngine g_engine;
 
 }
 
