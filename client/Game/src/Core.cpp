@@ -12,6 +12,23 @@ Core::Core() : _state(std::make_shared<MenuState>())
 {
     //Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
     // TODO : ALexis stp rempli les 2 map, ainsi que le petit vector qui les accompagnent
+	// Demander des explications pour faire ça ^^
+
+	std::map<std::string, std::vector<std::string>>		entities;
+	std::map<std::string, std::function<void()>>		functions;
+
+	entities["Ship"].emplace_back("Ship");
+
+	Menu	menu;
+
+	functions["Menu_move_up"] = menu.moveUp();
+	functions["Menu_move_down"] = menu.moveDown();
+
+	UgandaEngine::g_engine.init(
+		{}, // COMPONENTS
+		entities, // ENTITIES
+		functions //ACTIONS
+	);
 }
 
 void    Core::start() {
