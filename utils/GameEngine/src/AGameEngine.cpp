@@ -53,4 +53,9 @@ namespace UgandaEngine {
         libGraph = external_creator();
         libGraph->init();
     }
+
+    AGameEngine::~AGameEngine()
+    {
+        delete(libGraph);
+    }
 }
