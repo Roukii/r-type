@@ -17,7 +17,7 @@ public:
     virtual void options(std::shared_ptr<IState> &state);
     virtual void game(std::shared_ptr<IState> &state);
 
-    virtual int exec(sf::RenderWindow &win);
+    virtual int exec(std::shared_ptr<sf::RenderWindow> win);
     virtual void init();
 };
 

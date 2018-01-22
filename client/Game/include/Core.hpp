@@ -5,19 +5,17 @@
 #ifndef R_TYPE_CORE_HPP
 #define R_TYPE_CORE_HPP
 
-#include <memory>
-#include "../../Lib/include/UGL.hpp"
 #include "../../State/include/IState.hpp"
+#include "../../State/include/MenuState.hpp"
+#include "../../../utils/GameEngine/include/AGameEngine.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
-	std::shared_ptr<UGL> _ugl;
+	std::shared_ptr<UgandaEngine::AGameEngine> _engine;
 public:
 	Core();
 	~Core() = default;
 
-	//Initialisation
-//    void		initLib(int x, int y);
 	void		start();
 
 	//States
@@ -27,7 +25,7 @@ public:
 	void		game();
 
 	//Setters and getters
-	void		setState(std::shared_ptr<IState> newState) { this->_state = newState; }
+	void		setState(std::shared_ptr<IState> newState) { this->_state = std::move(newState); }
 };
 
 

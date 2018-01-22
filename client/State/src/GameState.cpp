@@ -24,7 +24,7 @@ void	GameState::options(std::shared_ptr<IState> &state) {
 void	GameState::game(std::shared_ptr<IState> &state) {
 }
 
-int    GameState::exec(sf::RenderWindow &win) {
+int    GameState::exec(std::shared_ptr<sf::RenderWindow> win) {
 }
 
 void   GameState::init() {

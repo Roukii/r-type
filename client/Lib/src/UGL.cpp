@@ -2,15 +2,18 @@
 // Created by alex on 1/18/18.
 //
 
-#include "../include/UGL.hpp"
 
-UGL::UGL() : _window(sf::VideoMode(1920, 1080), "R-Type")
+#include "../include/UGL.hpp"
+#include "../../../utils/GameEngine/include/Entity.hpp"
+
+UGL::UGL() : _window(std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "R-Type"))
 {
+    // Tous les emplacement sprite avec un nom => remplir toutes ses map
 }
 
 UGL::~UGL()
 {
-	_window.close();
+	_window->close();
 }
 
 void 		UGL::init() {
@@ -18,7 +21,7 @@ void 		UGL::init() {
 	if (!_texture->loadFromFile("assets/ship_1.png"))
 		throw std::invalid_argument("Error: Cannot load image");*/
 
-	loadSprite("assets/ship_1.png", "Ship1");
+	loadSprite("../assets/ship_1.png", "Ship1");
 	// UP ANIM
 	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_up");
 	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
@@ -42,6 +45,7 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 	if (!_sprites[name].second->loadFromFile(path))
 		throw std::invalid_argument("Error: Unable to load Texture " + path);
 	_sprites[name].first->setTexture(*_sprites[name].second);
+
 }
 
 eEntityType	UGL::getEntity(const std::string& entityType) {
@@ -116,12 +120,12 @@ std::vector<std::shared_ptr<Animation>>	UGL::animationFactory(const std::string&
 	return ret;
 }
 
-EntityFactoryData	UGL::factoryData(const std::string& entityName) {
-	return EntityFactoryData(textureFactory(entityName), animationFactory(entityName));
+std::shared_ptr<EntityFactoryData>	UGL::factoryData(const std::string& entityName) {
+	return std::make_shared<EntityFactoryData>(textureFactory(entityName), animationFactory(entityName));
 }
 
 extern "C" {
-	std::shared_ptr<ILib>		create_lib() {
-    		return std::make_shared<UGL>();
+	ILib		*create_lib() {
+    		return new UGL();
 	}
 }

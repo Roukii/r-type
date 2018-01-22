@@ -13,15 +13,15 @@
 #include <map>
 #include <iostream>
 #include "Entity.hpp"
+#include "../../../client/Lib/include/ILib.hpp"
 
 namespace UgandaEngine {
-    //TODO: bugfix de compilation
     namespace Factory {
         class FactoryEntity {
         public:
             FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
                           const std::map<std::string, std::function<void()>> &action);
-            std::shared_ptr<entity::Entity> create(const std::string &name);
+            std::shared_ptr<entity::Entity> create(const std::string &name, ILib *lib);
         private:
             std::map<std::string, std::vector<std::string>>     _entity;
             std::map<std::string, std::function<void()>>        _action;

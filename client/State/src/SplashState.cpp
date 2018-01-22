@@ -22,7 +22,7 @@ void	SplashState::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameState>();
 }
 
-int    SplashState::exec(sf::RenderWindow &win) {
+int    SplashState::exec(std::shared_ptr<sf::RenderWindow> win) {
     std::cout << "SplashScreen" << std::endl;
     return -1;
 }

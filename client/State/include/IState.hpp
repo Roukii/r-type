@@ -15,7 +15,7 @@ public:
     virtual void options(std::shared_ptr<IState> &state) = 0;
     virtual void game(std::shared_ptr<IState> &state) = 0;
 
-    virtual int exec(sf::RenderWindow &win) = 0;
+    virtual int exec(std::shared_ptr<sf::RenderWindow> win) = 0;
     virtual void init() = 0;
     template<typename T>
     IState* screen() {

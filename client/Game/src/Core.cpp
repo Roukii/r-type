@@ -5,30 +5,38 @@
 #include <iostream>
 #include "Core.hpp"
 #include "../../State/include/MenuState.hpp"
+#include "../../../utils/GameEngine/include/AGameEngine.hpp"
 
 
-Core::Core() : _state(std::make_shared<MenuState>()), _ugl(std::make_shared<UGL>())
+Core::Core() : _state(std::make_shared<MenuState>())
 {
     //Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
+    // TODO : ALexis stp rempli les 2 map, ainsi que le petit vector qui les accompagnent
+	// Demander des explications pour faire ça ^^
 
+    _engine = std::make_shared<UgandaEngine::AGameEngine>();
+	std::map<std::string, std::vector<std::string>>		entities;
+	std::map<std::string, std::function<void()>>		functions;
+
+	entities["Ship"].emplace_back("Ship");
+
+	Menu	menu;
+//
+//	functions["Menu_move_up"] = menu.moveUp();
+//	functions["Menu_move_down"] = menu.moveDown();
+//
+//	_engine->init(
+//		{}, // COMPONENTS
+//		entities, // ENTITIES
+//		functions //ACTIONS
+//	);
 }
-
-//void	Core::initLib(int x, int y)
-//{
-//    ILib *(*external_creator)(int, int);
-//    _handle = dlopen("./lib/lib_zappy_sfml.so", RTLD_LAZY);
-//    if (_handle == NULL)
-//        throw("[X]Failed to dlopen.");
-//    external_creator = reinterpret_cast<ILib *(*)(int, int)>(dlsym(_handle, "create_lib_sfml"));
-//    if (external_creator == NULL)
-//        throw("[X]Fail to create external_creator.");
-//    _gpm_g->setLib(external_creator(x, y));
-//}
 
 void    Core::start() {
     int ret = 0;
-    while (_ugl->getWindow().isOpen() && ret != -2) {
-        ret =  _state->exec(_ugl->getWindow());
+    std::shared_ptr<sf::RenderWindow> win = _engine->libGraph->getWindow();
+    while (win->isOpen() && ret != -2) {
+        ret =  _state->exec(win);
         if (ret == 0)
             splash();
         else if (ret == 1)
