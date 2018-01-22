@@ -14,26 +14,27 @@ Core::Core() : _state(std::make_shared<MenuState>())
     // TODO : ALexis stp rempli les 2 map, ainsi que le petit vector qui les accompagnent
 	// Demander des explications pour faire ça ^^
 
+    _engine = std::make_shared<UgandaEngine::AGameEngine>();
 	std::map<std::string, std::vector<std::string>>		entities;
 	std::map<std::string, std::function<void()>>		functions;
 
 	entities["Ship"].emplace_back("Ship");
 
 	Menu	menu;
-
-	functions["Menu_move_up"] = menu.moveUp();
-	functions["Menu_move_down"] = menu.moveDown();
-
-	UgandaEngine::g_engine.init(
-		{}, // COMPONENTS
-		entities, // ENTITIES
-		functions //ACTIONS
-	);
+//
+//	functions["Menu_move_up"] = menu.moveUp();
+//	functions["Menu_move_down"] = menu.moveDown();
+//
+//	_engine->init(
+//		{}, // COMPONENTS
+//		entities, // ENTITIES
+//		functions //ACTIONS
+//	);
 }
 
 void    Core::start() {
     int ret = 0;
-    auto win = UgandaEngine::g_engine.libGraph->getWindow();
+    std::shared_ptr<sf::RenderWindow> win = _engine->libGraph->getWindow();
     while (win->isOpen() && ret != -2) {
         ret =  _state->exec(win);
         if (ret == 0)

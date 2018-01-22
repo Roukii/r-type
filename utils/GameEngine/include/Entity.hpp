@@ -40,7 +40,6 @@ namespace UgandaEngine {
 
             // créeer une classe graphique pour les entity
             // GraphEnt qui va contenir AnimatedSprite / Texture / vector<Animation>
-            // TODO : ALEXIS CORRIGE TON CACA ICI, OUBLIE PAS
             std::shared_ptr<EntityFactoryData>              myGraph;
 
             // les éléments de maniabilité
