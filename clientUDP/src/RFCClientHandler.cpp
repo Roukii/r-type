@@ -6,7 +6,7 @@
 
 namespace RTypeClient
 {
-    RFCClientHandler::RFCClientHandler(std::shared_ptr<RTypeServer::IServerUdpSocket> &socket) : _socket(socket)
+    RFCClientHandler::RFCClientHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }
@@ -16,9 +16,9 @@ namespace RTypeClient
 
     }
 
-    void RFCClientHandler::executeCommand(RTypeServer::Message &msg, std::size_t ownerID)
+    void RFCClientHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        RTypeServer::code codeCommand = (RTypeServer::code) msg._msg->_header._code;
+        RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);

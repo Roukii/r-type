@@ -6,7 +6,8 @@
 #define R_TYPE_ISTATE_HPP
 
 #include <memory>
-#include "../../Lib/include/ILib.hpp"
+
+#include "ILib.hpp"
 
 class IState {
 public:

@@ -1,0 +1,38 @@
+//
+// Created by zozo on 23/01/18.
+//
+
+#ifndef R_TYPE_RFCGAMEHANDLER_HPP
+#define R_TYPE_RFCGAMEHANDLER_HPP
+
+#include <map>
+
+#include "Message.hpp"
+#include "IRFCHandler.hpp"
+#include "IServerUdpSocket.hpp"
+
+namespace RTypeServer {
+    class RFCGameHandler : public RTypeProtocol::IRFCHandler {
+        typedef void (RFCGameHandler::*function)(RTypeProtocol::Message &, std::size_t);
+        using mapOfCommand = std::map<RTypeProtocol::code, function>;
+
+    public:
+        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        ~RFCGameHandler() = default;
+        RFCGameHandler(const RFCGameHandler &) = delete;
+        RFCGameHandler &operator=(const RFCGameHandler &) = delete;
+
+        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
+
+    private:
+
+        void initMapOfCommandHandler();
+
+
+
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
+        mapOfCommand _CommandHandler;
+    };
+}
+
+#endif //R_TYPE_RFCGAMEHANDLER_HPP

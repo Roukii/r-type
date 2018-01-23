@@ -11,6 +11,7 @@
 #include <map>
 #include <functional>
 #include <memory>
+#include <dlfcn.h>
 #include "Entity.hpp"
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
@@ -18,7 +19,7 @@
 
 
 namespace UgandaEngine {
-//TODO: bugfix de compilation
+    // TODO: Renommer la classe en GameEngine car ce n'est pas une abstract
 
 
     class AGameEngine {

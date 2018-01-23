@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <map>
+
 #include "IServerUdpSocket.hpp"
 #include "Message.hpp"
 #include "RFCProtocol.hpp"
@@ -14,28 +15,33 @@
 
 namespace RTypeServer
 {
-    class RFCHandler : public IRFCHandler
+    class RFCHandler : public RTypeProtocol::IRFCHandler
     {
-        typedef void (RFCHandler::*function)(Message &, std::size_t);
-        using mapOfCommand = std::map<code, function>;
+        typedef void (RFCHandler::*function)(RTypeProtocol::Message &, std::size_t);
+        using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCHandler(std::shared_ptr<IServerUdpSocket> &socket);
+        RFCHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
         ~RFCHandler() = default;
         RFCHandler(const RFCHandler &) = delete;
         RFCHandler &operator=(const RFCHandler &) = delete;
 
-        void RFCError(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCOk(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCLogin(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCStatus(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCNewEntity(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCMovEntity(Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCDelEntity(Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCLogin(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
+    public:
+        void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
 
     private:
-        std::shared_ptr<IServerUdpSocket> &_socket;
+        void initMapOfCommandHandler();
+
+    private:
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };
 

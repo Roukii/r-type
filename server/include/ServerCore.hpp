@@ -5,6 +5,10 @@
 #ifndef R_TYPE_SERVERCORE_HPP
 #define R_TYPE_SERVERCORE_HPP
 
+#ifdef _WIN32
+#define _WIN32_WINNT 0x0501
+#endif
+
 #include "IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
@@ -29,8 +33,8 @@ namespace RTypeServer
         void start();
 
     private:
-        MessageQueue<Message> _messageQueue;
-        std::shared_ptr<IServerUdpSocket> _lobbyServer;
+        MessageQueue<RTypeProtocol::Message> _messageQueue;
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> _lobbyServer;
         RoomPool _rooms;
     };
 }

@@ -3,7 +3,6 @@
 //
 
 #include "MenuState.hpp"
-
 #include "SplashState.hpp"
 #include "GameState.hpp"
 #include "OptionsState.hpp"

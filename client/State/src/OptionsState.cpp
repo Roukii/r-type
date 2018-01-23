@@ -2,9 +2,7 @@
 // Created by Samy on 10/01/2018.
 //
 
-
 #include "OptionsState.hpp"
-
 #include "SplashState.hpp"
 #include "GameState.hpp"
 #include "ConnexionState.hpp"

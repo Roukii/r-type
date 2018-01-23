@@ -21,10 +21,10 @@ if (UNIX)
 endif()
 
 #Add include
-include_directories(include)
+include_directories(include ../utils ../utils/Protocol)
 
 #Add sources
-file(GLOB CLIENTTEST_SOURCE_FILES src/*.cpp include/*.h include/*.hpp)
+file(GLOB CLIENTTEST_SOURCE_FILES src/*.cpp include/*.h include/*.hpp ../utils/*.h ../utils/Protocol/*.hpp)
 
 #Create executable
 add_executable(ClientTest ${CLIENTTEST_SOURCE_FILES})

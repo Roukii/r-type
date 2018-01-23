@@ -13,22 +13,17 @@ ClientUdp::ClientUdp(const std::string &host,
       _isRunning(true), _host(host), _serverPort(serverPort), _localPort(localPort)
 {
     std::cout << "size of msg : " << sizeof(_msg._msg.get()) << std::endl;
-    _msg._msg.get()->_header._code = code::ERR;
+    _msg._msg.get()->_header._code = RTypeProtocol::code::ERR;
     _msg._msg.get()->_header._owner = 1;
 }
 
 ClientUdp::~ClientUdp()
 {
-    delete _data;
     _socket.close();
 }
 
 void ClientUdp::run()
 {
-    _data = new char[MAX_SIZE_MSG];
-    for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
-        _data[i] = 0;
-
     boost::asio::ip::udp::resolver resolver(io_service);
     boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), _host, std::to_string(_serverPort));
     _serverEndpoint = *resolver.resolve(query);
@@ -68,8 +63,8 @@ void ClientUdp::startReceive()
                               {
                                   if (!ec)
                                   {
-                                      std::string message(_data);
-                                      std::cout << message << std::endl;
+                                      std::cout << "receive a message" << std::endl;
+                                      std::cout << "msg code : " << (int) _msg._msg.get()->_header._code << std::endl;
                                   }
                                   else
                                   {
@@ -88,10 +83,4 @@ bool ClientUdp::checkPort(unsigned short port)
     a.open(boost::asio::ip::tcp::v4(), ec) || a.bind({boost::asio::ip::tcp::v4(), port }, ec);
 
     return ec == boost::asio::error::address_in_use;
-}
-
-void ClientUdp::cleanBuffer()
-{
-    for (unsigned int i = 0; i < MAX_SIZE_MSG; i++)
-        _data[i] = 0;
 }

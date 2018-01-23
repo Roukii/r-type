@@ -12,8 +12,6 @@
 #include "RFCProtocol.hpp"
 #include "Message.hpp"
 
-#define MAX_SIZE_MSG 2048
-
 class ClientUdp
 {
 public:
@@ -35,15 +33,13 @@ public:
 private:
     void run();
     void startReceive();
-    void cleanBuffer();
 
 private:
     boost::asio::io_service io_service;
     boost::asio::ip::udp::socket _socket;
     boost::asio::ip::udp::endpoint _remoteEndpoint;
     boost::asio::ip::udp::endpoint _serverEndpoint;
-    char *_data;
-    Message _msg;
+    RTypeProtocol::Message _msg;
     std::thread _serviceThread;
     bool _isRunning;
     const std::string &_host;

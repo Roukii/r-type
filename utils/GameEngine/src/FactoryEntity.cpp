@@ -16,7 +16,7 @@ namespace UgandaEngine {
 
         }
 
-        std::shared_ptr<entity::Entity> FactoryEntity::create(const std::string &name, ILib *lib) {
+        std::shared_ptr<entity::Entity> FactoryEntity::create(const std::string &name, std::shared_ptr<ILib> lib) {
             std::shared_ptr<entity::Entity> newEntity;
             if (_entity.find(name) == _entity.end()) {
                 std::cout << "error name not found" << std::endl;
@@ -26,6 +26,7 @@ namespace UgandaEngine {
             for (auto e : _entity[name]) {
                 newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
             }
+            newEntity->_name = name;
             // LibGraĥique => pour récupérer toutes les données lié à l'affichage
 
             newEntity->myGraph = lib->factoryData("Ship");

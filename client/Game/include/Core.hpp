@@ -5,9 +5,10 @@
 #ifndef R_TYPE_CORE_HPP
 #define R_TYPE_CORE_HPP
 
-#include "../../State/include/IState.hpp"
-#include "../../State/include/MenuState.hpp"
-#include "../../../utils/GameEngine/include/AGameEngine.hpp"
+#include "IState.hpp"
+#include "MenuState.hpp"
+#include "AGameEngine.hpp"
+#include "EntityFunc.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;
