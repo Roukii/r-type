@@ -15,8 +15,8 @@ class EntityFactoryData {
 public:
     EntityFactoryData(std::shared_ptr<sf::Texture> texture, std::vector<std::shared_ptr<Animation>> anims)
              {
-                 _texture = texture;
-                 _anims = anims;
+                 _texture = std::move(texture);
+                 _anims = std::move(anims);
              }
     std::shared_ptr<sf::Texture>	_texture;
     std::vector<std::shared_ptr<Animation>>	_anims;

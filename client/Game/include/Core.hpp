@@ -29,6 +29,7 @@ public:
 
 	//Setters and getters
 	void		setState(std::shared_ptr<IState> newState) { this->_state = std::move(newState); }
+
 };
 
 

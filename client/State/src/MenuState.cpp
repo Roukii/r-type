@@ -41,16 +41,19 @@ int    MenuState::exec() {
         if ((ret = handleKeys(event)) != 1)
             return ret;
     }
-    lib->getWindow()->clear();
+    if (lib->getWindow() != nullptr) {
+        lib->getWindow()->clear();
 
-    lib->getWindow()->draw(*lib->getSprite("Background1"));
-    lib->getWindow()->draw(*lib->getSprite("Cursor1"));
-    lib->getWindow()->draw(*lib->getText("New Game"));
-    lib->getWindow()->draw(*lib->getText("Options"));
-    lib->getWindow()->draw(*lib->getText("Quit"));
-    lib->getWindow()->draw(*lib->getText("R TYPE"));
-    lib->getWindow()->display();
-    return -1;
+        lib->getWindow()->draw(*lib->getSprite("Background1"));
+        lib->getWindow()->draw(*lib->getSprite("Cursor1"));
+        lib->getWindow()->draw(*lib->getText("New Game"));
+        lib->getWindow()->draw(*lib->getText("Options"));
+        lib->getWindow()->draw(*lib->getText("Quit"));
+        lib->getWindow()->draw(*lib->getText("R TYPE"));
+        lib->getWindow()->display();
+	    return -1;
+    } else
+	    throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
 }
 
 void   MenuState::init(std::shared_ptr<ILib> &lib) {
