@@ -6,28 +6,29 @@
 #define R_TYPE_RFCCLIENTGAMEHANDLER_HPP
 
 #include <map>
-#include "../../server/include/IRFCHandler.hpp"
-#include "../../server/include/IServerUdpSocket.hpp"
+#include "IRFCHandler.hpp"
+#include "IServerUdpSocket.hpp"
 
 namespace RTypeClient {
-    class RFCClientGameHandler : public IRFCHandler
+    class RFCClientGameHandler : public RTypeProtocol::IRFCHandler
     {
-        typedef void (RFCClientGameHandler::*function)(RTypeServer::Message &, std::size_t);
-        using mapOfCommand = std::map<RTypeServer::code, function>;
+        typedef void (RFCClientGameHandler::*function)(RTypeProtocol::Message &, std::size_t);
+        using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCClientGameHandler(std::shared_ptr<RTypeServer::IServerUdpSocket> &socket);
+        RFCClientGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
         ~RFCClientGameHandler() = default;
         RFCClientGameHandler(const RFCClientGameHandler &) = delete;
         RFCClientGameHandler &operator=(const RFCClientGameHandler &) = delete;
 
+        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
+
     private:
-        std::shared_ptr<RTypeServer::IServerUdpSocket> &_socket;
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
 
         void initMapOfCommandHandler();
 
-        void executeCommand(RTypeServer::Message &msg, size_t ownerID);
     };
 }
 

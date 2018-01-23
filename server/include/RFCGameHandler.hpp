@@ -11,24 +11,25 @@
 #include "IServerUdpSocket.hpp"
 
 namespace RTypeServer {
-    class RFCGameHandler : public IRFCHandler {
-        typedef void (RFCGameHandler::*function)(Message &, std::size_t);
-        using mapOfCommand = std::map<code, function>;
+    class RFCGameHandler : public RTypeProtocol::IRFCHandler {
+        typedef void (RFCGameHandler::*function)(RTypeProtocol::Message &, std::size_t);
+        using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCGameHandler(std::shared_ptr<IServerUdpSocket> &socket);
-        ~RFCHandler() = default;
+        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        ~RFCGameHandler() = default;
         RFCGameHandler(const RFCGameHandler &) = delete;
         RFCGameHandler &operator=(const RFCGameHandler &) = delete;
+
+        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
 
     private:
 
         void initMapOfCommandHandler();
 
-        void executeCommand(Message &msg, size_t ownerID);
 
 
-        std::shared_ptr<IServerUdpSocket> &_socket;
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };
 }
