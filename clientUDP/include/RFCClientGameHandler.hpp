@@ -6,8 +6,8 @@
 #define R_TYPE_RFCCLIENTGAMEHANDLER_HPP
 
 #include <map>
-#include "IRFCHandler.hpp"
-#include "IServerUdpSocket.hpp"
+#include "../../utils/Protocol/IRFCHandler.hpp"
+#include "../../utils/Protocol/IServerUdpSocket.hpp"
 
 namespace RTypeClient {
     class RFCClientGameHandler : public RTypeProtocol::IRFCHandler

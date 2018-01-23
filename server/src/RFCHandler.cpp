@@ -17,12 +17,11 @@ namespace RTypeServer
     {
         _CommandHandler[RTypeProtocol::ERR] = &RFCHandler::RFCError;
         _CommandHandler.insert({RTypeProtocol::ERR, &RFCHandler::RFCError});
-        _CommandHandler.insert({RTypeProtocol::LOGIN, &RFCHandler::RFCOk});
         _CommandHandler.insert({RTypeProtocol::OK, &RFCHandler::RFCLogin});
         _CommandHandler.insert({RTypeProtocol::STATUS, &RFCHandler::RFCStatus});
-        _CommandHandler.insert({RTypeProtocol::NEWENTITY, &RFCHandler::RFCNewEntity});
-        _CommandHandler.insert({RTypeProtocol::MOVENTITY, &RFCHandler::RFCMovEntity});
-        _CommandHandler.insert({RTypeProtocol::DELENTITY, &RFCHandler::RFCDelEntity});
+        _CommandHandler.insert({RTypeProtocol::NEW_ENTITY, &RFCHandler::RFCNewEntity});
+        _CommandHandler.insert({RTypeProtocol::MOV_ENTITY, &RFCHandler::RFCMovEntity});
+        _CommandHandler.insert({RTypeProtocol::DEL_ENTITY, &RFCHandler::RFCDelEntity});
     }
 
     void RFCHandler::RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
@@ -35,15 +34,9 @@ namespace RTypeServer
         std::cout << "RFCLogin lagin" << std::endl;
     }
 
-    void RFCHandler::RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCOk lol" << std::endl;
-    }
-
     void RFCHandler::RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         std::cout << "RFCStatus lol" << std::endl;
-
     }
 
     void RFCHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
