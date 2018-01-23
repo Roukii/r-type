@@ -7,7 +7,7 @@
 
 namespace RTypeServer
 {
-    ServerUdp::ServerUdp(MessageQueue<Message> &queue, unsigned short port)
+    ServerUdp::ServerUdp(MessageQueue<RTypeProtocol::Message> &queue, unsigned short port)
         : _socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)),
           _messageQueue(queue),
           _running(false),
@@ -16,19 +16,19 @@ namespace RTypeServer
 
     ServerUdp::~ServerUdp() = default;
 
-    void ServerUdp::SendToClient(const Message &message, std::size_t clientId)
+    void ServerUdp::SendToClient(const RTypeProtocol::Message &message, std::size_t clientId)
     {
         if (clientId < _clientsList.size())
            send(message, _clientsList[clientId]);
     }
 
-    void ServerUdp::SendToAll(const Message &message)
+    void ServerUdp::SendToAll(const RTypeProtocol::Message &message)
     {
         for (auto i = 0; i < _clientsList.size(); i++)
             send(message, _clientsList[i]);
     }
 
-    void ServerUdp::SendToAllExcept(const Message &message, std::size_t clientId)
+    void ServerUdp::SendToAllExcept(const RTypeProtocol::Message &message, std::size_t clientId)
     {
         for (auto i = 0; i < _clientsList.size(); i++)
             if (i != clientId)
@@ -48,8 +48,10 @@ namespace RTypeServer
                         {
                             _clientsList.push_back(_lastEndpoint);
                             SendToClient(_msg, _clientsList.size() - 1);
+                            _msg._msg.get()->_header._code++;
                         }
                         _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
+                        SendToAllExcept(_msg, _clientsList.size() - 1);
                     }
                     else
                     {
@@ -62,7 +64,7 @@ namespace RTypeServer
 
     }
 
-    void ServerUdp::send(const Message &message, endpoint target)
+    void ServerUdp::send(const RTypeProtocol::Message &message, endpoint target)
     {
         _socket.send_to(boost::asio::buffer(message._msg.get(), sizeof(message._msg.get())), target);
     }

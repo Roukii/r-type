@@ -8,10 +8,10 @@
 #include <memory>
 #include <thread>
 #include <cstdlib>
-#include "IServerUdpSocket.hpp"
+#include "Protocol/IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
-#include "Message.hpp"
+#include "../../utils/Protocol/Message.hpp"
 #include "RFCHandler.hpp"
 
 namespace RTypeServer
@@ -46,8 +46,8 @@ namespace RTypeServer
 
     private:
         std::thread _serviceThread;
-        MessageQueue<Message>    _messageQueue;
-        std::shared_ptr<IServerUdpSocket> _roomServer;
+        MessageQueue<RTypeProtocol::Message>    _messageQueue;
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> _roomServer;
         RFCHandler _rfcHandler;
         bool _running;
         RoomState _state;

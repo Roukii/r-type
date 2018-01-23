@@ -13,19 +13,19 @@
 #include <vector>
 #include <string>
 #include <thread>
-#include "IServerUdpSocket.hpp"
+#include "Protocol/IServerUdpSocket.hpp"
 #include "MessageQueue.hpp"
-#include "Message.hpp"
+#include "../../utils/Protocol/Message.hpp"
 #include "RFCHandler.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
 
 namespace RTypeServer
 {
-    class ServerUdp : public IServerUdpSocket
+    class ServerUdp : public RTypeProtocol::IServerUdpSocket
     {
     public:
-        ServerUdp(MessageQueue<Message> &, unsigned short port);
+        ServerUdp(MessageQueue<RTypeProtocol::Message> &, unsigned short port);
 
         ~ServerUdp() override;
 
@@ -33,9 +33,9 @@ namespace RTypeServer
 
         ServerUdp &operator=(const ServerUdp &) = delete;
 
-        void SendToClient(const Message &, std::size_t) override;
-        void SendToAll(const Message &) override;
-        void SendToAllExcept(const Message &, std::size_t) override;
+        void SendToClient(const RTypeProtocol::Message &, std::size_t) override;
+        void SendToAll(const RTypeProtocol::Message &) override;
+        void SendToAllExcept(const RTypeProtocol::Message &, std::size_t) override;
 
         void runServer() override;
         void runServerWithThread() override;
@@ -47,7 +47,7 @@ namespace RTypeServer
         void shutdown() override;
 
     private:
-        void send(const Message &, endpoint);
+        void send(const RTypeProtocol::Message &, endpoint);
         void startReceive();
         void handleError(const boost::system::error_code &, endpoint);
         void removeDisconnectedClient(endpoint);
@@ -57,11 +57,11 @@ namespace RTypeServer
     private:
         boost::asio::io_service io_service;
         boost::asio::ip::udp::socket    _socket;
-        MessageQueue<Message> &_messageQueue;
+        MessageQueue<RTypeProtocol::Message> &_messageQueue;
         std::thread _serviceThread;
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
-        Message _msg;
+        RTypeProtocol::Message _msg;
         bool _running;
         unsigned short _port;
     };
