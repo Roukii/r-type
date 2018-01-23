@@ -3,8 +3,8 @@
 //
 
 
-#include "../include/UGL.hpp"
-#include "../../../utils/GameEngine/include/Entity.hpp"
+#include "UGL.hpp"
+#include "Entity.hpp"
 
 UGL::UGL() : _window(std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "R-Type"))
 {

@@ -7,7 +7,6 @@
 
 #include <memory>
 #include <iostream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>

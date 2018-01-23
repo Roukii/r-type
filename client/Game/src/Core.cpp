@@ -3,10 +3,8 @@
 //
 
 #include <iostream>
-#include "Core.hpp"
-#include "../../State/include/MenuState.hpp"
-#include "../../../utils/GameEngine/include/AGameEngine.hpp"
 
+#include "Core.hpp"
 
 Core::Core() : _state(std::make_shared<MenuState>())
 {

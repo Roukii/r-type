@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../build)
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../build)
 
-INCLUDE_DIRECTORIES(Game/include State/include)
+INCLUDE_DIRECTORIES(Game/include State/include Lib/include ../utils/GameEngine/include)
 
 FILE(GLOB CLIENT_GAME_SOURCES Game/include/*.hpp Game/src/*.cpp State/include/*.hpp State/src/*.cpp ../utils/GameEngine/include/*.hpp ../utils/GameEngine/src/*.cpp)
 FILE(GLOB CLIENT_GRAPHIC_LIBRARY_SOURCES Lib/include/*.hpp Lib/src/*.cpp)

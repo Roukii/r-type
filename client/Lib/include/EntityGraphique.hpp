@@ -5,9 +5,10 @@
 #ifndef R_TYPE_ENTITYGRAPHIQUE_HPP
 #define R_TYPE_ENTITYGRAPHIQUE_HPP
 
-#include <SFML/Graphics/Texture.hpp>
 #include <memory>
 #include <utility>
+#include <SFML/Graphics/Texture.hpp>
+
 #include "Animation.hpp"
 
 class EntityFactoryData {

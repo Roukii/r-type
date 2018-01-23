@@ -19,6 +19,7 @@
 
 namespace UgandaEngine {
 //TODO: bugfix de compilation
+    // TODO: Renommer la classe en GameEngine car ce n'est pas une abstract
 
 
     class AGameEngine {
