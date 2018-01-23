@@ -5,6 +5,10 @@ ghost = {
                 particule = "ghostparticule.png"
         },
         {
+                componentName = "TestComponent",
+                string = "Nice"
+        },
+        {
                 componentName = "Issou",
                 filename = "lol.png"
         }

@@ -3,6 +3,7 @@
 //
 
 
+#include <TestComponent.hpp>
 #include "Core.hpp"
 
 Core::Core() : _state(std::make_shared<MenuState>())
@@ -55,6 +56,11 @@ void    Core::start() {
 
     std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(_engine->factory->create("Ship", _engine->libGraph));
     ship->_funcComp["shoot"]();
+
+    //Test
+    UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/ghost.lua", "ghost");
+    std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
+    std::cout << getter.lock().get()->getPhrase() << std::endl;
 
     while (_engine->libGraph->getWindow()->isOpen() && ret != -2) {
         ret =  _state->exec();

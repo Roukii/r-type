@@ -3,6 +3,7 @@
 //
 
 
+#include <TestComponent.hpp>
 #include "../include/AGameEngine.hpp"
 
 namespace UgandaEngine {
@@ -18,12 +19,12 @@ namespace UgandaEngine {
         ILib *get;
         ILib *(*external_creator)();
         void *_handle = dlopen("../build/libUGL.so", RTLD_LAZY);
-        if (_handle == NULL)
+        if (_handle == nullptr)
             _handle = dlopen("../build/libUGL.dll", RTLD_LAZY);
-        if (_handle == NULL)
+        if (_handle == nullptr)
             throw std::invalid_argument("[X]Failed to dlopen.");
         external_creator = reinterpret_cast<ILib *(*)()>(dlsym(_handle, "create_lib"));
-        if (external_creator == NULL)
+        if (external_creator == nullptr)
             throw std::invalid_argument("[X]Fail to create external_creator.");
         get = external_creator();
         std::shared_ptr<ILib> getShared(get);
@@ -31,16 +32,30 @@ namespace UgandaEngine {
         libGraph->init();
     }
 
-    void AGameEngine::initWithLua(const std::string &filePath, const std::string &entityName) {
+    //TODO: Créer actuellement un exemple d'entity. Besoin de factoriser ça. Ensuite on pourra même charger des params depuis le fichier
+    UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,
+                                                                               const std::string &entityName) {
         lua_State* L = luaL_newstate();
         luaL_dofile(L, filePath.c_str());
         luaL_openlibs(L);
         lua_pcall(L, 0, 0, 0);
-        luabridge::LuaRef ghostRef = luabridge::getGlobal(L, entityName.c_str());
-        for(int i = 0; i < ghostRef.length(); ++i) {
-            luabridge::LuaRef ghostTableRef = ghostRef[i+1];
-            std::string componentName = ghostTableRef["componentName"].cast<std::string>();
-            std::cout << componentName << std::endl;
+        luabridge::LuaRef reference = luabridge::getGlobal(L, entityName.c_str());
+        for(int i = 0; i < reference.length(); ++i) {
+            luabridge::LuaRef tableRef = reference[i+1];
+            std::string componentName = tableRef["componentName"].cast<std::string>();
+
+            //TODO: ceci est un exemple ! Besoin de l'implémenter dans la facto
+            if (componentName == "TestComponent") {
+                UgandaEngine::entity::Entity *entity = new UgandaEngine::entity::Entity;
+                UgandaEngine::TestComponent test;
+                std::shared_ptr<UgandaEngine::TestComponent> component = std::make_shared<UgandaEngine::TestComponent>(test);
+                component->setPhrase(tableRef["string"].cast<std::string>());
+
+                entity->addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), component);
+                std::cout << "[OK] Successfully created component [" << componentName << "]" << std::endl;
+                return entity;
+            }
         }
+        throw std::invalid_argument("[X]Couldn't create entity [" + entityName + "] from file " + filePath);
     }
 }

@@ -51,7 +51,8 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
 
-        void initWithLua(const std::string &filePath, const std::string &entityName);
+        UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
+                                                                      const std::string &entityName);
     };
 
 }
