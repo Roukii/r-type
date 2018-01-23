@@ -23,16 +23,6 @@ add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
 
 target_link_libraries(UgandaPilote UGL)
 
-#Detect and add Lua
-find_package(Lua REQUIRED)
-if(LUA_FOUND)
-    MESSAGE( STATUS "Found Lua ${LUA_VERSION_STRING} in ${LUA_INCLUDE_DIR}")
-    include_directories(${LUA_INCLUDE_DIR})
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/build/lua/LuaBridge)
-    target_link_libraries(UgandaPilote ${LUA_LIBRARIES})
-else()
-    MESSAGE(STATUS "LUA not found!")
-endif()
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -48,6 +38,10 @@ endif()
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(UgandaPilote ${Boost_LIBRARIES})
+endif()
+
+if(LUA_FOUND)
+    target_link_libraries(UgandaPilote ${LUA_LIBRARIES})
 endif()
 
 if (UNIX)

@@ -1,6 +1,11 @@
 ghost = {
-    {
-        componentName = "TestComponent",
-        phrase = "I'M A SCARY GHOST!!!"
-    }
+        {
+                componentName = "Display",
+                image = "ghost.png",
+                particule = "ghostparticule.png"
+        },
+        {
+                componentName = "",
+                filename = "lol.png"
+        }
 }

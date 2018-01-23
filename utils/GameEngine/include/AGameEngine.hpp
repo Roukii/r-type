@@ -44,13 +44,11 @@ namespace UgandaEngine {
         /*
          * Function and methods
          */
-
     public:
-
-
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
+
     };
 
 }

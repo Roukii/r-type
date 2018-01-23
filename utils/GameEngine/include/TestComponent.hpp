@@ -5,7 +5,6 @@
 #ifndef R_TYPE_TESTCOMPONENT_HPP
 #define R_TYPE_TESTCOMPONENT_HPP
 
-
 #include <string>
 #include "AComponent.hpp"
 
