@@ -3,21 +3,21 @@
 //
 
 #include "../../server/include/RFCHandler.hpp"
-#include "../include/RFCClientHandler.hpp"
+#include "../include/RFCRoomHandler.hpp"
 
 namespace RTypeClient
 {
-    RFCClientHandler::RFCClientHandler(std::shared_ptr<RTypeServer::IServerUdpSocket> &socket) : _socket(socket)
+    RFCRoomHandler::RFCRoomHandler(std::shared_ptr<RTypeServer::IServerUdpSocket> &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }
 
-    void RFCClientHandler::initMapOfCommandHandler()
+    void RFCRoomHandler::initMapOfCommandHandler()
     {
 
     }
 
-    void RFCClientHandler::executeCommand(RTypeServer::Message &msg, std::size_t ownerID)
+    void RFCRoomHandler::executeCommand(RTypeServer::Message &msg, std::size_t ownerID)
     {
         RTypeServer::code codeCommand = (RTypeServer::code) msg._msg->_header._code;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
