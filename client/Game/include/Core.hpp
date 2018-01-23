@@ -8,6 +8,7 @@
 #include "IState.hpp"
 #include "MenuState.hpp"
 #include "AGameEngine.hpp"
+#include "EntityFunc.hpp"
 
 class Core {
     std::shared_ptr<IState>	_state;

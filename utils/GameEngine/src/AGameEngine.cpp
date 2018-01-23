@@ -3,10 +3,7 @@
 //
 
 
-#include <dlfcn.h>
 #include "../include/AGameEngine.hpp"
-#include "../../../client/Lib/include/ILib.hpp"
-#include "../../../client/Lib/include/UGL.hpp"
 
 namespace UgandaEngine {
 
@@ -14,9 +11,6 @@ namespace UgandaEngine {
     void AGameEngine::init(const std::vector<std::string> &component,
                            const std::map<std::string, std::vector<std::string>> &entity,
                            const std::map<std::string, std::function<void()>> &action) {
-        //TODO LibGraph à implémenter
-
-
         factory = std::make_shared<Factory::FactoryEntity>(entity, action);
     }
 
