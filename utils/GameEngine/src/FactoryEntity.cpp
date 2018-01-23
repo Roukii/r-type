@@ -3,7 +3,7 @@
 //
 
 
-#include "../include/FactoryEntity.hpp"
+#include "FactoryEntity.hpp"
 
 namespace UgandaEngine {
     namespace Factory {

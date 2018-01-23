@@ -27,12 +27,11 @@ namespace RTypeServer
         RFCHandler &operator=(const RFCHandler &) = delete;
 
         void RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCLogin(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
     public:
         void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;

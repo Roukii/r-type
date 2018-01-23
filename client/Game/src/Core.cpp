@@ -43,7 +43,7 @@ void    Core::start() {
 
     // TODO : Test your Entity creation here
 
-    std::shared_ptr<UgandaEngine::entity::Entity> ship = _engine->factory->create("Ship", _engine->libGraph);
+    std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(_engine->factory->create("Ship", _engine->libGraph));
     ship->_funcComp["shoot"]();
 
     while (_engine->libGraph->getWindow()->isOpen() && ret != -2) {
