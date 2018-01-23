@@ -35,9 +35,9 @@ protected:
 	void		loadSprite(const std::string &path, const std::string &name) override;
 	std::shared_ptr<sf::Texture>	textureFactory(const std::string&);
 
-	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) { return _sprites[name].first; }
-	std::shared_ptr<sf::Sound>	getSound(const std::string& name) {return _sounds[name].first;};
-	std::shared_ptr<sf::Text>	getText(const std::string& name) {return _texts[name];};
+	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) override { return _sprites[name].first; }
+	std::shared_ptr<sf::Sound>	getSound(const std::string& name) override {return _sounds[name].first;};
+	std::shared_ptr<sf::Text>	getText(const std::string& name) override {return _texts[name];};
 	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
 
