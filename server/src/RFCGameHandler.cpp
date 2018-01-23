@@ -12,7 +12,9 @@ namespace RTypeServer {
 
     void RFCGameHandler::initMapOfCommandHandler()
     {
-        
+        _CommandHandler.insert({RTypeProtocol::NEW_ENTITY, &RFCGameHandler::RFCNewEntity});
+        _CommandHandler.insert({RTypeProtocol::MOV_ENTITY, &RFCGameHandler::RFCMovEntity});
+        _CommandHandler.insert({RTypeProtocol::DEL_ENTITY, &RFCGameHandler::RFCDelEntity});
     }
 
     void RFCGameHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) {
@@ -21,5 +23,22 @@ namespace RTypeServer {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
             //_CommandHandler[codeCommand](msg, ownerID);
         }
+    }
+
+    void RFCGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        std::cout << "RFCentitaie lol" << std::endl;
+    }
+
+    void RFCGameHandler::RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        std::cout << "RFCmoveantitai lol" << std::endl;
+
+    }
+
+    void RFCGameHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        std::cout << "RFCdelentitaie lol" << std::endl;
+
     }
 }

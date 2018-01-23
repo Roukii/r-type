@@ -15,13 +15,12 @@ namespace RTypeServer
 
     void RFCHandler::initMapOfCommandHandler()
     {
-        _CommandHandler[RTypeProtocol::ERR] = &RFCHandler::RFCError;
         _CommandHandler.insert({RTypeProtocol::ERR, &RFCHandler::RFCError});
-        _CommandHandler.insert({RTypeProtocol::OK, &RFCHandler::RFCLogin});
         _CommandHandler.insert({RTypeProtocol::STATUS, &RFCHandler::RFCStatus});
-        _CommandHandler.insert({RTypeProtocol::NEW_ENTITY, &RFCHandler::RFCNewEntity});
-        _CommandHandler.insert({RTypeProtocol::MOV_ENTITY, &RFCHandler::RFCMovEntity});
-        _CommandHandler.insert({RTypeProtocol::DEL_ENTITY, &RFCHandler::RFCDelEntity});
+        _CommandHandler.insert({RTypeProtocol::OK, &RFCHandler::RFCOk});
+        _CommandHandler.insert({RTypeProtocol::CONNECT, &RFCHandler::RFCConnect});
+        _CommandHandler.insert({RTypeProtocol::START_GAME, &RFCHandler::RFCStartGame});
+        _CommandHandler.insert({RTypeProtocol::END_OF_GAME, &RFCHandler::RFCEndOfGame});
     }
 
     void RFCHandler::RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
@@ -29,31 +28,30 @@ namespace RTypeServer
         std::cout << "RFCERROR wala c gg wp" << std::endl;
     }
 
-    void RFCHandler::RFCLogin(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCLogin lagin" << std::endl;
-    }
 
     void RFCHandler::RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         std::cout << "RFCStatus lol" << std::endl;
     }
 
-    void RFCHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    void RFCHandler::RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCentitaie lol" << std::endl;
+        std::cout << "RFCStatus lol" << std::endl;
     }
 
-    void RFCHandler::RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    void RFCHandler::RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCmoveantitai lol" << std::endl;
-
+        std::cout << "RFCStatus lol" << std::endl;
     }
 
-    void RFCHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    void RFCHandler::RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCdelentitaie lol" << std::endl;
+        std::cout << "RFCStatus lol" << std::endl;
+    }
 
+    void RFCHandler::RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        std::cout << "RFCStatus lol" << std::endl;
     }
 
     void RFCHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)

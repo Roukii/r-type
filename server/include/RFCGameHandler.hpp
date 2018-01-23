@@ -10,6 +10,7 @@
 #include "Message.hpp"
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"
+#include "RFCHandler.hpp"
 
 namespace RTypeServer {
     class RFCGameHandler : public RTypeProtocol::IRFCHandler {
@@ -23,6 +24,11 @@ namespace RTypeServer {
         RFCGameHandler &operator=(const RFCGameHandler &) = delete;
 
         void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
+
+        void RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+
 
     private:
 
