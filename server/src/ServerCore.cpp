@@ -14,10 +14,12 @@ namespace RTypeServer
 
     void ServerCore::start()
     {
-        RFCHandler rfcHandler(_lobbyServer);
 
         _lobbyServer.get()->runServerWithThread();
         _rooms.startRooms();
+
+        RFCHandler rfcHandler(_lobbyServer, _rooms);
+
         while(_lobbyServer.get()->isRunning())
         {
             if (!_messageQueue.isEmpty())

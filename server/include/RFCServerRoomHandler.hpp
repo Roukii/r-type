@@ -24,9 +24,7 @@ namespace RTypeServer {
     public :
         void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
 
-        void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCPlayerJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCReadyRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 

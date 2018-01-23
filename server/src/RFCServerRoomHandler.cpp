@@ -13,25 +13,19 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::initMapOfCommandHandler()
     {
-        _CommandHandler.insert({RTypeProtocol::ROOMS, &RFCServerRoomHandler::RFCRooms});
         _CommandHandler.insert({RTypeProtocol::JOIN_ROOM, &RFCServerRoomHandler::RFCJoinRoom});
-        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCServerRoomHandler::RFCInfoRoom});
         _CommandHandler.insert({RTypeProtocol::PLAYER_JOIN_ROOM, &RFCServerRoomHandler::RFCPlayerJoinRoom});
         _CommandHandler.insert({RTypeProtocol::READY_ROOM, &RFCServerRoomHandler::RFCReadyRoom});
     }
 
     void RFCServerRoomHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-
-    }
-
-    void RFCServerRoomHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID){
-
-    }
-
-    void RFCServerRoomHandler::RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-
+        RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
+        if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
+        {
+            (this->*_CommandHandler[codeCommand])(msg, ownerID);
+            //_CommandHandler[codeCommand](msg, ownerID);
+        }
     }
 
     void RFCServerRoomHandler::RFCJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)

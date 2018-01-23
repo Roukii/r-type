@@ -12,6 +12,7 @@
 #include "Message.hpp"
 #include "RFCProtocol.hpp"
 #include "IRFCHandler.hpp"
+#include "RoomPool.hpp"
 
 namespace RTypeServer
 {
@@ -21,7 +22,7 @@ namespace RTypeServer
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        RFCHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket, RoomPool &roomPool);
         ~RFCHandler() = default;
         RFCHandler(const RFCHandler &) = delete;
         RFCHandler &operator=(const RFCHandler &) = delete;
@@ -32,6 +33,8 @@ namespace RTypeServer
         void RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
     public:
         void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
@@ -40,6 +43,7 @@ namespace RTypeServer
         void initMapOfCommandHandler();
 
     private:
+        RoomPool _roomPool;
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };
