@@ -30,9 +30,9 @@ public:
 	virtual void		loadText(float x, float y, unsigned int size, const std::string &str, const std::string &name) = 0;
 	virtual void		loadSound(const std::string &path, const std::string &name) = 0;
 	virtual void		loadMusic(const std::string &path, const std::string &name) = 0;
-	virtual sf::Sprite	*getSprite(const std::string& name) = 0;
-	virtual sf::Sound	*getSound(const std::string& name) = 0;
-	virtual sf::Text	*getText(const std::string& name) = 0;
+	virtual std::shared_ptr<sf::Sprite>     getSprite(const std::string& name) = 0;
+	virtual std::shared_ptr<sf::Sound>	getSound(const std::string& name) = 0;
+	virtual std::shared_ptr<sf::Text>	getText(const std::string& name) = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 	virtual std::shared_ptr<sf::RenderWindow> getWindow() = 0;
 };

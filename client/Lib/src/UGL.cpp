@@ -71,8 +71,7 @@ eEntityType	UGL::getEntity(const std::string& entityType) {
 std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) {
 	switch (getEntity(entityName)) {
 		case SHIP:
-			getSprite("Ship1");
-			break;
+			return getTexture("Ship1");
 		default:
 			break;
 	};
@@ -128,7 +127,7 @@ std::vector<std::shared_ptr<Animation>>	UGL::animationFactory(const std::string&
 	std::vector<std::shared_ptr<Animation>>	ret;
 
 	for (auto& item2 : corresp) {
-		ret.push_back(_animations[item2]);
+		ret.push_back(std::move(_animations[item2]));
 	}
 
 	return ret;

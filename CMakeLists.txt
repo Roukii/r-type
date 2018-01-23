@@ -27,5 +27,5 @@ find_package(Boost 1.58.0 COMPONENTS filesystem regex)
 
 
 add_subdirectory(client)
-add_subdirectory(server)
-add_subdirectory(clientUDP)
+#add_subdirectory(server)
+#add_subdirectory(clientUDP)
