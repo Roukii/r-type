@@ -19,10 +19,9 @@ namespace RTypeServer
         _CommandHandler.insert({RTypeProtocol::STATUS, &RFCHandler::RFCStatus});
         _CommandHandler.insert({RTypeProtocol::OK, &RFCHandler::RFCOk});
         _CommandHandler.insert({RTypeProtocol::CONNECT, &RFCHandler::RFCConnect});
-        _CommandHandler.insert({RTypeProtocol::START_GAME, &RFCHandler::RFCStartGame});
         _CommandHandler.insert({RTypeProtocol::END_OF_GAME, &RFCHandler::RFCEndOfGame});
         _CommandHandler.insert({RTypeProtocol::ROOMS, &RFCHandler::RFCRooms});
-        _CommandHandler.insert({RTypeProtocol::JOIN_ROOM, &RFCHandler::RFCInfoRoom});
+        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCHandler::RFCInfoRoom});
 
     }
 
@@ -67,11 +66,6 @@ namespace RTypeServer
     }
 
     void RFCHandler::RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCStatus lol" << std::endl;
-    }
-
-    void RFCHandler::RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         std::cout << "RFCStatus lol" << std::endl;
     }

@@ -31,7 +31,6 @@ namespace RTypeServer
         void RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);

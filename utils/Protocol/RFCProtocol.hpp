@@ -17,7 +17,6 @@ namespace RTypeProtocol
         MOV_ENTITY,
         DEL_ENTITY,
         ROOMS,
-        JOIN_ROOM,
         INFO_ROOM,
         PLAYER_JOIN_ROOM,
         READY_ROOM,
