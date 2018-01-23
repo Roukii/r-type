@@ -3,12 +3,12 @@
 //
 
 
-#include "../include/OptionsState.hpp"
+#include "OptionsState.hpp"
 
-#include "../include/MenuState.hpp"
-#include <iostream>
-#include "../include/SplashState.hpp"
-#include "../include/GameState.hpp"
+#include "SplashState.hpp"
+#include "GameState.hpp"
+#include "ConnexionState.hpp"
+#include "LobbyState.hpp"
 
 void	OptionsState::splash(std::shared_ptr<IState> &state) {
     state = std::make_shared<SplashState>();
@@ -25,11 +25,27 @@ void	OptionsState::game(std::shared_ptr<IState> &state) {
     state = std::make_shared<GameState>();
 }
 
-int    OptionsState::exec(std::shared_ptr<sf::RenderWindow> win) {
-    std::cout << "OptionsScreen" << std::endl;
+void	OptionsState::connexion(std::shared_ptr<IState> &state) {
+    state = std::make_shared<ConnexionState>();
+}
+
+void	OptionsState::lobby(std::shared_ptr<IState> &state) {
+    state = std::make_shared<LobbyState>();
+}
+
+int    OptionsState::exec() {
+    sf::Event event;
+    while (lib->getWindow()->pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            lib->getWindow()->close();
+    }
+    lib->getWindow()->clear();
+
+    lib->getWindow()->draw(*lib->getSprite("Background1"));
+    lib->getWindow()->display();
     return -1;
 }
 
-void   OptionsState::init() {
-
+void   OptionsState::init(std::shared_ptr<ILib> &lib) {
+    this->lib = lib;
 }

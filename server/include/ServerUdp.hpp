@@ -5,7 +5,6 @@
 #ifndef R_TYPE_SERVERUDP_HPP
 #define R_TYPE_SERVERUDP_HPP
 
-#define PORT_SERVER 4242
 #define MAX_SIZE_MSG 2048
 
 #include <boost/asio.hpp>
@@ -26,29 +25,32 @@ namespace RTypeServer
     class ServerUdp : public IServerUdpSocket
     {
     public:
-        ServerUdp(MessageQueue<Message> &);
+        ServerUdp(MessageQueue<Message> &, unsigned short port);
 
-        ~ServerUdp();
+        ~ServerUdp() override;
 
         ServerUdp(const ServerUdp &) = delete;
 
         ServerUdp &operator=(const ServerUdp &) = delete;
 
-        void SendToClient(const std::string &, std::size_t) override;
-        void SendToAll(const std::string &) override;
-        void SendToAllExcept(const std::string &, std::size_t) override;
+        void SendToClient(const Message &, std::size_t) override;
+        void SendToAll(const Message &) override;
+        void SendToAllExcept(const Message &, std::size_t) override;
 
         void runServer() override;
         void runServerWithThread() override;
         bool isRunning() const override;
         std::thread &getThread() override;
+        static bool checkPort(unsigned short port);
+        unsigned short getPort() const override;
+
+        void shutdown() override;
 
     private:
-        void send(const std::string &, endpoint);
+        void send(const Message &, endpoint);
         void startReceive();
         void handleError(const boost::system::error_code &, endpoint);
         void removeDisconnectedClient(endpoint);
-        void cleanBuffer();
         bool endpointExist(endpoint) const;
         std::size_t clientIDFromEndpoint(endpoint) const;
 
@@ -60,8 +62,8 @@ namespace RTypeServer
         std::vector<endpoint> _clientsList;
         endpoint _lastEndpoint;
         Message _msg;
-        char *_data;
         bool _running;
+        unsigned short _port;
     };
 }
 

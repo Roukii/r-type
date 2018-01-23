@@ -10,10 +10,11 @@
 #include "IServerUdpSocket.hpp"
 #include "Message.hpp"
 #include "RFCProtocol.hpp"
+#include "IRFCHandler.hpp"
 
 namespace RTypeServer
 {
-    class RFCHandler
+    class RFCHandler : public IRFCHandler
     {
         typedef void (RFCHandler::*function)(Message &, std::size_t);
         using mapOfCommand = std::map<code, function>;
@@ -24,9 +25,6 @@ namespace RTypeServer
         RFCHandler(const RFCHandler &) = delete;
         RFCHandler &operator=(const RFCHandler &) = delete;
 
-
-        void executeCommand(Message &currentMessage, std::size_t _currentOwnerID);
-
         void RFCError(Message &currentMessage, std::size_t _currentOwnerID);
         void RFCOk(Message &currentMessage, std::size_t _currentOwnerID);
         void RFCLogin(Message &currentMessage, std::size_t _currentOwnerID);
@@ -35,7 +33,6 @@ namespace RTypeServer
         void RFCMovEntity(Message &currentMessage, std::size_t _currentOwnerID);
         void RFCDelEntity(Message &currentMessage, std::size_t _currentOwnerID);
 
-        void initMapOfCommandHandler();
 
     private:
         std::shared_ptr<IServerUdpSocket> &_socket;
