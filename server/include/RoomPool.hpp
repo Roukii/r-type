@@ -5,9 +5,10 @@
 #ifndef R_TYPE_ROOMPOOL_HPP
 #define R_TYPE_ROOMPOOL_HPP
 
+#include <memory>
+
 #include "Room.hpp"
 #include "Random.h"
-#include <memory>
 
 #define PORT_MIN_RANGE 4000
 #define PORT_MAX_RANGE 5000

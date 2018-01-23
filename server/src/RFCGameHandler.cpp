@@ -2,7 +2,7 @@
 // Created by zozo on 23/01/18.
 //
 
-#include "../include/RFCGameHandler.hpp"
+#include "RFCGameHandler.hpp"
 
 namespace RTypeServer {
     RFCGameHandler::RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)

@@ -6,6 +6,7 @@
 #define R_TYPE_RFCGAMEHANDLER_HPP
 
 #include <map>
+
 #include "Message.hpp"
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"

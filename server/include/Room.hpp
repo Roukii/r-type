@@ -8,10 +8,11 @@
 #include <memory>
 #include <thread>
 #include <cstdlib>
-#include "Protocol/IServerUdpSocket.hpp"
+
+#include "IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
-#include "../../utils/Protocol/Message.hpp"
+#include "Message.hpp"
 #include "RFCHandler.hpp"
 
 namespace RTypeServer

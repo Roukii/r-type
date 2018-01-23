@@ -9,7 +9,7 @@
 #define _WIN32_WINNT 0x0501
 #endif
 
-#include "Protocol/IServerUdpSocket.hpp"
+#include "IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
 #include "RFCHandler.hpp"

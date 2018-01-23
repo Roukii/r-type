@@ -13,9 +13,10 @@
 #include <vector>
 #include <string>
 #include <thread>
-#include "Protocol/IServerUdpSocket.hpp"
+
+#include "IServerUdpSocket.hpp"
 #include "MessageQueue.hpp"
-#include "../../utils/Protocol/Message.hpp"
+#include "Message.hpp"
 #include "RFCHandler.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
