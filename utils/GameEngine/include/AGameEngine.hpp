@@ -12,6 +12,8 @@
 #include <functional>
 #include <memory>
 #include <dlfcn.h>
+#include <lua.hpp>
+#include <LuaBridge.h>
 #include "Entity.hpp"
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
@@ -39,7 +41,7 @@ namespace UgandaEngine {
          */
     public:
         AGameEngine();
-        ~AGameEngine();
+        ~AGameEngine() = default;
 
         /*
          * Function and methods
@@ -49,6 +51,7 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
 
+        void initWithLua(const std::string &filePath, const std::string &entityName);
     };
 
 }

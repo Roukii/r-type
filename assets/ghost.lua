@@ -5,7 +5,7 @@ ghost = {
                 particule = "ghostparticule.png"
         },
         {
-                componentName = "",
+                componentName = "Issou",
                 filename = "lol.png"
         }
 }

@@ -31,8 +31,16 @@ namespace UgandaEngine {
         libGraph->init();
     }
 
-    AGameEngine::~AGameEngine()
-    {
-
+    void AGameEngine::initWithLua(const std::string &filePath, const std::string &entityName) {
+        lua_State* L = luaL_newstate();
+        luaL_dofile(L, filePath.c_str());
+        luaL_openlibs(L);
+        lua_pcall(L, 0, 0, 0);
+        luabridge::LuaRef ghostRef = luabridge::getGlobal(L, entityName.c_str());
+        for(int i = 0; i < ghostRef.length(); ++i) {
+            luabridge::LuaRef ghostTableRef = ghostRef[i+1];
+            std::string componentName = ghostTableRef["componentName"].cast<std::string>();
+            std::cout << componentName << std::endl;
+        }
     }
 }

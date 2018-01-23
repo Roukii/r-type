@@ -14,16 +14,24 @@ Core::Core() : _state(std::make_shared<MenuState>())
     _engine = std::make_shared<UgandaEngine::AGameEngine>();
 
     // TODO : Init all the functions needed for the Entities action here and in EntityFunc.cpp/hpp
-    std::map<std::string, std::vector<std::string>>		entities;
-	std::map<std::string, std::function<void()>>		functions;
+
+    //Definition des entities et des fonctions associées
+    std::map<std::string, std::vector<std::string>> entities;
+	std::map<std::string, std::function<void()>> functions;
     std::shared_ptr<EntityFunc> func = std::make_shared<EntityFunc>();
+
+    //On liste les components par nom
     std::vector<std::string> componentNames;
-    componentNames.push_back("moveLeft");
-    componentNames.push_back("moveRight");
-    componentNames.push_back("moveDown");
-    componentNames.push_back("moveUp");
-    componentNames.push_back("shoot");
+    componentNames.emplace_back("moveLeft");
+    componentNames.emplace_back("moveRight");
+    componentNames.emplace_back("moveDown");
+    componentNames.emplace_back("moveUp");
+    componentNames.emplace_back("shoot");
+
+    //On associe à ship les components par nom.
     entities["Ship"] = componentNames;
+
+    //On associe à chaque nom de component une fonction
     std::function<void()> left = func->move_left;
     functions["moveLeft"] = left;
     std::function<void()> right = func->move_right;
@@ -34,6 +42,8 @@ Core::Core() : _state(std::make_shared<MenuState>())
     functions["moveUp"] = up;
     std::function<void()> shoot = func->shoot;
     functions["shoot"] = shoot;
+
+    //Confirmation
     _engine->init(componentNames, entities, functions);
 }
 
