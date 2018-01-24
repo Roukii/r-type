@@ -13,7 +13,7 @@
 #include "ServerUdp.hpp"
 #include "MessageQueue.hpp"
 #include "Message.hpp"
-#include "RFCHandler.hpp"
+#include "RFCServerRoomHandler.hpp"
 
 namespace RTypeServer
 {
@@ -41,6 +41,18 @@ namespace RTypeServer
         RoomState getState() const;
         void updateWaitingRoom();
 
+    public:
+
+        unsigned short getPort() const {
+            return _roomServer.get()->getPort();
+        }
+        char getPlayer() const {
+            return _roomServer.get()->getClients();
+        }
+        bool getReady(int nb) const {
+            return _roomServer.get()->getReady(nb);
+        }
+
     private:
         void runGame();
         void startGame();
@@ -49,7 +61,7 @@ namespace RTypeServer
         std::thread _serviceThread;
         MessageQueue<RTypeProtocol::Message>    _messageQueue;
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> _roomServer;
-        RFCHandler _rfcHandler;
+        RFCServerRoomHandler _rfcHandler;
         bool _running;
         RoomState _state;
     };

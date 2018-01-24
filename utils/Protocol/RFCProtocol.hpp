@@ -19,7 +19,6 @@ namespace RTypeProtocol
         MOV_ENTITY,
         DEL_ENTITY,
         ROOMS,
-        JOIN_ROOM,
         INFO_ROOM,
         PLAYER_JOIN_ROOM,
         READY_ROOM,
@@ -60,9 +59,14 @@ namespace RTypeProtocol
 
     struct room
     {
-        char _port[4];
+        char _port[2];
         char _nb_player;
         bool _player_ready[4];
+    };
+
+    struct nb_room
+    {
+        char _room[4];
     };
 
     struct msg
@@ -74,6 +78,7 @@ namespace RTypeProtocol
             status _status;
             entity _entity;
             room _room;
+            nb_room _nb_room;
         } data;
     };
 

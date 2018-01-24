@@ -22,9 +22,19 @@ namespace RTypeServer
 
         ~RoomPool();
 
-        RoomPool(const RoomPool &) = delete;
+        RoomPool(const RoomPool &room) {
+            _numberOfRoom = room._numberOfRoom;
+            _rooms = room._rooms;
+        }
 
-        RoomPool &operator=(const RoomPool &) = delete;
+        RoomPool &operator=(const RoomPool &room){
+            if (this != &room)
+            {
+                _numberOfRoom = room._numberOfRoom;
+                _rooms = room._rooms;
+            }
+            return *this;
+        }
 
     public:
         void startRooms();

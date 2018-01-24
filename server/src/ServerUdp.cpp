@@ -48,6 +48,7 @@ namespace RTypeServer
                         if (!endpointExist(_lastEndpoint))
                         {
                             _clientsList.push_back(_lastEndpoint);
+                            _readylist.push_back(false);
                             SendToClient(_msg, _clientsList.size() - 1);
                             _msg._msg.get()->_header._code++;
                         }

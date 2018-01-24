@@ -7,8 +7,8 @@
 namespace RTypeServer
 {
 
-    RFCHandler::RFCHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket)
-            : _socket(socket)
+    RFCHandler::RFCHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket, RoomPool &rooms)
+            : _socket(socket), _roomPool(rooms)
     {
         initMapOfCommandHandler();
     }
@@ -19,9 +19,35 @@ namespace RTypeServer
         _CommandHandler.insert({RTypeProtocol::STATUS, &RFCHandler::RFCStatus});
         _CommandHandler.insert({RTypeProtocol::OK, &RFCHandler::RFCOk});
         _CommandHandler.insert({RTypeProtocol::CONNECT, &RFCHandler::RFCConnect});
-        _CommandHandler.insert({RTypeProtocol::START_GAME, &RFCHandler::RFCStartGame});
         _CommandHandler.insert({RTypeProtocol::END_OF_GAME, &RFCHandler::RFCEndOfGame});
+        _CommandHandler.insert({RTypeProtocol::ROOMS, &RFCHandler::RFCRooms});
+        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCHandler::RFCInfoRoom});
+
     }
+
+    void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        std::string tmp = std::to_string(_roomPool._numberOfRoom);
+        for (int i = 0; i < 4; i++)
+            currentMessage._msg.get()->data._nb_room._room[i] = tmp[i];
+        _socket.get()->SendToClient(currentMessage, _currentOwnerID);
+    }
+
+    void RFCHandler::RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        for (auto i : _roomPool._rooms)
+        {
+            std::string tmp = std::to_string(i.get()->getPort());
+            for (int nb = 0; nb < 2; nb++)
+                currentMessage._msg.get()->data._room._port[nb] = tmp[nb];
+            currentMessage._msg.get()->data._room._nb_player = i.get()->getPlayer();
+
+            for (int nb = 0; nb < 4; nb++)
+                currentMessage._msg.get()->data._room._player_ready[nb] = i.get()->getReady(nb);
+            _socket.get()->SendToClient(currentMessage, _currentOwnerID);
+        }
+    }
+
 
     void RFCHandler::RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
@@ -40,11 +66,6 @@ namespace RTypeServer
     }
 
     void RFCHandler::RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCStatus lol" << std::endl;
-    }
-
-    void RFCHandler::RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         std::cout << "RFCStatus lol" << std::endl;
     }

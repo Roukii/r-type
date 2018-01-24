@@ -17,7 +17,6 @@
 #include "IServerUdpSocket.hpp"
 #include "MessageQueue.hpp"
 #include "Message.hpp"
-#include "RFCHandler.hpp"
 
 using endpoint = boost::asio::ip::udp::endpoint;
 
@@ -47,6 +46,37 @@ namespace RTypeServer
 
         void shutdown() override;
 
+    public:
+
+        char getClients() const
+        {
+            std::vector<endpoint> vec = _clientsList;
+            char k = 0;
+            for (auto i : vec)
+            {
+                k++;
+            }
+            return k;
+        }
+
+        bool getReady(int nb) const
+        {
+            std::vector<bool> vec = _readylist;
+            bool k;
+            int t = 0;
+            for (auto i : vec)
+            {
+                if (t == nb)
+                {
+                    k = i;
+                    return (k);
+                }
+                t++;
+            }
+            return false;
+        }
+
+
     private:
         void send(const RTypeProtocol::Message &, endpoint);
         void startReceive();
@@ -61,6 +91,7 @@ namespace RTypeServer
         MessageQueue<RTypeProtocol::Message> &_messageQueue;
         std::thread _serviceThread;
         std::vector<endpoint> _clientsList;
+        std::vector<bool> _readylist;
         endpoint _lastEndpoint;
         RTypeProtocol::Message _msg;
         bool _running;

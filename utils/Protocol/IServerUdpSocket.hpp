@@ -26,6 +26,10 @@ namespace RTypeProtocol
 
         virtual unsigned short getPort() const = 0;
 
+        virtual char getClients() const = 0;
+
+        virtual bool getReady(int nb) const = 0;
+
         virtual void shutdown() = 0;
 
         virtual void SendToClient(const Message &, std::size_t) = 0;
