@@ -6,9 +6,10 @@
 #define R_TYPE_RFCCLIENTHANDLER_HPP
 
 #include <map>
-#include "Protocol/Message.hpp"
-#include "Protocol/IServerUdpSocket.hpp"
-#include "Protocol/IRFCHandler.hpp"
+#include "Message.hpp"
+#include "IServerUdpSocket.hpp"
+#include "IRFCHandler.hpp"
+#include "IClientUdpSocket.hpp"
 
 namespace RTypeClient
 {
@@ -18,7 +19,7 @@ namespace RTypeClient
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCRoomHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        RFCRoomHandler(IClientUdpSocket<RTypeProtocol::Message> &socket);
         ~RFCRoomHandler() override = default;
         RFCRoomHandler(const RFCRoomHandler &) = delete;
         RFCRoomHandler &operator=(const RFCRoomHandler &) = delete;
@@ -30,7 +31,7 @@ namespace RTypeClient
         void initMapOfCommandHandler();
 
     private:
-        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
+        IClientUdpSocket<RTypeProtocol::Message> &_socket;
         mapOfCommand _CommandHandler;
     };
 

@@ -2,11 +2,11 @@
 // Created by zozo on 23/01/18.
 //
 
-#include "../include/RFCClientHandler.hpp"
+#include "RFCClientHandler.hpp"
 
 namespace RTypeClient
 {
-    RFCClientHandler::RFCClientHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
+    RFCClientHandler::RFCClientHandler(IClientUdpSocket<RTypeProtocol::Message> &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }

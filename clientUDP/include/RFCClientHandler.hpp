@@ -6,8 +6,8 @@
 #define R_TYPE_RFCCLIENTHANDLER_HPP
 
 #include <map>
-#include "../../utils/Protocol/IRFCHandler.hpp"
-#include "../../utils/Protocol/IServerUdpSocket.hpp"
+#include "IRFCHandler.hpp"
+#include "IClientUdpSocket.hpp"
 
 namespace RTypeClient
 {
@@ -17,15 +17,15 @@ namespace RTypeClient
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCClientHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
-        ~RFCClientHandler() = default;
+        RFCClientHandler(IClientUdpSocket<RTypeProtocol::Message> &socket);
+        ~RFCClientHandler() override = default;
         RFCClientHandler(const RFCClientHandler &) = delete;
         RFCClientHandler &operator=(const RFCClientHandler &) = delete;
 
-        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID);
+        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
 
     private:
-        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
+        IClientUdpSocket<RTypeProtocol::Message> &_socket;
         mapOfCommand _CommandHandler;
 
         void initMapOfCommandHandler();

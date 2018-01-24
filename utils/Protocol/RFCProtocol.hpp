@@ -5,11 +5,13 @@
 #ifndef R_TYPE_RFCPROTOCOL_HPP
 #define R_TYPE_RFCPROTOCOL_HPP
 
+#pragma pack(push, 1)
+
 namespace RTypeProtocol
 {
     enum code
     {
-        ERR = 1,
+        ERR,
         OK,
         STATUS,
         CONNECT,
@@ -74,6 +76,8 @@ namespace RTypeProtocol
             room _room;
         } data;
     };
+
+#pragma pack(pop)
 }
 
 #endif //R_TYPE_RFCPROTOCOL_HPP

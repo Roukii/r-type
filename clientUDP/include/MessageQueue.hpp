@@ -10,7 +10,7 @@
 
 #define MAX_SIZE 50
 
-namespace RTypeServer
+namespace RTypeClient
 {
     template<class T>
     class MessageQueue

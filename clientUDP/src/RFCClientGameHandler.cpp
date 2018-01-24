@@ -2,11 +2,11 @@
 // Created by zozo on 23/01/18.
 //
 
-#include "../include/RFCClientGameHandler.hpp"
+#include "RFCClientGameHandler.hpp"
 
 namespace RTypeClient
 {
-    RFCClientGameHandler::RFCClientGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
+    RFCClientGameHandler::RFCClientGameHandler(IClientUdpSocket<RTypeProtocol::Message> &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }
