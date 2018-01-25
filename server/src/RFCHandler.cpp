@@ -21,8 +21,6 @@ namespace RTypeServer
         _CommandHandler.insert({RTypeProtocol::CONNECT, &RFCHandler::RFCConnect});
         _CommandHandler.insert({RTypeProtocol::END_OF_GAME, &RFCHandler::RFCEndOfGame});
         _CommandHandler.insert({RTypeProtocol::ROOMS, &RFCHandler::RFCRooms});
-//        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCHandler::RFCInfoRoom});
-
     }
 
     void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)

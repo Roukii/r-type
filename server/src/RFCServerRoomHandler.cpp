@@ -6,7 +6,7 @@
 
 namespace RTypeServer
 {
-    RFCServerRoomHandler::RFCServerRoomHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
+    RFCServerRoomHandler::RFCServerRoomHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _roomInfo(socket)
     {
         initMapOfCommandHandler();
     }

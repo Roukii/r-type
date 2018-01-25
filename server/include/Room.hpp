@@ -30,7 +30,7 @@ namespace RTypeServer
 
         ~Room();
 
-        Room(const Room &) = delete;
+        Room(const Room &r) = delete;
 
         Room &operator=(const Room &) = delete;
 
