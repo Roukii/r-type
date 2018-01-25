@@ -39,9 +39,17 @@ int main(int ac,char **av)
         if (!messageQueue.isEmpty())
         {
             std::cout << "a message arrived" << std::endl;
+            rfcHandler.executeCommand(messageQueue.peekMessage(), messageQueue.peekOwnerID());
             messageQueue.pop();
         }
         std::getline(std::cin, shell);
+        if (shell == "room")
+        {
+            RTypeProtocol::Message _msg;
+            _msg._msg.get()->_header._code = RTypeProtocol::ROOMS;
+            client.SendToServer(_msg);
+
+        }
         if (shell == "test")
         {
             RTypeProtocol::Message _msg;

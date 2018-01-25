@@ -29,7 +29,7 @@ namespace RTypeClient
         std::pair<T, std::size_t> getMessage();
 
         T &peekMessage();
-        std::size_t peekOwnerID() const;
+        size_t peekOwnerID() const;
 
         void pop();
 
@@ -67,7 +67,7 @@ namespace RTypeClient
     }
 
     template<class T>
-    std::size_t MessageQueue<T>::peekOwnerID() const
+    size_t MessageQueue<T>::peekOwnerID() const
     {
         return _queue.front().second;
     }
