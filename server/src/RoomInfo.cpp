@@ -3,3 +3,16 @@
 //
 
 #include "RoomInfo.hpp"
+
+RoomInfo::RoomInfo()
+{
+
+}
+
+void RoomInfo::addPlayer() {
+
+}
+
+void RoomInfo::delPlayer(int nb) {
+
+}

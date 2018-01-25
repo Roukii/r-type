@@ -21,19 +21,19 @@ namespace RTypeServer
         _CommandHandler.insert({RTypeProtocol::CONNECT, &RFCHandler::RFCConnect});
         _CommandHandler.insert({RTypeProtocol::END_OF_GAME, &RFCHandler::RFCEndOfGame});
         _CommandHandler.insert({RTypeProtocol::ROOMS, &RFCHandler::RFCRooms});
-        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCHandler::RFCInfoRoom});
+//        _CommandHandler.insert({RTypeProtocol::INFO_ROOM, &RFCHandler::RFCInfoRoom});
 
     }
+
+//    void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+//    {
+//        std::string tmp = std::to_string(_roomPool._numberOfRoom);
+//        for (int i = 0; i < 4; i++)
+//            currentMessage._msg.get()->data._nb_room._room[i] = tmp[i];
+//        _socket.get()->SendToClient(currentMessage, _currentOwnerID);
+//    }
 
     void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::string tmp = std::to_string(_roomPool._numberOfRoom);
-        for (int i = 0; i < 4; i++)
-            currentMessage._msg.get()->data._nb_room._room[i] = tmp[i];
-        _socket.get()->SendToClient(currentMessage, _currentOwnerID);
-    }
-
-    void RFCHandler::RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         for (auto i : _roomPool._rooms)
         {

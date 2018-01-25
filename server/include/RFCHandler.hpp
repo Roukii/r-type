@@ -33,7 +33,7 @@ namespace RTypeServer
         void RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+//        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
     public:
         void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
