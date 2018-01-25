@@ -60,8 +60,7 @@ namespace RTypeProtocol
 
     struct room
     {
-        unsigned short _port;
-        //char _port[2];
+        char _port[2];
         char _nb_player;
         bool _player_ready[4];
     };
