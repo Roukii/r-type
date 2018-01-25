@@ -33,15 +33,7 @@ void	LobbyState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    LobbyState::exec() {
-    sf::Event event;
-    while (lib->getWindow()->pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            lib->getWindow()->close();
-    }
-    lib->getWindow()->clear();
-
-    lib->getWindow()->draw(*lib->getSprite("Background1"));
-    lib->getWindow()->display();
+    return lib->handleLobby();
 }
 
 void   LobbyState::init(std::shared_ptr<ILib> &lib) {

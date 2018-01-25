@@ -4,9 +4,10 @@
 
 
 #include <TestComponent.hpp>
+#include <SplashState.hpp>
 #include "Core.hpp"
 
-Core::Core() : _state(std::make_shared<MenuState>())
+Core::Core() : _state(std::make_shared<SplashState>())
 {
     //Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
     // TODO : ALexis stp rempli les 2 map, ainsi que le petit vector qui les accompagnent
@@ -50,7 +51,7 @@ Core::Core() : _state(std::make_shared<MenuState>())
 
 void    Core::start() {
     int ret = 0;
-    menu();
+    splash();
 
     // TODO : Test your Entity creation here
 
@@ -62,7 +63,7 @@ void    Core::start() {
     std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
     std::cout << getter.lock().get()->getPhrase() << std::endl;
 
-    while (_engine->_libGraph->getWindow()->isOpen() && ret != -2) {
+    while (ret != -2) {
         ret =  _state->exec();
         if (ret == 0)
             splash();
@@ -72,6 +73,10 @@ void    Core::start() {
             options();
         else if (ret == 3)
             game();
+        else if (ret == 4)
+            connexion();
+        else if (ret == 5)
+            lobby();
     }
 }
 

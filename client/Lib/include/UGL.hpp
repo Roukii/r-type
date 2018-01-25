@@ -10,6 +10,16 @@
 #include <memory>
 #include <map>
 #include <functional>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Animation.hpp"
 #include "ILib.hpp"
@@ -27,17 +37,24 @@ public:
 	UGL();
 	~UGL() override;
 	// TODO : Sami, peux tu stp faire en sorte que cette fonction ne retourne pas un élément de la lib sfml :)
-	std::shared_ptr<sf::RenderWindow> getWindow() override
-	{return _window;}
+	std::shared_ptr<sf::RenderWindow> getWindow() {return _window;}
 protected:
+	int selected = 0;
+	float alpha = 255;
+	int aState = 0;
+	int boxSelected = 0;
+	std::string item[2];
+	sf::RectangleShape ip;
+	sf::RectangleShape port;
+
 	void 		init() override;
 	void		loadLib() override;
 	void		loadSprite(const std::string &path, const std::string &name) override;
 	std::shared_ptr<sf::Texture>	textureFactory(const std::string&);
 
-	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) override { return _sprites[name].first; }
-	std::shared_ptr<sf::Sound>	getSound(const std::string& name) override {return _sounds[name].first;};
-	std::shared_ptr<sf::Text>	getText(const std::string& name) override {return _texts[name];};
+	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) { return _sprites[name].first; }
+	std::shared_ptr<sf::Sound>	getSound(const std::string& name) {return _sounds[name].first;};
+	std::shared_ptr<sf::Text>	getText(const std::string& name) {return _texts[name];};
 	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
 
@@ -51,6 +68,19 @@ protected:
 	std::shared_ptr<Animation>	getAnimation(const std::string& name) { return _animations[name]; }
 	std::vector<std::shared_ptr<Animation>>	animationFactory(const std::string&);
 	std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) override;
+
+	void moveUp();
+	int handleMenu();
+	void moveDown();
+	int handleKeys(const sf::Event &e);
+
+	int handleSplash();
+	void handleAlpha();
+
+	int handleConnexion();
+	void handleKeysConnexion(const sf::Event &e);
+
+	int handleLobby();
 
 
 	std::shared_ptr<sf::RenderWindow>	_window;

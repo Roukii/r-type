@@ -9,6 +9,7 @@
 #include "Core.hpp"
 
 class SplashState : public IState {
+    std::shared_ptr<ILib> lib;
 public:
     SplashState() = default;
     virtual ~SplashState() = default;

@@ -2,7 +2,6 @@
 // Created by alex on 1/18/18.
 //
 
-
 #include "UGL.hpp"
 #include "Entity.hpp"
 
@@ -40,7 +39,7 @@ void 		UGL::init() {
 	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
 
 	loadSprite("../assets/Stars.jpg", "Background1");
-	getSprite("Background1")->setColor(sf::Color::Magenta);
+	getSprite("Background1")->setColor(sf::Color::Cyan);
 
 	loadSprite("../assets/HandCursor.gif", "Cursor1");
 	getSprite("Cursor1")->setPosition(90 * 20 / 6, 580);
@@ -53,6 +52,20 @@ void 		UGL::init() {
 	loadText(90 * 20 / 5, 650, 60, "Options", "Options");
 	loadText(90 * 20 / 5, 750, 60, "Quit", "Quit");
 	loadText(90 * 20 / 2.8, 150, 200, "R TYPE", "R TYPE");
+	loadText(250, 850, 100, "PRESS A KEY TO CONTINUE", "PRESS KEY");
+	loadText(250, 850, 100, "PRESS SPACE TO CONTINUE", "PRESS SPACE");
+	loadText(400, 200, 60, "IP ADRESS", "IP ADRESS");
+	loadText(400, 400, 60, "PORT", "PORT");
+	loadText(410, 285, 60, item[0], "ITEM 0");
+	loadText(410, 485, 60, item[1], "ITEM 1");
+	(*getText("ITEM 0").get()).setFillColor(sf::Color::Black);
+	(*getText("ITEM 1").get()).setFillColor(sf::Color::Black);
+
+	ip.setSize(sf::Vector2f(500, 80));
+	ip.setPosition(sf::Vector2f(400, 280));
+
+	port.setSize(sf::Vector2f(500, 80));
+	port.setPosition(sf::Vector2f(400, 480));
 }
 
 void		UGL::loadSprite(const std::string &path, const std::string &name) {
@@ -135,6 +148,213 @@ std::vector<std::shared_ptr<Animation>>	UGL::animationFactory(const std::string&
 
 std::shared_ptr<EntityFactoryData>	UGL::factoryData(const std::string& entityName) {
 	return std::make_shared<EntityFactoryData>(textureFactory(entityName), animationFactory(entityName));
+}
+
+
+void    UGL::moveUp() {
+	if (selected == 0) {
+		getSprite("Background1").get()->setColor(sf::Color::Red);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 780);
+		selected = 2;
+	} else if (selected == 1) {
+		getSprite("Background1").get()->setColor(sf::Color::Magenta);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 580);
+		selected = 0;
+	} else {
+		getSprite("Background1").get()->setColor(sf::Color::Green);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 680);
+		selected = 1;
+	}
+	getSound("Cursor2").get()->play();
+}
+
+void    UGL::moveDown()
+{
+	if (selected == 0) {
+		getSprite("Background1").get()->setColor(sf::Color::Green);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 680);
+		selected = 1;
+	} else if (selected == 1) {
+		getSprite("Background1").get()->setColor(sf::Color::Red);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 780);
+		selected = 2;
+	} else {
+		getSprite("Background1").get()->setColor(sf::Color::Magenta);
+		getSprite("Cursor1").get()->setPosition(90 * 20 / 6, 580);
+		selected = 0;
+	}
+	getSound("Cursor2").get()->play();
+}
+
+int UGL::handleKeys(const sf::Event&e) {
+	int ret = 1;
+	if (e.type == sf::Event::KeyPressed) {
+		if (e.key.code == sf::Keyboard::Up) {
+			moveUp();
+		} else if (e.key.code == sf::Keyboard::Down) {
+			moveDown();
+		} else if (e.key.code == sf::Keyboard::Space) {
+			if (selected == 0)
+				ret = 3;
+			else if (selected == 1)
+				ret = 2;
+			else
+				ret = -2;
+		}
+	}
+	return ret;
+}
+
+int UGL::handleMenu() {
+	sf::Event event;
+	int ret;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if ((ret = handleKeys(event)) != 1)
+			return ret;
+	}
+	if (getWindow() != nullptr) {
+		getWindow()->clear();
+
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getSprite("Cursor1").get());
+		getWindow()->draw(*getText("New Game").get());
+		getWindow()->draw(*getText("Options").get());
+		getWindow()->draw(*getText("Quit").get());
+		getWindow()->draw(*getText("R TYPE").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
+
+void UGL::handleAlpha() {
+	if (alpha >= 255)
+		aState = 1;
+	else if (alpha <= 0)
+		aState = 0;
+	if (aState == 0)
+		alpha += 0.2;
+	else
+		alpha -= 0.2;
+	getText("PRESS KEY").get()->setFillColor(sf::Color(255,255,255,alpha));
+	getText("PRESS SPACE").get()->setFillColor(sf::Color(255,255,255,alpha));
+}
+
+int UGL::handleSplash() {
+	sf::Event event;
+	int ret;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			return 4;
+		}
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		//TODO SPLASHSCREEN
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("PRESS KEY").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
+
+int UGL::handleLobby() {
+	sf::Event event;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			getSprite("Background1").get()->setColor(sf::Color::Magenta);
+			return 1;
+		}
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		//TODO LOBBY
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("PRESS KEY").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
+
+void UGL::handleKeysConnexion(const sf::Event&e) {
+	if (e.type == sf::Event::MouseButtonPressed) {
+		if (e.mouseButton.button == sf::Mouse::Left) {
+			if (e.mouseButton.x > 400 && e.mouseButton.x < 900
+				&& e.mouseButton.y > 280 && e.mouseButton.y < 360) {
+				boxSelected = 1;
+				ip.setFillColor(sf::Color::Green);
+				port.setFillColor(sf::Color::White);
+			} else if (e.mouseButton.x > 400 && e.mouseButton.x < 900
+					   && e.mouseButton.y > 480 && e.mouseButton.y < 560) {
+				boxSelected = 2;
+				port.setFillColor(sf::Color::Green);
+				ip.setFillColor(sf::Color::White);
+			} else {
+				boxSelected = 0;
+				ip.setFillColor(sf::Color::White);
+				port.setFillColor(sf::Color::White);
+			}
+		}
+	} else if (e.type == sf::Event::TextEntered && boxSelected != 0) {
+		if (e.text.unicode == '\b') {
+			if (item[boxSelected - 1].size() > 0)
+				item[boxSelected - 1].erase(item[boxSelected - 1].size() - 1, 1);
+			if (boxSelected == 1)
+				(*getText("ITEM 0").get()).setString(item[0]);
+			else if (boxSelected == 1)
+				(*getText("ITEM 1").get()).setString(item[1]);
+		} else if ((e.text.unicode >= '0' && e.text.unicode <= '9') ||
+				   e.text.unicode == '.') {
+			if (boxSelected == 2 && (e.text.unicode >= '0' && e.text.unicode <= '9')) {
+				item[1] += static_cast<char>(e.text.unicode);
+				(*getText("ITEM 1").get()).setString(item[1]);
+			} else if (boxSelected == 1 && ((e.text.unicode >= '0' &&
+										  e.text.unicode <= '9') || e.text.unicode == '.')) {
+				item[0] += static_cast<char>(e.text.unicode);
+				(*getText("ITEM 0").get()).setString(item[0]);
+			}
+		}
+	}
+}
+
+int UGL::handleConnexion() {
+	sf::Event event;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Space) {
+			//TODO	if connexion reussi
+				return 5;
+			}
+		}
+		handleKeysConnexion(event);
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("IP ADRESS").get());
+		getWindow()->draw(*getText("PORT").get());
+		getWindow()->draw(ip);
+		getWindow()->draw(port);
+		getWindow()->draw(*getText("ITEM 0").get());
+		getWindow()->draw(*getText("ITEM 1").get());
+		getWindow()->draw(*getText("PRESS SPACE").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
 }
 
 extern "C" {

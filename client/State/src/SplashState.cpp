@@ -32,8 +32,9 @@ void	SplashState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    SplashState::exec() {
-    return -1;
+    return lib->handleSplash();
 }
 
 void   SplashState::init(std::shared_ptr<ILib> &lib) {
+    this->lib = lib;
 }

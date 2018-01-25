@@ -5,6 +5,15 @@
 #ifndef R_TYPE_MENUSCREEN_HPP
 #define R_TYPE_MENUSCREEN_HPP
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Window/Event.hpp>
+
 #include "IState.hpp"
 #include "Core.hpp"
 

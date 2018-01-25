@@ -32,19 +32,9 @@ void	ConnexionState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    ConnexionState::exec() {
-    sf::Event event;
-    while (lib->getWindow()->pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            lib->getWindow()->close();
-    }
-    lib->getWindow()->clear();
-
-    lib->getWindow()->draw(*lib->getSprite("Background1"));
-    lib->getWindow()->display();
-    return -1;
+    return lib->handleConnexion();
 }
 
 void   ConnexionState::init(std::shared_ptr<ILib> &lib) {
     this->lib = lib;
-
 }
