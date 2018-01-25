@@ -6,6 +6,7 @@
 #define R_TYPE_RFCCLIENTHANDLER_HPP
 
 #include <map>
+#include <iostream>
 #include "IRFCHandler.hpp"
 #include "IClientUdpSocket.hpp"
 
@@ -25,10 +26,13 @@ namespace RTypeClient
         void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
 
     private:
+        void initMapOfCommandHandler();
+        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+
+    private:
         IClientUdpSocket<RTypeProtocol::Message> &_socket;
         mapOfCommand _CommandHandler;
 
-        void initMapOfCommandHandler();
 
     };
 }

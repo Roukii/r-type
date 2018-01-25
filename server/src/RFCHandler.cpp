@@ -62,7 +62,7 @@ namespace RTypeServer
 
     void RFCHandler::RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCStatus lol" << std::endl;
+        std::cout << "RFCOK lol" << std::endl;
     }
 
     void RFCHandler::RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)

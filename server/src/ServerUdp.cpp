@@ -49,9 +49,9 @@ namespace RTypeServer
                         {
                             _clientsList.push_back(_lastEndpoint);
                             _readylist.push_back(false);
-                            SendToClient(_msg, _clientsList.size() - 1);
-                            _msg._msg.get()->_header._code++;
                         }
+                        std::cout << "message" << std::endl;
+                        SendToClient(_msg, _clientsList.size() - 1);
                         _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
                         SendToAllExcept(_msg, _clientsList.size() - 1);
                     }
