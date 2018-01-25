@@ -7,7 +7,6 @@
 
 // UGL means Uganda Graphic Library
 
-#include <memory>
 #include <map>
 #include <functional>
 #include <SFML/Graphics/RenderWindow.hpp>

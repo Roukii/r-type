@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add include
-include_directories(include ../utils/GameEngine/include ../utils/Protocol)
+include_directories(include ../utils/GameEngine ../utils/Protocol)
 
 #Add sources
 file(GLOB SERVER_SOURCE_FILES src/*.cpp include/*.h include/*.hpp ../utils/*.h ../utils/Protocol/*.hpp)

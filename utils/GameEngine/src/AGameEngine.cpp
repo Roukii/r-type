@@ -33,7 +33,7 @@ namespace UgandaEngine {
     }
 
     UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,
-                                                                               const std::string &entityName) {
+                                                               const std::string &entityName) {
         lua_State* L = luaL_newstate();
         luaL_dofile(L, filePath.c_str());
         luaL_openlibs(L);
@@ -43,25 +43,25 @@ namespace UgandaEngine {
             luabridge::LuaRef tableRef = reference[i+1];
             std::string componentName = tableRef["componentName"].cast<std::string>();
 
-            std::map<std::string, AComponent>::const_iterator it = _components.find(componentName);
-            if (componentName == "TestComponent") {//(it != _components.end()) {
+            if (componentName == "TestComponent") {
                 UgandaEngine::entity::Entity *entity = new UgandaEngine::entity::Entity;
-
-                //Todo: changer ça en facto
                 UgandaEngine::TestComponent test;
-                std::shared_ptr<UgandaEngine::TestComponent> component = std::make_shared<UgandaEngine::TestComponent>(test);
-                component->setPhrase(tableRef["string"].cast<std::string>());
-                entity->addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), component);
-
-                std::cout << "[OK] Successfully created component [" << componentName << "]" << std::endl;
+                test.setPhrase(tableRef["string"].cast<std::string>());
+                std::shared_ptr<UgandaEngine::TestComponent> com = std::make_shared<UgandaEngine::TestComponent>(
+                        test);
+                entity->addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), com);
                 return entity;
             }
         }
         throw std::invalid_argument("[X]Couldn't create entity [" + entityName + "] from file " + filePath);
     }
 
-    void AGameEngine::registerComponent(const AComponent &component, const std::string &name) {
-        if (_components.find(name) == _components.end())
-            _components[name] = component;
+    void
+    AGameEngine::registerComponent(const std::type_index &type_index,
+                                   const std::pair<std::string, AComponent> &component) {
+        if (_components.find(type_index) == _components.end()) {
+            _components[type_index] = component;
+            std::cout << "[OK] Successfully registered component [" << component.first << "]" << std::endl;
+        }
     }
 }

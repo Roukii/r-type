@@ -17,38 +17,19 @@
 
 namespace UgandaEngine {
     namespace entity {
-        enum Direction
-        {
-            UP = 0,
-            DOWN,
-            NONE
-        };
         class Entity {
             /*
              * Variables
              */
         public:
-            std::string                                     _name;
-            // LUA
-            std::map<std::type_index, std::shared_ptr<AComponent> > _components;
-
             // Factory
-            std::map<std::string, std::function<void()>>    _funcComp;
-
-            //LUA
-            std::string                                     _type;
-
-            // créeer une classe graphique pour les entity
-            // GraphEnt qui va contenir AnimatedSprite / Texture / vector<Animation>
+            std::map<std::string, std::function<void()>> _funcComp;
+            std::string _name;
             std::shared_ptr<EntityFactoryData>              myGraph;
 
-            // les éléments de maniabilité
-            Direction                                       _currentDirection;
-            sf::Vector2f                                    _position;
-            float                                           _speed;
-
-            // les éléments rataché
-            std::vector<Entity>                             _missiles;
+            // LUA
+            std::map<std::type_index, std::shared_ptr<AComponent> > _components;
+            std::string _type;
 
             /*
              * Constructors / Destructor
@@ -68,12 +49,12 @@ namespace UgandaEngine {
             std::shared_ptr<T> get() {
                 std::map<std::type_index, std::shared_ptr<UgandaEngine::AComponent>>::iterator it = _components.find(
                         std::type_index(typeid(T)));
-                std::shared_ptr<T> hey;
+                std::shared_ptr<T> sharedPtr;
                 if (it != _components.end()) {
-                    hey = std::dynamic_pointer_cast<T>(it->second);
-                    return hey;
+                    sharedPtr = std::dynamic_pointer_cast<T>(it->second);
+                    return sharedPtr;
                 }
-                return hey;
+                return sharedPtr;
             }
 
             void setType(const std::string &type) { _type = type; }

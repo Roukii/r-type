@@ -6,6 +6,7 @@
 #define R_TYPE_TESTCOMPONENT_HPP
 
 #include <string>
+#include <iostream>
 #include "AComponent.hpp"
 
 namespace UgandaEngine {

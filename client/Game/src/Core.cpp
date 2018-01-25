@@ -5,7 +5,6 @@
 
 #include <TestComponent.hpp>
 #include <SplashState.hpp>
-#include "Core.hpp"
 
 Core::Core() : _state(std::make_shared<SplashState>())
 {
@@ -53,15 +52,25 @@ void    Core::start() {
     int ret = 0;
     splash();
 
-    // TODO : Test your Entity creation here
+    //TODO: zone de test!!!
+    {
+        std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
+                _engine->_factory->create("Ship", _engine->_libGraph));
+        ship->_funcComp["shoot"]();
 
-    std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(_engine->_factory->create("Ship", _engine->_libGraph));
-    ship->_funcComp["shoot"]();
+        //Test
+        UgandaEngine::TestComponent testComponent;
+        std::cout << "[DEBUG] typeid original=" << std::type_index(typeid(testComponent)).name() << std::endl;
 
-    //Test
-    UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/ghost.lua", "ghost");
-    std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
-    std::cout << getter.lock().get()->getPhrase() << std::endl;
+        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/ghost.lua", "ghost");
+        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
+
+
+        if (!getter.expired())
+            std::cout << getter.lock().get()->getPhrase() << std::endl;
+        else
+            std::cout << "error "<< std::endl;
+    }
 
     while (ret != -2) {
         ret =  _state->exec();

@@ -31,7 +31,7 @@ namespace UgandaEngine {
     private:
         //List of entities and components
         std::vector<entity::Entity> _entities;
-        std::map<std::string, AComponent> _components;
+        std::map<std::type_index, std::pair<std::string, AComponent> >_components;
 
     public:
         std::shared_ptr<ILib> _libGraph;
@@ -53,7 +53,7 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
 
-        void registerComponent(const AComponent &component, const std::string &name);
+        void registerComponent(const std::type_index &type_index, const std::pair<std::string, AComponent> &component);
         UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
                                                                       const std::string &entityName);
     };
