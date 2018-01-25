@@ -27,6 +27,7 @@ namespace RTypeServer {
         void RFCPlayerJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCReadyRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCPlayerLeaveRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
     private:
         void initMapOfCommandHandler();

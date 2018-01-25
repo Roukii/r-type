@@ -16,6 +16,7 @@ namespace RTypeServer
         _CommandHandler.insert({RTypeProtocol::PLAYER_JOIN_ROOM, &RFCServerRoomHandler::RFCPlayerJoinRoom});
         _CommandHandler.insert({RTypeProtocol::READY_ROOM, &RFCServerRoomHandler::RFCReadyRoom});
         _CommandHandler.insert({RTypeProtocol::START_GAME, &RFCServerRoomHandler::RFCStartGame});
+        _CommandHandler.insert({RTypeProtocol::PLAYER_LEAVE_ROOM, &RFCServerRoomHandler::RFCPlayerLeaveRoom});
     }
 
     void RFCServerRoomHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
@@ -30,10 +31,24 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::RFCPlayerJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
+        // TODO: update les infos
+    }
+
+    void RFCServerRoomHandler::RFCPlayerLeaveRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
+    {
+        // TODO: update les infos aussi
     }
 
     void RFCServerRoomHandler::RFCReadyRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
+        for (auto i : currentMessage._msg.get()->data._room._player_ready)
+        {
+            if (!i)
+            {
+                // TODO: si tout le monde n'est pas pret faire un truc enfin je pense
+            }
+        }
+        // TODO: lancer la game ici
     }
 
     void RFCServerRoomHandler::RFCStartGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
