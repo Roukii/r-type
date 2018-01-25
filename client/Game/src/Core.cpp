@@ -54,7 +54,7 @@ void    Core::start() {
 
     // TODO : Test your Entity creation here
 
-    std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(_engine->factory->create("Ship", _engine->libGraph));
+    std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(_engine->_factory->create("Ship", _engine->_libGraph));
     ship->_funcComp["shoot"]();
 
     //Test
@@ -62,7 +62,7 @@ void    Core::start() {
     std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
     std::cout << getter.lock().get()->getPhrase() << std::endl;
 
-    while (_engine->libGraph->getWindow()->isOpen() && ret != -2) {
+    while (_engine->_libGraph->getWindow()->isOpen() && ret != -2) {
         ret =  _state->exec();
         if (ret == 0)
             splash();
@@ -77,30 +77,30 @@ void    Core::start() {
 
 void	Core::splash(){
     this->_state->splash(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }
 
 void	Core::menu() {
     this->_state->menu(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }
 
 void	Core::options() {
     this->_state->options(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }
 
 void	Core::game() {
     this->_state->game(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }
 
 void	Core::connexion() {
     this->_state->connexion(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }
 
 void	Core::lobby() {
     this->_state->lobby(_state);
-    this->_state->init(_engine->libGraph);
+    this->_state->init(_engine->_libGraph);
 }

@@ -12,7 +12,7 @@ namespace UgandaEngine {
     void AGameEngine::init(const std::vector<std::string> &component,
                            const std::map<std::string, std::vector<std::string>> &entity,
                            const std::map<std::string, std::function<void()>> &action) {
-        factory = std::make_shared<Factory::FactoryEntity>(entity, action);
+        _factory = std::make_shared<Factory::FactoryEntity>(entity, action);
     }
 
     AGameEngine::AGameEngine() {
@@ -28,11 +28,10 @@ namespace UgandaEngine {
             throw std::invalid_argument("[X]Fail to create external_creator.");
         get = external_creator();
         std::shared_ptr<ILib> getShared(get);
-        libGraph = getShared;
-        libGraph->init();
+        _libGraph = getShared;
+        _libGraph->init();
     }
 
-    //TODO: Créer actuellement un exemple d'entity. Besoin de factoriser ça. Ensuite on pourra même charger des params depuis le fichier
     UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,
                                                                                const std::string &entityName) {
         lua_State* L = luaL_newstate();
@@ -44,18 +43,25 @@ namespace UgandaEngine {
             luabridge::LuaRef tableRef = reference[i+1];
             std::string componentName = tableRef["componentName"].cast<std::string>();
 
-            //TODO: ceci est un exemple ! Besoin de l'implémenter dans la facto
-            if (componentName == "TestComponent") {
+            std::map<std::string, AComponent>::const_iterator it = _components.find(componentName);
+            if (componentName == "TestComponent") {//(it != _components.end()) {
                 UgandaEngine::entity::Entity *entity = new UgandaEngine::entity::Entity;
+
+                //Todo: changer ça en facto
                 UgandaEngine::TestComponent test;
                 std::shared_ptr<UgandaEngine::TestComponent> component = std::make_shared<UgandaEngine::TestComponent>(test);
                 component->setPhrase(tableRef["string"].cast<std::string>());
-
                 entity->addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), component);
+
                 std::cout << "[OK] Successfully created component [" << componentName << "]" << std::endl;
                 return entity;
             }
         }
         throw std::invalid_argument("[X]Couldn't create entity [" + entityName + "] from file " + filePath);
+    }
+
+    void AGameEngine::registerComponent(const AComponent &component, const std::string &name) {
+        if (_components.find(name) == _components.end())
+            _components[name] = component;
     }
 }

@@ -9,7 +9,7 @@ ghost = {
                 string = "Nice"
         },
         {
-                componentName = "Issou",
+                componentName = "Ok",
                 filename = "lol.png"
         }
 }

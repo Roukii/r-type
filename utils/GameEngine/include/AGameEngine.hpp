@@ -29,13 +29,15 @@ namespace UgandaEngine {
          * Variables
          */
     private:
-        //List of entities
-        std::vector<entity::Entity> _Entities;
+        //List of entities and components
+        std::vector<entity::Entity> _entities;
+        std::map<std::string, AComponent> _components;
 
     public:
-        std::shared_ptr<ILib>                       libGraph;
-        std::shared_ptr<LibGraph>                   graph;
-        std::shared_ptr<Factory::FactoryEntity>     factory;
+        std::shared_ptr<ILib> _libGraph;
+        std::shared_ptr<LibGraph> graph;
+        std::shared_ptr<Factory::FactoryEntity> _factory;
+
         /*
          * Constructor and destructor
          */
@@ -51,10 +53,10 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void()>> &action);
 
+        void registerComponent(const AComponent &component, const std::string &name);
         UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
                                                                       const std::string &entityName);
     };
-
 }
 
 #endif //R_TYPE_GAMEENGINE_HPP
