@@ -21,6 +21,7 @@ namespace RTypeProtocol
         ROOMS,
         INFO_ROOM,
         PLAYER_JOIN_ROOM,
+        PLAYER_LEAVE_ROOM,
         READY_ROOM,
         START_GAME,
         END_OF_GAME
