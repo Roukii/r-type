@@ -8,6 +8,7 @@
 #include <map>
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"
+#include "RoomInfo.hpp"
 
 namespace RTypeServer {
     class RFCServerRoomHandler : public RTypeProtocol::IRFCHandler
@@ -16,7 +17,7 @@ namespace RTypeServer {
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCServerRoomHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        RFCServerRoomHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &);
         ~RFCServerRoomHandler() override = default;
         RFCServerRoomHandler(const RFCServerRoomHandler &) = delete;
         RFCServerRoomHandler &operator=(const RFCServerRoomHandler &) = delete;
@@ -33,8 +34,8 @@ namespace RTypeServer {
         void initMapOfCommandHandler();
 
     private:
-        std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
+        RoomInfo _roomInfo;
     };
 }
 
