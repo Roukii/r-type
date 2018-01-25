@@ -29,6 +29,8 @@ namespace RTypeClient
         void initMapOfCommandHandler();
         void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
+        unsigned short getPortFromChar(RTypeProtocol::Message &currentMessage);
+
     private:
         IClientUdpSocket<RTypeProtocol::Message> &_socket;
         mapOfCommand _CommandHandler;

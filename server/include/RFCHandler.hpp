@@ -27,6 +27,11 @@ namespace RTypeServer
         RFCHandler(const RFCHandler &) = delete;
         RFCHandler &operator=(const RFCHandler &) = delete;
 
+    public:
+        void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
+
+    private:
+        void initMapOfCommandHandler();
         void RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
@@ -35,11 +40,7 @@ namespace RTypeServer
         void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 //        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
-    public:
-        void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
-
-    private:
-        void initMapOfCommandHandler();
+        void getPortFromShortToChar(RTypeProtocol::Message &currentMessage, std::shared_ptr<RTypeServer::Room> &room);
 
     private:
         RoomPool _roomPool;

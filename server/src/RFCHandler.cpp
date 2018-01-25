@@ -25,21 +25,12 @@ namespace RTypeServer
 
     }
 
-//    void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-//    {
-//        std::string tmp = std::to_string(_roomPool._numberOfRoom);
-//        for (int i = 0; i < 4; i++)
-//            currentMessage._msg.get()->data._nb_room._room[i] = tmp[i];
-//        _socket.get()->SendToClient(currentMessage, _currentOwnerID);
-//    }
-
     void RFCHandler::RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        for (auto i : _roomPool._rooms)
+        currentMessage._msg.get()->_header._code = RTypeProtocol::INFO_ROOM;
+        for (auto &i : _roomPool._rooms)
         {
-            std::string tmp = std::to_string(i.get()->getPort());
-            for (int nb = 0; nb < 2; nb++)
-                currentMessage._msg.get()->data._room._port[nb] = tmp[nb];
+            getPortFromShortToChar(currentMessage, i);
             currentMessage._msg.get()->data._room._nb_player = i.get()->getPlayer();
 
             for (int nb = 0; nb < 4; nb++)
@@ -83,5 +74,20 @@ namespace RTypeServer
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
             //_CommandHandler[codeCommand](msg, ownerID);
         }
+    }
+
+    void RFCHandler::getPortFromShortToChar(RTypeProtocol::Message &currentMessage, std::shared_ptr<RTypeServer::Room> &room)
+    {
+        union
+        {
+            char ch[2];
+            unsigned short n;
+        } char2short;
+
+        char2short.n = room.get()->getPort();
+        currentMessage._msg.get()->data._room._port[0] = char2short.ch[0];
+        currentMessage._msg.get()->data._room._port[1] = char2short.ch[1];
+        std::cout << "port 1 = " << (int) char2short.ch[0] << std::endl;
+        std::cout << "port 2 = " << (int) char2short.ch[1] << std::endl;
     }
 }
