@@ -6,8 +6,8 @@
 #define R_TYPE_ICLIENTUDPSOCKET_HPP
 
 #include <thread>
+#include "Message.hpp"
 
-template<class T>
 class IClientUdpSocket
 {
 public:
@@ -16,7 +16,7 @@ public:
     virtual void run() = 0;
     virtual void runWithThread() = 0;
     virtual bool isRunning() const = 0;
-    virtual void SendToServer(T &) = 0;
+    virtual void SendToServer(RTypeProtocol::Message &) = 0;
     virtual std::thread &getThread() = 0;
 
     virtual void shutdown() = 0;

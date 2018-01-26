@@ -16,7 +16,7 @@ namespace RTypeClient {
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCClientGameHandler(IClientUdpSocket<RTypeProtocol::Message> &socket);
+        RFCClientGameHandler(IClientUdpSocket &socket);
         ~RFCClientGameHandler() = default;
         RFCClientGameHandler(const RFCClientGameHandler &) = delete;
         RFCClientGameHandler &operator=(const RFCClientGameHandler &) = delete;
@@ -24,7 +24,7 @@ namespace RTypeClient {
         void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
 
     private:
-        IClientUdpSocket<RTypeProtocol::Message> &_socket;
+        IClientUdpSocket &_socket;
         mapOfCommand _CommandHandler;
 
         void initMapOfCommandHandler();

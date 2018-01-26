@@ -19,7 +19,7 @@ FILE(GLOB CLIENT_GRAPHIC_LIBRARY_SOURCES Lib/include/*.hpp Lib/src/*.cpp)
 add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
 
 #Create executable
-add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
+add_executable(UgandaPilote ${CLIENT_GAME_SOURCES} Network/src/ClientUdp.cpp)
 
 target_link_libraries(UgandaPilote UGL)
 

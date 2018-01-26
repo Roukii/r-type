@@ -18,7 +18,7 @@ namespace RTypeClient
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCClientHandler(IClientUdpSocket<RTypeProtocol::Message> &socket);
+        RFCClientHandler(IClientUdpSocket &socket);
         ~RFCClientHandler() override = default;
         RFCClientHandler(const RFCClientHandler &) = delete;
         RFCClientHandler &operator=(const RFCClientHandler &) = delete;
@@ -32,7 +32,7 @@ namespace RTypeClient
         unsigned short getPortFromChar(RTypeProtocol::Message &currentMessage);
 
     private:
-        IClientUdpSocket<RTypeProtocol::Message> &_socket;
+        IClientUdpSocket &_socket;
         mapOfCommand _CommandHandler;
 
 

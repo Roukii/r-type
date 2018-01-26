@@ -6,7 +6,7 @@
 
 namespace RTypeClient
 {
-    RFCClientGameHandler::RFCClientGameHandler(IClientUdpSocket<RTypeProtocol::Message> &socket) : _socket(socket)
+    RFCClientGameHandler::RFCClientGameHandler(IClientUdpSocket &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }

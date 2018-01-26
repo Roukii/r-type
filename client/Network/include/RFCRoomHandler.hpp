@@ -19,7 +19,7 @@ namespace RTypeClient
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCRoomHandler(IClientUdpSocket<RTypeProtocol::Message> &socket);
+        RFCRoomHandler(IClientUdpSocket &socket);
         ~RFCRoomHandler() override = default;
         RFCRoomHandler(const RFCRoomHandler &) = delete;
         RFCRoomHandler &operator=(const RFCRoomHandler &) = delete;
@@ -31,7 +31,7 @@ namespace RTypeClient
         void initMapOfCommandHandler();
 
     private:
-        IClientUdpSocket<RTypeProtocol::Message> &_socket;
+        IClientUdpSocket &_socket;
         mapOfCommand _CommandHandler;
     };
 

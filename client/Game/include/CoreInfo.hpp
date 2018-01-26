@@ -19,12 +19,12 @@ public:
 
 	~CoreInfo() = default;
 
-	std::shared_ptr<IClientUdpSocket<RTypeProtocol::Message>> &getSocket();
+	std::shared_ptr<IClientUdpSocket> &getSocket();
 	void startSocket(const std::string &host, unsigned short port);
 	RTypeClient::MessageQueue<RTypeProtocol::Message> &getMessageQueue();
 
 private:
-	std::shared_ptr<IClientUdpSocket<RTypeProtocol::Message>> _socket;
+	std::shared_ptr<IClientUdpSocket> _socket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 	unsigned short _port;
 };

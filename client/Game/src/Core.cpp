@@ -35,17 +35,17 @@ Core::Core() : _state(std::make_shared<SplashState>())
     entities["Ship"] = componentNames;
 
     //On associe à chaque nom de component une fonction
-    std::function<void(RTypeProtocol::Message&)> left = func->move_left;
-	//std::function<void(RTypeProtocol::Message&)> left = EntityFunc::move_left;
-    functions["moveLeft"] = left;
-    std::function<void(RTypeProtocol::Message&)> right = func->move_right;
-    functions["moveRight"] = right;
-    std::function<void(RTypeProtocol::Message&)> down = func->move_down;
-    functions["moveDown"] = down;
-    std::function<void(RTypeProtocol::Message&)> up = func->move_up;
-    functions["moveUp"] = up;
-    std::function<void(RTypeProtocol::Message&)> shoot = func->shoot;
-    functions["shoot"] = shoot;
+//    std::function<void(RTypeProtocol::Message&)> left = func->move_left;
+//	//std::function<void(RTypeProtocol::Message&)> left = EntityFunc::move_left;
+//    functions["moveLeft"] = left;
+//    std::function<void(RTypeProtocol::Message&)> right = func->move_right;
+//    functions["moveRight"] = right;
+//    std::function<void(RTypeProtocol::Message&)> down = func->move_down;
+//    functions["moveDown"] = down;
+//    std::function<void(RTypeProtocol::Message&)> up = func->move_up;
+//    functions["moveUp"] = up;
+//    std::function<void(RTypeProtocol::Message&)> shoot = func->shoot;
+//    functions["shoot"] = shoot;
 
     //Confirmation
     _engine->init(componentNames, entities, functions);
@@ -73,22 +73,22 @@ void    Core::start() {
     int ret = 0;
     splash();
 
-    //TODO: zone de test!!!
-    {
-        std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
-                _engine->_factory->create("Ship", _engine->_libGraph));
-	    RTypeProtocol::Message msg;
-        ship->_funcComp["shoot"](msg);
-
-        //Test
-        UgandaEngine::TestComponent testComponent;
-        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
-        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
-        if (!getter.expired())
-            std::cout << getter.lock().get()->getPhrase() << std::endl;
-        else
-            std::cout << "error "<< std::endl;
-    }
+//    //TODO: zone de test!!!
+//    {
+//        std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
+//                _engine->_factory->create("Ship", _engine->_libGraph));
+//	    RTypeProtocol::Message msg;
+//        ship->_funcComp["shoot"](msg);
+//
+//        //Test
+//        UgandaEngine::TestComponent testComponent;
+//        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
+//        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
+//        if (!getter.expired())
+//            std::cout << getter.lock().get()->getPhrase() << std::endl;
+//        else
+//            std::cout << "error "<< std::endl;
+//    }
 
     while (ret != -2) {
         ret =  _state->exec();
