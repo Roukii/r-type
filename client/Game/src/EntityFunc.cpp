@@ -4,22 +4,37 @@
 
 #include "EntityFunc.hpp"
 
-void EntityFunc::move_up() {
-    std::cout << "it's up" << std::endl;
+void EntityFunc::move_up(RTypeProtocol::Message &msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::UP;
 }
 
-void EntityFunc::move_down() {
-    std::cout << "it's down" << std::endl;
+void EntityFunc::move_down(RTypeProtocol::Message &msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::DOWN;
 }
 
-void EntityFunc::move_right() {
-    std::cout << "it's right" << std::endl;
+void EntityFunc::move_right(RTypeProtocol::Message &msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::RIGHT;
 }
 
-void EntityFunc::move_left() {
-    std::cout << "it's left" << std::endl;
+void EntityFunc::move_left(RTypeProtocol::Message &msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::LEFT;
 }
 
-void EntityFunc::shoot() {
-    std::cout << "it's shoot" << std::endl;
+void EntityFunc::shoot(RTypeProtocol::Message &msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::SHOOT;
+}
+
+void EntityFunc::leave(RTypeProtocol::Message& msg) {
+	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+	msg._msg.get()->data._action._action = RTypeProtocol::actions::LEAVE;
+}
+
+void EntityFunc::updatePosition(sf::Vector2f pos, const UgandaEngine::entity::Entity& entity) {
+	//
+	entity.myGraph->_anims;
 }

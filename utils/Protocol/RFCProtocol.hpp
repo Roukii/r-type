@@ -23,7 +23,7 @@ namespace RTypeProtocol
         INFO_ROOM,
         PLAYER_JOIN_ROOM,
         PLAYER_LEAVE_ROOM,
-        PlAYER_READY,
+        PLAYER_READY,
         PLAYER_NOT_READY,
         READY_ROOM,
         START_GAME,
@@ -36,7 +36,7 @@ namespace RTypeProtocol
         DOWN,
         LEFT,
         RIGHT,
-        SHOT,
+        SHOOT,
         LEAVE
     };
 

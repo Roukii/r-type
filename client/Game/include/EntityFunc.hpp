@@ -6,14 +6,20 @@
 #define R_TYPE_ENTITYFUNC_HPP
 
 #include <iostream>
+#include <SFML/Audio.hpp>
+
+#include "Entity.hpp"
+#include "../../../utils/Protocol/Message.hpp"
 
 
 struct EntityFunc {
-    static void move_up();
-    static void move_down();
-    static void move_right();
-    static void move_left();
-    static void shoot();
+	static void		move_up(RTypeProtocol::Message &msg);
+	static void		move_down(RTypeProtocol::Message &msg);
+	static void		move_right(RTypeProtocol::Message &msg);
+	static void		move_left(RTypeProtocol::Message &msg);
+	static void		shoot(RTypeProtocol::Message &msg);
+	static void		leave(RTypeProtocol::Message &msg);
+	static void		updatePosition(sf::Vector2f, const UgandaEngine::entity::Entity&);
 };
 
 
