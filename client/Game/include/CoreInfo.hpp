@@ -21,12 +21,18 @@ public:
 
 	std::shared_ptr<IClientUdpSocket> &getSocket();
 	void startSocket(const std::string &host, unsigned short port);
+	void shutdownSocket();
+	bool isRunning() const { return _socket.get()->isRunning(); }
 	RTypeClient::MessageQueue<RTypeProtocol::Message> &getMessageQueue();
 
+private:
+    void getRandomPort();
 private:
 	std::shared_ptr<IClientUdpSocket> _socket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 	unsigned short _port;
+    // TODO put a message if connection failed
+    //bool connectionFailed;
 };
 
 

@@ -9,33 +9,32 @@
 #include "LobbyState.hpp"
 
 void	OptionsState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>();
+    state = std::make_shared<SplashState>(_info);
 }
 
 void	OptionsState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>();
+    state = std::make_shared<MenuState>(_info);
 }
 
 void	OptionsState::options(std::shared_ptr<IState> &state) {
 }
 
 void	OptionsState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>();
+    state = std::make_shared<GameState>(_info);
 }
 
 void	OptionsState::connexion(std::shared_ptr<IState> &state) {
-    state = std::make_shared<ConnexionState>();
+    state = std::make_shared<ConnexionState>(_info);
 }
 
 void	OptionsState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>();
+    state = std::make_shared<LobbyState>(_info);
 }
 
 int    OptionsState::exec() {
     return -1;
 }
 
-void   OptionsState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
+void   OptionsState::init(std::shared_ptr<ILib> &lib) {
     this->lib = lib;
-    this->info = info;
 }

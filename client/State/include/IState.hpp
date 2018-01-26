@@ -20,7 +20,7 @@ public:
     virtual void lobby(std::shared_ptr<IState> &state) = 0;
 
     virtual int exec() = 0;
-    virtual void init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) = 0;
+    virtual void init(std::shared_ptr<ILib> &lib) = 0;
     template<typename T>
     IState* screen() {
         return new T();

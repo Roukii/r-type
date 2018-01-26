@@ -195,7 +195,7 @@ int UGL::handleKeys(const sf::Event&e) {
 			moveDown();
 		} else if (e.key.code == sf::Keyboard::Space) {
 			if (selected == 0)
-				ret = 3;
+				ret = 5;
 			else if (selected == 1)
 				ret = 2;
 			else
@@ -271,7 +271,7 @@ int UGL::handleLobby() {
 			getWindow()->close();
 		if (event.type == sf::Event::KeyPressed) {
 			getSprite("Background1").get()->setColor(sf::Color::Magenta);
-			return 1;
+			return 3;
 		}
 	}
 	if (getWindow() != nullptr) {
@@ -335,7 +335,8 @@ int UGL::handleConnexion() {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Space) {
 			//TODO	if connexion reussi
-				return 5;
+
+				return 1;
 			}
 		}
 		handleKeysConnexion(event);
