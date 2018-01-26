@@ -9,8 +9,6 @@
 #include <map>
 
 #include "IServerUdpSocket.hpp"
-#include "Message.hpp"
-#include "RFCProtocol.hpp"
 #include "IRFCHandler.hpp"
 #include "RoomPool.hpp"
 

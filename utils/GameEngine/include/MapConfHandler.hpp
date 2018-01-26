@@ -13,7 +13,6 @@
 #include <sstream>
 #include <memory>
 
-
 namespace UgandaEngine {
     class MapConfHandler {
         /*

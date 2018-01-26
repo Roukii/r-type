@@ -8,12 +8,13 @@
 #include <memory>
 #include <thread>
 #include <cstdlib>
+#include <chrono>
 
-#include "IServerUdpSocket.hpp"
 #include "ServerUdp.hpp"
-#include "MessageQueue.hpp"
-#include "Message.hpp"
 #include "RFCServerRoomHandler.hpp"
+#include "RFCGameHandler.hpp"
+
+#define FRAME_RATE 60
 
 namespace RTypeServer
 {

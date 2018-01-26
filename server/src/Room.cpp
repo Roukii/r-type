@@ -2,6 +2,7 @@
 // Created by Alexandre on 21/01/2018.
 //
 
+#include "Game.hpp"
 #include "Room.hpp"
 
 namespace RTypeServer
@@ -20,13 +21,29 @@ namespace RTypeServer
 
     void Room::runGame()
     {
+        RFCGameHandler gameHandler(_roomServer);
+        RTypeGame::Game game;
+        game.init();
+
         while(_roomServer.get()->isRunning())
         {
             if (!_messageQueue.isEmpty())
             {
-                _rfcHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
+                gameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
                 _messageQueue.pop();
             }
+            auto current = std::chrono::system_clock::now();
+
+            //Ici boucle de jeu
+//            _roomServer.get()->SendToAllExcept();
+
+            auto end = std::chrono::system_clock::now();
+            std::chrono::duration<double> elapsed_seconds = end - current;
+
+            game.play(elapsed_seconds.count());
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / FRAME_RATE));
+            std::cout << "Elapsed time : " << elapsed_seconds.count() << std::endl;
         }
     }
 

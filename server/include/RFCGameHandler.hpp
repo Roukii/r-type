@@ -10,7 +10,6 @@
 #include "Message.hpp"
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"
-#include "RFCHandler.hpp"
 #include "../../utils/GameEngine/include/Entity.hpp"
 
 namespace RTypeServer {
@@ -36,7 +35,7 @@ namespace RTypeServer {
         void initMapOfCommandHandler();
 
 
-//        std::vector<UgandaEngine::entity::Entity> _entities;
+        std::vector<UgandaEngine::entity::Entity> _entities;
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };

@@ -2,6 +2,7 @@
 // Created by zozo on 23/01/18.
 //
 
+#include <iostream>
 #include "RFCGameHandler.hpp"
 
 namespace RTypeServer {

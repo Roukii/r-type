@@ -26,6 +26,7 @@ namespace UgandaEngine {
             // Factory
             std::map<std::string, std::function<void(RTypeProtocol::Message&)>> _funcComp;
             std::string _name;
+
             std::shared_ptr<EntityFactoryData>              myGraph;
 
             // LUA
