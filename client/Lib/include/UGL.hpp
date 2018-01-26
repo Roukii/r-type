@@ -69,17 +69,17 @@ protected:
 	std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) override;
 
 	void moveUp();
-	int handleMenu();
+	int handleMenu() override;
 	void moveDown();
 	int handleKeys(const sf::Event &e);
 
-	int handleSplash();
+	int handleSplash() override;
 	void handleAlpha();
 
-	int handleConnexion();
+	int handleConnexion() override;
 	void handleKeysConnexion(const sf::Event &e);
 
-	int handleLobby();
+	int handleLobby() override;
 
 
 	std::shared_ptr<sf::RenderWindow>	_window;

@@ -58,8 +58,8 @@ void 		UGL::init() {
 	loadText(400, 400, 60, "PORT", "PORT");
 	loadText(410, 285, 60, item[0], "ITEM 0");
 	loadText(410, 485, 60, item[1], "ITEM 1");
-	(*getText("ITEM 0").get()).setColor(sf::Color::Black);
-	(*getText("ITEM 1").get()).setColor(sf::Color::Black);
+	(*getText("ITEM 0")).setFillColor(sf::Color::Black);
+	(*getText("ITEM 1")).setFillColor(sf::Color::Black);
 
 	ip.setSize(sf::Vector2f(500, 80));
 	ip.setPosition(sf::Vector2f(400, 280));
@@ -238,8 +238,8 @@ void UGL::handleAlpha() {
 		alpha += 0.2;
 	else
 		alpha -= 0.2;
-	getText("PRESS KEY").get()->setColor(sf::Color(255,255,255,alpha));
-	getText("PRESS SPACE").get()->setColor(sf::Color(255,255,255,alpha));
+	getText("PRESS KEY")->setFillColor(sf::Color(255,255,255,alpha));
+	getText("PRESS SPACE")->setFillColor(sf::Color(255,255,255,alpha));
 }
 
 int UGL::handleSplash() {
