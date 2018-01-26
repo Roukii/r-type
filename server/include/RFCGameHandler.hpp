@@ -11,6 +11,7 @@
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"
 #include "RFCHandler.hpp"
+#include "../../utils/GameEngine/include/Entity.hpp"
 
 namespace RTypeServer {
     class RFCGameHandler : public RTypeProtocol::IRFCHandler {
@@ -18,7 +19,7 @@ namespace RTypeServer {
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket);
+        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket, std::vector<UgandaEngine::entity::Entity> &_entities);
         ~RFCGameHandler() = default;
         RFCGameHandler(const RFCGameHandler &) = delete;
         RFCGameHandler &operator=(const RFCGameHandler &) = delete;
@@ -35,7 +36,7 @@ namespace RTypeServer {
         void initMapOfCommandHandler();
 
 
-
+        std::vector<UgandaEngine::entity::Entity> _entities;
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };

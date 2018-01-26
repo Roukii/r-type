@@ -5,7 +5,9 @@
 #include "RFCGameHandler.hpp"
 
 namespace RTypeServer {
-    RFCGameHandler::RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
+    RFCGameHandler::RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket,
+                                   std::vector<UgandaEngine::entity::Entity> &_entities) : _socket(socket),
+                                                                                           _entities(_entities)
     {
         initMapOfCommandHandler();
     }
@@ -28,7 +30,7 @@ namespace RTypeServer {
 
     void RFCGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCentitaie lol" << std::endl;
+        //TODO: recup les donnes du AENTITY et les envoyer pareil pour les fonctions en dessous
     }
 
     void RFCGameHandler::RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
