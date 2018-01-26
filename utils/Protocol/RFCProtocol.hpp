@@ -11,7 +11,7 @@ namespace RTypeProtocol
 {
     enum code
     {
-        ERR,
+        ERR = 0,
         OK,
         STATUS,
         CONNECT,
@@ -30,6 +30,15 @@ namespace RTypeProtocol
         END_OF_GAME
     };
 
+    enum actions
+    {
+        UP = 0,
+        DOWN,
+        LEFT,
+        RIGHT,
+        SHOT,
+        LEAVE
+    };
 
     struct header
     {

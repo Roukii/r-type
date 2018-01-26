@@ -67,7 +67,7 @@ namespace RTypeServer
 
     void RFCHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        
+
     }
 
     void RFCHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
