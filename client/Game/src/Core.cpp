@@ -46,6 +46,24 @@ Core::Core() : _state(std::make_shared<SplashState>())
 
     //Confirmation
     _engine->init(componentNames, entities, functions);
+
+
+    //Exemple de création d'entity.
+    UgandaEngine::entity::Entity entity;
+
+    //On créer les component
+    std::shared_ptr<UgandaEngine::TestComponent> component = std::make_shared<UgandaEngine::TestComponent>();
+    component->setPhrase("LOL");
+
+    //On ajoute les component
+    entity.addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), component);
+
+    //Pour récupérer depuis une entity un component:
+    std::weak_ptr<UgandaEngine::TestComponent> getter = entity.get<UgandaEngine::TestComponent>();
+    if (!getter.expired())
+        std::cout << getter.lock()->getPhrase() << std::endl;
+    else
+        std::cout << "Ce component n'existe pas!" << std::endl;
 }
 
 void    Core::start() {
@@ -60,12 +78,8 @@ void    Core::start() {
 
         //Test
         UgandaEngine::TestComponent testComponent;
-        std::cout << "[DEBUG] typeid original=" << std::type_index(typeid(testComponent)).name() << std::endl;
-
-        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/ghost.lua", "ghost");
+        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
         std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
-
-
         if (!getter.expired())
             std::cout << getter.lock().get()->getPhrase() << std::endl;
         else

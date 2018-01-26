@@ -52,6 +52,21 @@ namespace UgandaEngine {
                 entity->addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), com);
                 return entity;
             }
+            if (componentName == "Display") {
+                //Todo: créer objet display
+            }
+            if (componentName == "Actions") {
+                //Todo: créer objet Action
+            }
+            if (componentName == "Velocity") {
+                //Todo: créer objet Velocity
+            }
+            if (componentName == "AI") {
+                //Todo: créer objet AI
+            }
+            if (componentName == "Collision") {
+                //Todo: créer objet Collision
+            }
         }
         throw std::invalid_argument("[X]Couldn't create entity [" + entityName + "] from file " + filePath);
     }
