@@ -38,7 +38,7 @@ namespace RTypeServer {
 
         void addPlayer();
 
-        void delPlayer(int nb);
+        void delPlayer();
 
         void setReady(int nb) { _ready[nb] = true; }
 

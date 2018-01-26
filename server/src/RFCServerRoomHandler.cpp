@@ -31,12 +31,12 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::RFCPlayerJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        // TODO: update les infos
+        _roomInfo.addPlayer();
     }
 
     void RFCServerRoomHandler::RFCPlayerLeaveRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        // TODO: update les infos aussi
+        _roomInfo.delPlayer();
     }
 
     void RFCServerRoomHandler::RFCReadyRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
