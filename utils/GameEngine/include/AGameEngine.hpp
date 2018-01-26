@@ -18,6 +18,7 @@
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
 #include "../../../client/Lib/include/ILib.hpp"
+#include "../../../utils/Protocol/Message.hpp"
 
 
 namespace UgandaEngine {
@@ -51,7 +52,7 @@ namespace UgandaEngine {
     public:
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
-                  const std::map<std::string, std::function<void()>> &action);
+                  const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
 
         void registerComponent(const std::type_index &type_index, const std::pair<std::string, AComponent> &component);
         UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,

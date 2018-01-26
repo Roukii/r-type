@@ -9,7 +9,7 @@ namespace UgandaEngine {
     namespace Factory {
 
         FactoryEntity::FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
-                                     const std::map<std::string, std::function<void()>> &action)
+                                     const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action)
         {
             _entity = entity;
             _action = action;
@@ -24,7 +24,7 @@ namespace UgandaEngine {
             }
             newEntity = std::make_shared<entity::Entity>();
             for (auto e : _entity[name]) {
-                newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
+                newEntity->_funcComp.insert(std::pair<std::string, std::function<void(RTypeProtocol::Message&)>>(e, _action[e]));
             }
             newEntity->_name = name;
             // LibGraĥique => pour récupérer toutes les données lié à l'affichage

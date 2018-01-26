@@ -14,6 +14,7 @@
 #include "../../../client/Lib/include/AnimatedSprite.hpp"
 #include "AComponent.hpp"
 #include "../../../client/Lib/include/EntityGraphique.hpp"
+#include "../../../utils/Protocol/Message.hpp"
 
 namespace UgandaEngine {
     namespace entity {
@@ -23,7 +24,7 @@ namespace UgandaEngine {
              */
         public:
             // Factory
-            std::map<std::string, std::function<void()>> _funcComp;
+            std::map<std::string, std::function<void(RTypeProtocol::Message&)>> _funcComp;
             std::string _name;
             std::shared_ptr<EntityFactoryData>              myGraph;
 

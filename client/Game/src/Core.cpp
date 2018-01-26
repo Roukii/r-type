@@ -18,7 +18,7 @@ Core::Core() : _state(std::make_shared<SplashState>())
 
     //Definition des entities et des fonctions associées
     std::map<std::string, std::vector<std::string>> entities;
-	std::map<std::string, std::function<void()>> functions;
+	std::map<std::string, std::function<void(RTypeProtocol::Message&)>> functions;
     std::shared_ptr<EntityFunc> func = std::make_shared<EntityFunc>();
 
     //On liste les components par nom
@@ -33,15 +33,16 @@ Core::Core() : _state(std::make_shared<SplashState>())
     entities["Ship"] = componentNames;
 
     //On associe à chaque nom de component une fonction
-    std::function<void()> left = func->move_left;
+    std::function<void(RTypeProtocol::Message&)> left = func->move_left;
+	//std::function<void(RTypeProtocol::Message&)> left = EntityFunc::move_left;
     functions["moveLeft"] = left;
-    std::function<void()> right = func->move_right;
+    std::function<void(RTypeProtocol::Message&)> right = func->move_right;
     functions["moveRight"] = right;
-    std::function<void()> down = func->move_down;
+    std::function<void(RTypeProtocol::Message&)> down = func->move_down;
     functions["moveDown"] = down;
-    std::function<void()> up = func->move_up;
+    std::function<void(RTypeProtocol::Message&)> up = func->move_up;
     functions["moveUp"] = up;
-    std::function<void()> shoot = func->shoot;
+    std::function<void(RTypeProtocol::Message&)> shoot = func->shoot;
     functions["shoot"] = shoot;
 
     //Confirmation
@@ -74,7 +75,8 @@ void    Core::start() {
     {
         std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
                 _engine->_factory->create("Ship", _engine->_libGraph));
-        ship->_funcComp["shoot"]();
+	    RTypeProtocol::Message msg;
+        ship->_funcComp["shoot"](msg);
 
         //Test
         UgandaEngine::TestComponent testComponent;
