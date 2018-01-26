@@ -39,6 +39,5 @@ namespace RTypeServer {
     void RFCGameHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
         std::cout << "RFCdelentitaie lol" << std::endl;
-
     }
 }

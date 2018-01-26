@@ -18,6 +18,7 @@ namespace RTypeProtocol
         NEW_ENTITY,
         MOV_ENTITY,
         DEL_ENTITY,
+        ACTION,
         ROOMS,
         INFO_ROOM,
         PLAYER_JOIN_ROOM,
@@ -72,6 +73,11 @@ namespace RTypeProtocol
         char _room[4];
     };
 
+    struct action
+    {
+        char _action;
+    };
+
     struct msg
     {
         header _header;
@@ -82,6 +88,7 @@ namespace RTypeProtocol
             entity _entity;
             room _room;
             nb_room _nb_room;
+            action _action;
         } data;
     };
 

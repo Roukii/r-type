@@ -38,7 +38,7 @@ namespace RTypeServer
         void RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCRooms(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-//        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+        void RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
         void getPortFromShortToChar(RTypeProtocol::Message &currentMessage, std::shared_ptr<RTypeServer::Room> &room);
 
