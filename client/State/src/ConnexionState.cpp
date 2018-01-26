@@ -35,6 +35,7 @@ int    ConnexionState::exec() {
     return lib->handleConnexion();
 }
 
-void   ConnexionState::init(std::shared_ptr<ILib> &lib) {
+void   ConnexionState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
     this->lib = lib;
+    this->info = info;
 }

@@ -36,6 +36,7 @@ int    LobbyState::exec() {
     return lib->handleLobby();
 }
 
-void   LobbyState::init(std::shared_ptr<ILib> &lib) {
+void   LobbyState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
     this->lib = lib;
+    this->info = info;
 }

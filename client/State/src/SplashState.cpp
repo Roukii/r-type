@@ -35,6 +35,7 @@ int    SplashState::exec() {
     return lib->handleSplash();
 }
 
-void   SplashState::init(std::shared_ptr<ILib> &lib) {
+void   SplashState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
     this->lib = lib;
+    this->info = info;
 }

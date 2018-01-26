@@ -35,6 +35,7 @@ int    OptionsState::exec() {
     return -1;
 }
 
-void   OptionsState::init(std::shared_ptr<ILib> &lib) {
+void   OptionsState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
     this->lib = lib;
+    this->info = info;
 }

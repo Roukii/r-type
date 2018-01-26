@@ -36,6 +36,7 @@ int    MenuState::exec() {
     return lib->handleMenu();
 }
 
-void   MenuState::init(std::shared_ptr<ILib> &lib) {
+void   MenuState::init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) {
     this->lib = lib;
+    this->info = info;
 }

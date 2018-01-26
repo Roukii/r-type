@@ -10,6 +10,7 @@
 
 class OptionsState : public IState {
     std::shared_ptr<ILib> lib;
+	std::shared_ptr<CoreInfo> info;
 public:
     OptionsState() = default;
     virtual ~OptionsState() = default;
@@ -21,7 +22,7 @@ public:
     virtual void lobby(std::shared_ptr<IState> &state);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib);
+    virtual void init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info);
 };
 
 #endif //R_TYPE_OPTIONSSCREEN_HPP

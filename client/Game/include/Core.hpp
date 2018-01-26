@@ -13,6 +13,7 @@
 class Core {
     std::shared_ptr<IState>	_state;
 	std::shared_ptr<UgandaEngine::AGameEngine> _engine;
+	std::shared_ptr<CoreInfo> _info;
 public:
 	Core();
 	~Core() = default;

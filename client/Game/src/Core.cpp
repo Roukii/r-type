@@ -109,30 +109,30 @@ void    Core::start() {
 
 void	Core::splash(){
     this->_state->splash(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }
 
 void	Core::menu() {
     this->_state->menu(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }
 
 void	Core::options() {
     this->_state->options(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }
 
 void	Core::game() {
     this->_state->game(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }
 
 void	Core::connexion() {
     this->_state->connexion(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }
 
 void	Core::lobby() {
     this->_state->lobby(_state);
-    this->_state->init(_engine->_libGraph);
+    this->_state->init(_engine->_libGraph, _info);
 }

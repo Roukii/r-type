@@ -6,6 +6,7 @@
 #define R_TYPE_ISTATE_HPP
 
 #include <memory>
+#include <CoreInfo.hpp>
 
 #include "ILib.hpp"
 
@@ -19,7 +20,7 @@ public:
     virtual void lobby(std::shared_ptr<IState> &state) = 0;
 
     virtual int exec() = 0;
-    virtual void init(std::shared_ptr<ILib> &lib) = 0;
+    virtual void init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info) = 0;
     template<typename T>
     IState* screen() {
         return new T();
