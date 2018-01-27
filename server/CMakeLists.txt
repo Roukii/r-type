@@ -32,5 +32,6 @@ if(Boost_FOUND)
 endif()
 
 if (UNIX)
+    target_link_libraries(Server ${CMAKE_DL_LIBS})
     target_link_libraries(Server -lpthread)
 endif()

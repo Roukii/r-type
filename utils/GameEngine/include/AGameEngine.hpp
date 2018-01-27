@@ -11,14 +11,12 @@
 #include <map>
 #include <functional>
 #include <memory>
-//#include <dlfcn.h>
-//#include <lua.hpp>
-//#include <LuaBridge.h>
+#include <dlfcn.h>
 #include "Entity.hpp"
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
-#include "ILib.hpp"
-#include "Message.hpp"
+#include "../../../client/Lib/include/ILib.hpp"
+#include "../../../utils/Protocol/Message.hpp"
 
 
 namespace UgandaEngine {
@@ -32,7 +30,6 @@ namespace UgandaEngine {
     private:
         //List of entities and components
         std::vector<entity::Entity> _entities;
-        std::map<std::type_index, std::pair<std::string, AComponent> >_components;
 
     public:
         std::shared_ptr<ILib> _libGraph;
@@ -44,6 +41,7 @@ namespace UgandaEngine {
          */
     public:
         AGameEngine();
+
         ~AGameEngine() = default;
 
         /*
@@ -52,11 +50,8 @@ namespace UgandaEngine {
     public:
         void init(const std::vector<std::string> &component,
                   const std::map<std::string, std::vector<std::string>> &entity,
-                  const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
+                  const std::map<std::string, std::function<void(RTypeProtocol::Message &)>> &action);
 
-//        void registerComponent(const std::type_index &type_index, const std::pair<std::string, AComponent> &component);
-//        UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
-//                                                                      const std::string &entityName);
     };
 }
 

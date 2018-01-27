@@ -72,31 +72,15 @@ Core::Core() : _state(std::make_shared<SplashState>(_info))
 
 void    Core::start() {
     int ret = 0;
-    splash();
 
-//    //TODO: zone de test!!!
-//    {
-//        std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
-//                _engine->_factory->create("Ship", _engine->_libGraph));
-//	    RTypeProtocol::Message msg;
-//        ship->_funcComp["shoot"](msg);
-//
-//        //Test
-//        UgandaEngine::TestComponent testComponent;
-//        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
-//        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
-//        if (!getter.expired())
-//            std::cout << getter.lock().get()->getPhrase() << std::endl;
-//        else
-//            std::cout << "error "<< std::endl;
-//    }
+    splash();
 
     while (ret != -2) {
         ret =  _state->exec();
         if (ret == 0)
             splash();
         else if (ret == 1) {
-            _info.startSocket(_engine->_libGraph->getIpAdress(), atoi(_engine->_libGraph->getPort().c_str()));
+            _info.startSocket(_engine->_libGraph->getIpAdress(), std::atoi(_engine->_libGraph->getPort().c_str()));
             if (checkServer())
             {
                 menu();

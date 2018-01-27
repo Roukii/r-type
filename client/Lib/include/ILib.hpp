@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <iostream>
-
+#include <vector>
 #include "EntityGraphique.hpp"
 
 class ILib {
@@ -28,6 +28,7 @@ public:
 	virtual int         handleLobby() = 0;
 	virtual std::string getIpAdress() = 0;
 	virtual std::string getPort() = 0;
+	virtual std::vector<char> handleClientAction() = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 };
 

@@ -60,8 +60,26 @@ void 		UGL::init() {
 	loadText(410, 485, 60, item[1], "ITEM 1");
 	(*getText("ITEM 0")).setColor(sf::Color::Black);
 	(*getText("ITEM 1")).setColor(sf::Color::Black);
+    loadText(90 * 20 / 5, 450, 60, "ROOM 1", "ROOM 1");
+    loadText(90 * 20 / 5, 550, 60, "ROOM 2", "ROOM 2");
+    loadText(90 * 20 / 5, 650, 60, "ROOM 3", "ROOM 3");
+    loadText(90 * 20 / 5, 750, 60, "ROOM 4", "ROOM 4");
 
-	ip.setSize(sf::Vector2f(500, 80));
+    players[0] = "0";
+    players[1] = "0";
+    players[2] = "0";
+    players[3] = "0";
+    loadText(90 * 20 / 5, 450, 60, players[0], "ROOM 1 NB");
+    loadText(90 * 20 / 5, 550, 60, players[1], "ROOM 2 NB");
+    loadText(90 * 20 / 5, 650, 60, players[2], "ROOM 3 NB");
+    loadText(90 * 20 / 5, 750, 60, players[3], "ROOM 4 NB");
+
+    loadText(90 * 20 / 5, 750, 60, "/4", "/4");
+    loadText(90 * 20 / 5, 750, 60, "/4", "/4 ");
+    loadText(90 * 20 / 5, 750, 60, "/4", "/4  ");
+    loadText(90 * 20 / 5, 750, 60, "/4", "/4   ");
+
+    ip.setSize(sf::Vector2f(500, 80));
 	ip.setPosition(sf::Vector2f(400, 280));
 
 	port.setSize(sf::Vector2f(500, 80));
@@ -243,8 +261,8 @@ void UGL::handleAlpha() {
 }
 
 int UGL::handleSplash() {
+    std::cout << "test" << std::endl;
 	sf::Event event;
-	int ret;
 	while (getWindow()->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
 			getWindow()->close();
@@ -280,10 +298,27 @@ int UGL::handleLobby() {
 		//TODO LOBBY
 		getWindow()->draw(*getSprite("Background1").get());
 		getWindow()->draw(*getText("PRESS KEY").get());
+        getWindow()->draw(*getSprite("ROOM 1").get());
+        getWindow()->draw(*getSprite("ROOM 2").get());
+        getWindow()->draw(*getSprite("ROOM 3").get());
+        getWindow()->draw(*getSprite("ROOM 4").get());
+        getWindow()->draw(*getSprite("ROOM 1 NB").get());
+        getWindow()->draw(*getSprite("ROOM 2 NB").get());
+        getWindow()->draw(*getSprite("ROOM 3 NB").get());
+        getWindow()->draw(*getSprite("ROOM 4 NB").get());
+        getWindow()->draw(*getSprite("/4").get());
+        getWindow()->draw(*getSprite("/4 ").get());
+        getWindow()->draw(*getSprite("/4  ").get());
+        getWindow()->draw(*getSprite("/4   ").get());
 		getWindow()->display();
 		return -1;
 	} else
 		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
+
+void UGL::setPlayer(std::string room, std::string players) {
+
+    (*getText(room + "NB").get()).setString(players);
 }
 
 void UGL::handleKeysConnexion(const sf::Event&e) {
@@ -327,6 +362,27 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 	}
 }
 
+std::vector<char> UGL::handleClientAction()
+{
+    sf::Event event;
+    std::vector<char> unicodeEvent;
+
+    while (getWindow()->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            getWindow()->close();
+            unicodeEvent.push_back(27);
+            return unicodeEvent;
+        }
+        if (event.type == sf::Event::KeyPressed) {
+            if (unicodeEvent.empty())
+                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+            else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
+                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+        }
+    }
+    return unicodeEvent;
+}
+
 int UGL::handleConnexion() {
 	sf::Event event;
 	while (getWindow()->pollEvent(event)) {
@@ -335,9 +391,20 @@ int UGL::handleConnexion() {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Space) {
 			//TODO	if connexion reussi
-
 				return 1;
 			}
+            if (event.key.code == sf::Keyboard::Tab) {
+                if (boxSelected == 1) {
+                    boxSelected = 2;
+                    port.setFillColor(sf::Color::Green);
+                    ip.setFillColor(sf::Color::White);
+                }
+                else if (boxSelected == 2) {
+                    boxSelected = 1;
+                    ip.setFillColor(sf::Color::Green);
+                    port.setFillColor(sf::Color::White);
+                }
+            }
 		}
 		handleKeysConnexion(event);
 	}
