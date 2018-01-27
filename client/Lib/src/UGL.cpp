@@ -7,7 +7,7 @@
 
 UGL::UGL() : _window(std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "R-Type"))
 {
-    // Tous les emplacement sprite avec un nom => remplir toutes ses map
+	// Tous les emplacement sprite avec un nom => remplir toutes ses map
 }
 
 UGL::~UGL()
@@ -16,6 +16,7 @@ UGL::~UGL()
 }
 
 void 		UGL::init() {
+<<<<<<< HEAD
     /*_texture = new sf::Texture;
     if (!_texture->loadFromFile("assets/ship_1.png"))
         throw std::invalid_argument("Error: Cannot load image");*/
@@ -103,6 +104,79 @@ void 		UGL::init() {
 
     ip.setSize(sf::Vector2f(500, 80));
     ip.setPosition(sf::Vector2f(400, 280));
+=======
+	/*_texture = new sf::Texture;
+	if (!_texture->loadFromFile("assets/ship_1.png"))
+		throw std::invalid_argument("Error: Cannot load image");*/
+
+	loadSprite("../assets/ship_1.png", "Ship1");
+	// UP ANIM
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_up");
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
+	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(8, 11, 23, 15));
+
+	// DOWN ANIM
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_down");
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
+	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
+
+	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_none");
+	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
+
+	loadSprite("../assets/ship_3.png", "Enemy1");
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(5, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
+
+	loadSprite("../assets/Stars.jpg", "Background1");
+	getSprite("Background1")->setColor(sf::Color::Cyan);
+
+	loadSprite("../assets/HandCursor.gif", "Cursor1");
+	getSprite("Cursor1")->setPosition(90 * 20 / 6, 580);
+
+	loadSound("../assets/cursor.ogg", "Cursor2");
+
+	loadFont("../assets/Enter-The-Grid.ttf");
+
+	loadText(90 * 20 / 5, 550, 60, "New Game", "New Game");
+	loadText(90 * 20 / 5, 650, 60, "Options", "Options");
+	loadText(90 * 20 / 5, 750, 60, "Quit", "Quit");
+	loadText(90 * 20 / 2.8, 150, 200, "R TYPE", "R TYPE");
+	loadText(250, 850, 100, "PRESS A KEY TO CONTINUE", "PRESS KEY");
+	loadText(250, 850, 100, "PRESS SPACE TO CONTINUE", "PRESS SPACE");
+	loadText(400, 200, 60, "IP ADRESS", "IP ADRESS");
+	loadText(400, 400, 60, "PORT", "PORT");
+	loadText(410, 285, 60, item[0], "ITEM 0");
+	loadText(410, 485, 60, item[1], "ITEM 1");
+	(*getText("ITEM 0")).setColor(sf::Color::Black);
+	(*getText("ITEM 1")).setColor(sf::Color::Black);
+	loadText(90 * 20 / 5, 450, 60, "ROOM 1", "ROOM 1");
+	loadText(90 * 20 / 5, 550, 60, "ROOM 2", "ROOM 2");
+	loadText(90 * 20 / 5, 650, 60, "ROOM 3", "ROOM 3");
+	loadText(90 * 20 / 5, 750, 60, "ROOM 4", "ROOM 4");
+
+	players[0] = "0";
+	players[1] = "0";
+	players[2] = "0";
+	players[3] = "0";
+	loadText(90 * 20 / 5, 450, 60, players[0], "ROOM 1 NB");
+	loadText(90 * 20 / 5, 550, 60, players[1], "ROOM 2 NB");
+	loadText(90 * 20 / 5, 650, 60, players[2], "ROOM 3 NB");
+	loadText(90 * 20 / 5, 750, 60, players[3], "ROOM 4 NB");
+
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4 ");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4  ");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4   ");
+
+	ip.setSize(sf::Vector2f(500, 80));
+	ip.setPosition(sf::Vector2f(400, 280));
+>>>>>>> origin/master
 
     port.setSize(sf::Vector2f(500, 80));
     port.setPosition(sf::Vector2f(400, 480));
@@ -285,6 +359,7 @@ void UGL::handleAlpha() {
 }
 
 int UGL::handleSplash() {
+<<<<<<< HEAD
     std::cout << "test" << std::endl;
     sf::Event event;
     while (getWindow()->pollEvent(event)) {
@@ -408,10 +483,66 @@ int UGL::handleLobby() {
         return -1;
     } else
         throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+=======
+	std::cout << "test" << std::endl;
+	sf::Event event;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			return 4;
+		}
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		//TODO SPLASHSCREEN
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("PRESS KEY").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
+
+int UGL::handleLobby() {
+	sf::Event event;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			getSprite("Background1").get()->setColor(sf::Color::Magenta);
+			return 3;
+		}
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		//TODO LOBBY
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("PRESS KEY").get());
+		getWindow()->draw(*getSprite("ROOM 1").get());
+		getWindow()->draw(*getSprite("ROOM 2").get());
+		getWindow()->draw(*getSprite("ROOM 3").get());
+		getWindow()->draw(*getSprite("ROOM 4").get());
+		getWindow()->draw(*getSprite("ROOM 1 NB").get());
+		getWindow()->draw(*getSprite("ROOM 2 NB").get());
+		getWindow()->draw(*getSprite("ROOM 3 NB").get());
+		getWindow()->draw(*getSprite("ROOM 4 NB").get());
+		getWindow()->draw(*getSprite("/4").get());
+		getWindow()->draw(*getSprite("/4 ").get());
+		getWindow()->draw(*getSprite("/4  ").get());
+		getWindow()->draw(*getSprite("/4   ").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+>>>>>>> origin/master
 }
 
 void UGL::setPlayer(std::string room, std::string players) {
 
+<<<<<<< HEAD
     (*getText(room + " NB").get()).setString(players);
 }
 
@@ -454,30 +585,75 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
             }
         }
     }
+=======
+	(*getText(room + "NB").get()).setString(players);
+}
+
+void UGL::handleKeysConnexion(const sf::Event&e) {
+	if (e.type == sf::Event::MouseButtonPressed) {
+		if (e.mouseButton.button == sf::Mouse::Left) {
+			if (e.mouseButton.x > 400 && e.mouseButton.x < 900
+			    && e.mouseButton.y > 280 && e.mouseButton.y < 360) {
+				boxSelected = 1;
+				ip.setFillColor(sf::Color::Green);
+				port.setFillColor(sf::Color::White);
+			} else if (e.mouseButton.x > 400 && e.mouseButton.x < 900
+				   && e.mouseButton.y > 480 && e.mouseButton.y < 560) {
+				boxSelected = 2;
+				port.setFillColor(sf::Color::Green);
+				ip.setFillColor(sf::Color::White);
+			} else {
+				boxSelected = 0;
+				ip.setFillColor(sf::Color::White);
+				port.setFillColor(sf::Color::White);
+			}
+		}
+	} else if (e.type == sf::Event::TextEntered && boxSelected != 0) {
+		if (e.text.unicode == '\b') {
+			if (item[boxSelected - 1].size() > 0)
+				item[boxSelected - 1].erase(item[boxSelected - 1].size() - 1, 1);
+			if (boxSelected == 1)
+				(*getText("ITEM 0").get()).setString(item[0]);
+			else if (boxSelected == 1)
+				(*getText("ITEM 1").get()).setString(item[1]);
+		} else if ((e.text.unicode >= '0' && e.text.unicode <= '9') ||
+			   e.text.unicode == '.') {
+			if (boxSelected == 2 && (e.text.unicode >= '0' && e.text.unicode <= '9')) {
+				item[1] += static_cast<char>(e.text.unicode);
+				(*getText("ITEM 1").get()).setString(item[1]);
+			} else if (boxSelected == 1 && ((e.text.unicode >= '0' &&
+							 e.text.unicode <= '9') || e.text.unicode == '.')) {
+				item[0] += static_cast<char>(e.text.unicode);
+				(*getText("ITEM 0").get()).setString(item[0]);
+			}
+		}
+	}
+>>>>>>> origin/master
 }
 
 std::vector<char> UGL::handleClientAction()
 {
-    sf::Event event;
-    std::vector<char> unicodeEvent;
+	sf::Event event;
+	std::vector<char> unicodeEvent;
 
-    while (getWindow()->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            getWindow()->close();
-            unicodeEvent.push_back(27);
-            return unicodeEvent;
-        }
-        if (event.type == sf::Event::KeyPressed) {
-            if (unicodeEvent.empty())
-                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
-            else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
-                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
-        }
-    }
-    return unicodeEvent;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed) {
+			getWindow()->close();
+			unicodeEvent.push_back(27);
+			return unicodeEvent;
+		}
+		if (event.type == sf::Event::KeyPressed) {
+			if (unicodeEvent.empty())
+				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
+				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+		}
+	}
+	return unicodeEvent;
 }
 
 int UGL::handleConnexion() {
+<<<<<<< HEAD
     sf::Event event;
     while (getWindow()->pollEvent(event)) {
         if (event.type == sf::Event::Closed)
@@ -517,10 +693,55 @@ int UGL::handleConnexion() {
         return -1;
     } else
         throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+=======
+	sf::Event event;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			getWindow()->close();
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::Space) {
+				//TODO	if connexion reussi
+				return 1;
+			}
+			if (event.key.code == sf::Keyboard::Tab) {
+				if (boxSelected == 1) {
+					boxSelected = 2;
+					port.setFillColor(sf::Color::Green);
+					ip.setFillColor(sf::Color::White);
+				}
+				else if (boxSelected == 2) {
+					boxSelected = 1;
+					ip.setFillColor(sf::Color::Green);
+					port.setFillColor(sf::Color::White);
+				}
+			}
+		}
+		handleKeysConnexion(event);
+	}
+	if (getWindow() != nullptr) {
+		handleAlpha();
+		getWindow()->clear();
+		getWindow()->draw(*getSprite("Background1").get());
+		getWindow()->draw(*getText("IP ADRESS").get());
+		getWindow()->draw(*getText("PORT").get());
+		getWindow()->draw(ip);
+		getWindow()->draw(port);
+		getWindow()->draw(*getText("ITEM 0").get());
+		getWindow()->draw(*getText("ITEM 1").get());
+		getWindow()->draw(*getText("PRESS SPACE").get());
+		getWindow()->display();
+		return -1;
+	} else
+		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+>>>>>>> origin/master
 }
 
 extern "C" {
 ILib		*create_lib() {
+<<<<<<< HEAD
     return new UGL();
+=======
+	return new UGL();
+>>>>>>> origin/master
 }
 }
