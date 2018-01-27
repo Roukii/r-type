@@ -15,6 +15,7 @@ namespace UgandaEngine {
     }
 
     AGameEngine::AGameEngine() {
+        /*
         ILib *get;
         ILib *(*external_creator)();
         void *_handle = dlopen("../build/libUGL.so", RTLD_LAZY);
@@ -29,6 +30,7 @@ namespace UgandaEngine {
         std::shared_ptr<ILib> getShared(get);
         _libGraph = getShared;
         _libGraph->init();
+         */
     }
 
 //    UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,

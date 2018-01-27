@@ -15,19 +15,15 @@ INCLUDE_DIRECTORIES(Game/include State/include Lib/include ../utils/GameEngine/i
 FILE(GLOB CLIENT_GAME_SOURCES Game/include/*.hpp Game/src/*.cpp State/include/*.hpp State/src/*.cpp ../utils/GameEngine/include/*.hpp ../utils/GameEngine/src/*.cpp Network/src/*.cpp Network/include/*.hpp ../utils/*.h ../utils/Protocol/*.hpp)
 FILE(GLOB CLIENT_GRAPHIC_LIBRARY_SOURCES Lib/include/*.hpp Lib/src/*.cpp)
 
-#Create libUGL.so
-add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
-
-#Create executable
-add_executable(UgandaPilote ${CLIENT_GAME_SOURCES} Network/src/ClientUdp.cpp)
-
-target_link_libraries(UgandaPilote UGL)
-
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
 find_package(SFML 2 REQUIRED network audio graphics window system)
+
+
+#Create libUGL.so
+add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
 
 #Create executable
 add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
