@@ -20,9 +20,9 @@
 class MenuState : public IState {
     int selected = 0;
     std::shared_ptr<ILib> lib;
-	std::shared_ptr<CoreInfo> info;
+	CoreInfo &_info;
 public:
-    MenuState() = default;
+    MenuState(CoreInfo &info) : _info(info) {};
     virtual ~MenuState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
@@ -32,7 +32,7 @@ public:
     virtual void lobby(std::shared_ptr<IState> &state);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info);
+    virtual void init(std::shared_ptr<ILib> &lib);
 
     void    moveUp();
     int handleKeys(const sf::Event&e);

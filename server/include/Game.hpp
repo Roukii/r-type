@@ -26,8 +26,12 @@ namespace RTypeGame {
         /*
          * Function and methods
          */
+    public:
         void init();
         void play(double elapsedTime);
+
+    private:
+        void updateWorld();
     };
 }
 

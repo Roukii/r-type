@@ -26,6 +26,8 @@ public:
 	virtual int         handleSplash() = 0;
 	virtual int         handleConnexion() = 0;
 	virtual int         handleLobby() = 0;
+	virtual std::string getIpAdress() = 0;
+	virtual std::string getPort() = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 };
 

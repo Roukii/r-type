@@ -18,6 +18,10 @@ FILE(GLOB CLIENT_GRAPHIC_LIBRARY_SOURCES Lib/include/*.hpp Lib/src/*.cpp)
 #Create libUGL.so
 add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
 
+#Create executable
+add_executable(UgandaPilote ${CLIENT_GAME_SOURCES} Network/src/ClientUdp.cpp)
+
+target_link_libraries(UgandaPilote UGL)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

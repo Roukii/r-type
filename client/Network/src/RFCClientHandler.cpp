@@ -6,7 +6,7 @@
 
 namespace RTypeClient
 {
-    RFCClientHandler::RFCClientHandler(IClientUdpSocket<RTypeProtocol::Message> &socket) : _socket(socket)
+    RFCClientHandler::RFCClientHandler(IClientUdpSocket &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }

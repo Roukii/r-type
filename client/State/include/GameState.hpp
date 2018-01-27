@@ -10,9 +10,9 @@
 
 class GameState : public IState {
     std::shared_ptr<ILib> lib;
-	std::shared_ptr<CoreInfo> info;
+	CoreInfo &_info;
 public:
-    GameState() = default;
+    GameState(CoreInfo &info) : _info(info) {};
     virtual ~GameState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
@@ -22,7 +22,7 @@ public:
     virtual void lobby(std::shared_ptr<IState> &state);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib, std::shared_ptr<CoreInfo> &info);
+    virtual void init(std::shared_ptr<ILib> &lib);
 };
 
 #endif //R_TYPE_GAMESCREEN_HPP

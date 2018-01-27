@@ -81,6 +81,8 @@ protected:
 
 	int handleLobby() override;
 
+	std::string getIpAdress() {return item[0];};
+	std::string getPort(){return item[1];};
 
 	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;
