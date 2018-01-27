@@ -4,34 +4,40 @@
 
 #include "EntityFunc.hpp"
 
-void EntityFunc::move_up(RTypeProtocol::Message &msg) {
+void EntityFunc::move_up(RTypeProtocol::Message &msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::UP;
+	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::move_down(RTypeProtocol::Message &msg) {
+void EntityFunc::move_down(RTypeProtocol::Message &msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::DOWN;
+	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::move_right(RTypeProtocol::Message &msg) {
+void EntityFunc::move_right(RTypeProtocol::Message &msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::RIGHT;
+	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::move_left(RTypeProtocol::Message &msg) {
+void EntityFunc::move_left(RTypeProtocol::Message &msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::LEFT;
+	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::shoot(RTypeProtocol::Message &msg) {
+void EntityFunc::shoot(RTypeProtocol::Message &msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::SHOOT;
+	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::leave(RTypeProtocol::Message& msg) {
+void EntityFunc::leave(RTypeProtocol::Message& msg, CoreInfo& info) {
 	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 	msg._msg.get()->data._action._action = RTypeProtocol::actions::LEAVE;
+	info.getSocket().get()->SendToServer(msg);
 }
 
 void EntityFunc::updatePosition(sf::Vector2f pos, const UgandaEngine::entity::Entity& entity) {
