@@ -13,6 +13,7 @@ std::shared_ptr<IClientUdpSocket>& CoreInfo::getSocket() {
 }
 
 void CoreInfo::startSocket(const std::string& host, unsigned short hostPort) {
+    std::cout << "start socket lel" << std::endl;
     _host = host;
     getRandomPort();
     std::cout << "get random port : " << _port << std::endl;
@@ -38,4 +39,18 @@ unsigned short CoreInfo::getRandomPort() {
         _port = random.Generate(4000, 5000);
     }
     return _port;
+}
+
+bool CoreInfo::isRunning() const {
+	if (_socket.get() == nullptr)
+		return false;
+	return _socket.get()->isRunning();
+}
+
+void CoreInfo::addElemToRoom(CoreInfo::RoomInfo& room) {
+	if (_rooms.size() == 4)
+	{
+		resetRoom();
+	}
+		_rooms.push_back(room);
 }

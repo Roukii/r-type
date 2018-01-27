@@ -43,11 +43,12 @@ protected:
 	int aState = 0;
 	int boxSelected = 0;
 	int joinSelected = 0;
-    std::string players[4];
+	std::string players[4];
 	std::string item[2];
 	sf::RectangleShape ip;
 	sf::RectangleShape port;
 	sf::RectangleShape join[4];
+	std::string	_keybinding[5];
 
 	void 		init() override;
 	void		loadLib() override;
@@ -83,13 +84,15 @@ protected:
 	void handleKeysConnexion(const sf::Event &e);
 
 	int handleLobby() override;
-    void setPlayer(std::string room, std::string players);
+	void setPlayer(std::string room, std::string players);
 
 	std::string getIpAdress() {return item[0];};
 	std::string getPort(){return item[1];};
 
 	int         handleGame();
 	int getJoin() {return joinSelected;};
+
+	int		handleOption() override;
 
 	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;
@@ -99,7 +102,7 @@ protected:
 	std::map<std::string, std::shared_ptr<sf::Text>>	_texts;
 	std::map<std::string, std::shared_ptr<Animation>>	_animations;
 
-    std::vector<char> handleClientAction() override;
+	std::vector<char> handleClientAction() override;
 };
 
 #endif /* DISPLAYTESTS_UGL_HPP */

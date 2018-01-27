@@ -32,7 +32,7 @@ void	OptionsState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    OptionsState::exec() {
-    return -1;
+    return lib->handleOption();
 }
 
 void   OptionsState::init(std::shared_ptr<ILib> &lib) {

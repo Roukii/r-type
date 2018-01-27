@@ -90,7 +90,8 @@ void    Core::start() {
 		if (ret == 0)
 			splash();
 		else if (ret == 1) {
-			_info.startSocket(_engine->_libGraph->getIpAdress(), std::atoi(_engine->_libGraph->getPort().c_str()));
+			if (!_info.isRunning())
+				_info.startSocket(_engine->_libGraph->getIpAdress(), std::atoi(_engine->_libGraph->getPort().c_str()));
 			if (checkServer())
 			{
 				menu();
@@ -109,6 +110,7 @@ void    Core::start() {
 		else if (ret == 5)
 			lobby();
 	}
+	_info.shutdownSocket();
 }
 
 void	Core::splash(){
