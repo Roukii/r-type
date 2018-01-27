@@ -7,7 +7,7 @@
 
 UGL::UGL() : _window(std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "R-Type"))
 {
-    // Tous les emplacement sprite avec un nom => remplir toutes ses map
+	// Tous les emplacement sprite avec un nom => remplir toutes ses map
 }
 
 UGL::~UGL()
@@ -38,6 +38,12 @@ void 		UGL::init() {
 	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_none");
 	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
 
+	loadSprite("../assets/ship_3.png", "Enemy1");
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(5, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
+	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
+
 	loadSprite("../assets/Stars.jpg", "Background1");
 	getSprite("Background1")->setColor(sf::Color::Cyan);
 
@@ -60,26 +66,26 @@ void 		UGL::init() {
 	loadText(410, 485, 60, item[1], "ITEM 1");
 	(*getText("ITEM 0")).setColor(sf::Color::Black);
 	(*getText("ITEM 1")).setColor(sf::Color::Black);
-    loadText(90 * 20 / 5, 450, 60, "ROOM 1", "ROOM 1");
-    loadText(90 * 20 / 5, 550, 60, "ROOM 2", "ROOM 2");
-    loadText(90 * 20 / 5, 650, 60, "ROOM 3", "ROOM 3");
-    loadText(90 * 20 / 5, 750, 60, "ROOM 4", "ROOM 4");
+	loadText(90 * 20 / 5, 450, 60, "ROOM 1", "ROOM 1");
+	loadText(90 * 20 / 5, 550, 60, "ROOM 2", "ROOM 2");
+	loadText(90 * 20 / 5, 650, 60, "ROOM 3", "ROOM 3");
+	loadText(90 * 20 / 5, 750, 60, "ROOM 4", "ROOM 4");
 
-    players[0] = "0";
-    players[1] = "0";
-    players[2] = "0";
-    players[3] = "0";
-    loadText(90 * 20 / 5, 450, 60, players[0], "ROOM 1 NB");
-    loadText(90 * 20 / 5, 550, 60, players[1], "ROOM 2 NB");
-    loadText(90 * 20 / 5, 650, 60, players[2], "ROOM 3 NB");
-    loadText(90 * 20 / 5, 750, 60, players[3], "ROOM 4 NB");
+	players[0] = "0";
+	players[1] = "0";
+	players[2] = "0";
+	players[3] = "0";
+	loadText(90 * 20 / 5, 450, 60, players[0], "ROOM 1 NB");
+	loadText(90 * 20 / 5, 550, 60, players[1], "ROOM 2 NB");
+	loadText(90 * 20 / 5, 650, 60, players[2], "ROOM 3 NB");
+	loadText(90 * 20 / 5, 750, 60, players[3], "ROOM 4 NB");
 
-    loadText(90 * 20 / 5, 750, 60, "/4", "/4");
-    loadText(90 * 20 / 5, 750, 60, "/4", "/4 ");
-    loadText(90 * 20 / 5, 750, 60, "/4", "/4  ");
-    loadText(90 * 20 / 5, 750, 60, "/4", "/4   ");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4 ");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4  ");
+	loadText(90 * 20 / 5, 750, 60, "/4", "/4   ");
 
-    ip.setSize(sf::Vector2f(500, 80));
+	ip.setSize(sf::Vector2f(500, 80));
 	ip.setPosition(sf::Vector2f(400, 280));
 
 	port.setSize(sf::Vector2f(500, 80));
@@ -261,7 +267,7 @@ void UGL::handleAlpha() {
 }
 
 int UGL::handleSplash() {
-    std::cout << "test" << std::endl;
+	std::cout << "test" << std::endl;
 	sf::Event event;
 	while (getWindow()->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
@@ -298,18 +304,18 @@ int UGL::handleLobby() {
 		//TODO LOBBY
 		getWindow()->draw(*getSprite("Background1").get());
 		getWindow()->draw(*getText("PRESS KEY").get());
-        getWindow()->draw(*getSprite("ROOM 1").get());
-        getWindow()->draw(*getSprite("ROOM 2").get());
-        getWindow()->draw(*getSprite("ROOM 3").get());
-        getWindow()->draw(*getSprite("ROOM 4").get());
-        getWindow()->draw(*getSprite("ROOM 1 NB").get());
-        getWindow()->draw(*getSprite("ROOM 2 NB").get());
-        getWindow()->draw(*getSprite("ROOM 3 NB").get());
-        getWindow()->draw(*getSprite("ROOM 4 NB").get());
-        getWindow()->draw(*getSprite("/4").get());
-        getWindow()->draw(*getSprite("/4 ").get());
-        getWindow()->draw(*getSprite("/4  ").get());
-        getWindow()->draw(*getSprite("/4   ").get());
+		getWindow()->draw(*getSprite("ROOM 1").get());
+		getWindow()->draw(*getSprite("ROOM 2").get());
+		getWindow()->draw(*getSprite("ROOM 3").get());
+		getWindow()->draw(*getSprite("ROOM 4").get());
+		getWindow()->draw(*getSprite("ROOM 1 NB").get());
+		getWindow()->draw(*getSprite("ROOM 2 NB").get());
+		getWindow()->draw(*getSprite("ROOM 3 NB").get());
+		getWindow()->draw(*getSprite("ROOM 4 NB").get());
+		getWindow()->draw(*getSprite("/4").get());
+		getWindow()->draw(*getSprite("/4 ").get());
+		getWindow()->draw(*getSprite("/4  ").get());
+		getWindow()->draw(*getSprite("/4   ").get());
 		getWindow()->display();
 		return -1;
 	} else
@@ -318,19 +324,19 @@ int UGL::handleLobby() {
 
 void UGL::setPlayer(std::string room, std::string players) {
 
-    (*getText(room + "NB").get()).setString(players);
+	(*getText(room + "NB").get()).setString(players);
 }
 
 void UGL::handleKeysConnexion(const sf::Event&e) {
 	if (e.type == sf::Event::MouseButtonPressed) {
 		if (e.mouseButton.button == sf::Mouse::Left) {
 			if (e.mouseButton.x > 400 && e.mouseButton.x < 900
-				&& e.mouseButton.y > 280 && e.mouseButton.y < 360) {
+			    && e.mouseButton.y > 280 && e.mouseButton.y < 360) {
 				boxSelected = 1;
 				ip.setFillColor(sf::Color::Green);
 				port.setFillColor(sf::Color::White);
 			} else if (e.mouseButton.x > 400 && e.mouseButton.x < 900
-					   && e.mouseButton.y > 480 && e.mouseButton.y < 560) {
+				   && e.mouseButton.y > 480 && e.mouseButton.y < 560) {
 				boxSelected = 2;
 				port.setFillColor(sf::Color::Green);
 				ip.setFillColor(sf::Color::White);
@@ -349,12 +355,12 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 			else if (boxSelected == 1)
 				(*getText("ITEM 1").get()).setString(item[1]);
 		} else if ((e.text.unicode >= '0' && e.text.unicode <= '9') ||
-				   e.text.unicode == '.') {
+			   e.text.unicode == '.') {
 			if (boxSelected == 2 && (e.text.unicode >= '0' && e.text.unicode <= '9')) {
 				item[1] += static_cast<char>(e.text.unicode);
 				(*getText("ITEM 1").get()).setString(item[1]);
 			} else if (boxSelected == 1 && ((e.text.unicode >= '0' &&
-										  e.text.unicode <= '9') || e.text.unicode == '.')) {
+							 e.text.unicode <= '9') || e.text.unicode == '.')) {
 				item[0] += static_cast<char>(e.text.unicode);
 				(*getText("ITEM 0").get()).setString(item[0]);
 			}
@@ -364,23 +370,23 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 
 std::vector<char> UGL::handleClientAction()
 {
-    sf::Event event;
-    std::vector<char> unicodeEvent;
+	sf::Event event;
+	std::vector<char> unicodeEvent;
 
-    while (getWindow()->pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            getWindow()->close();
-            unicodeEvent.push_back(27);
-            return unicodeEvent;
-        }
-        if (event.type == sf::Event::KeyPressed) {
-            if (unicodeEvent.empty())
-                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
-            else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
-                unicodeEvent.push_back(static_cast<char>(event.text.unicode));
-        }
-    }
-    return unicodeEvent;
+	while (getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed) {
+			getWindow()->close();
+			unicodeEvent.push_back(27);
+			return unicodeEvent;
+		}
+		if (event.type == sf::Event::KeyPressed) {
+			if (unicodeEvent.empty())
+				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
+				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+		}
+	}
+	return unicodeEvent;
 }
 
 int UGL::handleConnexion() {
@@ -390,21 +396,21 @@ int UGL::handleConnexion() {
 			getWindow()->close();
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Space) {
-			//TODO	if connexion reussi
+				//TODO	if connexion reussi
 				return 1;
 			}
-            if (event.key.code == sf::Keyboard::Tab) {
-                if (boxSelected == 1) {
-                    boxSelected = 2;
-                    port.setFillColor(sf::Color::Green);
-                    ip.setFillColor(sf::Color::White);
-                }
-                else if (boxSelected == 2) {
-                    boxSelected = 1;
-                    ip.setFillColor(sf::Color::Green);
-                    port.setFillColor(sf::Color::White);
-                }
-            }
+			if (event.key.code == sf::Keyboard::Tab) {
+				if (boxSelected == 1) {
+					boxSelected = 2;
+					port.setFillColor(sf::Color::Green);
+					ip.setFillColor(sf::Color::White);
+				}
+				else if (boxSelected == 2) {
+					boxSelected = 1;
+					ip.setFillColor(sf::Color::Green);
+					port.setFillColor(sf::Color::White);
+				}
+			}
 		}
 		handleKeysConnexion(event);
 	}
@@ -426,7 +432,7 @@ int UGL::handleConnexion() {
 }
 
 extern "C" {
-	ILib		*create_lib() {
-    		return new UGL();
-	}
+ILib		*create_lib() {
+	return new UGL();
+}
 }
