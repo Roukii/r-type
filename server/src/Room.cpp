@@ -76,6 +76,11 @@ namespace RTypeServer
             std::cout << "a room was updated" << std::endl;
             _rfcHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
             _messageQueue.pop();
+            if (_rfcHandler.getRoomInfo().getRoomReady())
+            {
+                _state = RoomState::PLAYING_STATE;
+                _serviceThread = std::thread(&Room::runGame, this);
+            }
         }
     }
 

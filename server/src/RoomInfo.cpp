@@ -8,19 +8,54 @@ namespace RTypeServer {
     RoomInfo::RoomInfo(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
     {
         _port = _socket.get()->getPort();
-        _nb_player = _socket.get()->getClients();
-        for (int i = 0; i < 4; i++)
-            _ready[i] = _socket.get()->getReady(i);
+        _roomReady = false;
     }
 
-    void RoomInfo::addPlayer() {
-        ++_nb_player;
-
+    void RoomInfo::addPlayer(size_t id)
+    {
+        _player.insert(id, false);
     }
 
-    void RoomInfo::delPlayer() {
-        for (bool &i : _ready)
-            i = false;
-        --_nb_player;
+    void RoomInfo::delPlayer(size_t id)
+    {
+        int k = 0;
+        for (auto i : _player)
+        {
+            i.second = false;
+            if (i.first == id)
+            {
+                _player.erase(k);
+            }
+            k++;
+        }
+    }
+
+    void RoomInfo::playerReady(size_t id)
+    {
+        for (auto i : _player)
+        {
+            if (i.first == id)
+            {
+                i.second = true;
+            }
+        }
+        for (auto i : _player)
+        {
+            if (i.second == false)
+                return ;
+        }
+        _roomReady = true;
+    }
+
+    void RoomInfo::playerUnReady(size_t id)
+    {
+        for (auto i : _player)
+        {
+            if (i.first == id)
+            {
+                i.second = false;
+            }
+        }
+        _roomReady = false;
     }
 }
