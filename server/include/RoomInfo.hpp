@@ -7,6 +7,7 @@
 
 
 #include <IServerUdpSocket.hpp>
+#include <vector>
 
 namespace RTypeServer {
     class RoomInfo {

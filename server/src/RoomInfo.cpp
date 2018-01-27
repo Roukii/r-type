@@ -13,7 +13,8 @@ namespace RTypeServer {
 
     void RoomInfo::addPlayer(size_t id)
     {
-        _player.insert(id, false);
+        std::pair<size_t, bool>  p  = std::make_pair(id, false);
+        _player.emplace_back(p);
     }
 
     void RoomInfo::delPlayer(size_t id)
@@ -24,7 +25,7 @@ namespace RTypeServer {
             i.second = false;
             if (i.first == id)
             {
-                _player.erase(k);
+                _player.erase(_player.begin() + k);
             }
             k++;
         }

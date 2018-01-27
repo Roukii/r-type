@@ -54,7 +54,7 @@ namespace RTypeServer
     {
         for (auto i : _roomInfo.getPlayers())
         {
-            if (!i)
+            if (!i.second)
             {
                 // TODO: si tout le monde n'est pas pret faire un truc enfin je pense
             }

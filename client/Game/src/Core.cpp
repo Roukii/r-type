@@ -52,7 +52,7 @@ Core::Core() : _state(std::make_shared<SplashState>(_info))
 	//Confirmation
 	_engine->init(componentNames, entities, functions);
 
-	//TODO: ?
+	//TODO: Remplir fonction associés aux ennemis si necessaire
 	//ENEMY
 	entities.clear();
 	functions.clear();
