@@ -15,6 +15,14 @@
 
 class CoreInfo {
 public:
+	struct RoomInfo
+	{
+		int playerNbr;
+		bool inGame;
+		unsigned short port;
+	};
+
+public:
 	CoreInfo();
 
 	~CoreInfo() = default;
@@ -24,13 +32,18 @@ public:
 	void shutdownSocket();
 	bool isRunning() const { return _socket.get()->isRunning(); }
 	RTypeClient::MessageQueue<RTypeProtocol::Message> &getMessageQueue();
+	const std::vector<RoomInfo> &getRooms() { return _rooms; }
+	void addElemToRoom(RoomInfo &room) { _rooms.push_back(room); }
+	void resetRoom() { _rooms.clear(); }
+	const std::string &getHost() const { return _host; };
+	unsigned short getRandomPort();
 
-private:
-    void getRandomPort();
 private:
 	std::shared_ptr<IClientUdpSocket> _socket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 	unsigned short _port;
+	std::vector<RoomInfo> _rooms;
+	std::string _host;
     // TODO put a message if connection failed
     //bool connectionFailed;
 };

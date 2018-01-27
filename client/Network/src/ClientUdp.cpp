@@ -20,7 +20,7 @@ ClientUdp::ClientUdp(const std::string &host,
 
 ClientUdp::~ClientUdp()
 {
-    _socket.close();
+//    _socket.close();
 }
 
 void ClientUdp::run()
@@ -57,6 +57,7 @@ void ClientUdp::startReceive()
                                [this](const boost::system::error_code &ec,
                                       std::size_t bytes)
                                {
+                                   std::cout << "before crash" << std::endl;
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);

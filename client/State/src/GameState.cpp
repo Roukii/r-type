@@ -52,9 +52,36 @@ int    GameState::exec() {
 //
 //        render(lag / MS_PER_UPDATE);
 //    }
-    return -1;
+
+
+    // check if message
+    if (!_messageQueue.isEmpty())
+    {
+        _messageQueue.peekMessage();
+        _messageQueue.pop();
+    }
+
+    // send msg
+    RTypeProtocol::Message msg;
+    msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+    msg._msg.get()->data._action._action = 1;
+    _roomSocket.get()->SendToServer(msg);
+    return lib->handleGame();
 }
 
 void   GameState::init(std::shared_ptr<ILib> &lib) {
+    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[lib->getJoin()];
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _messageQueue);
+    _roomSocket.get()->runWithThread();
+    std::cout << "lelel lele lellelel l" << std::endl;
+    std::cout << "lelel lele lellelel l" << std::endl;
+    std::cout << "lelel lele lellelel l" << std::endl;
+    std::cout << "lelel lele lellelel l" << std::endl;
+    RTypeProtocol::Message startMsg;
+    startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_JOIN_ROOM;
+    _roomSocket.get()->SendToServer(startMsg);
+    startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_READY;
+    _roomSocket.get()->SendToServer(startMsg);
+
     this->lib = lib;
 }

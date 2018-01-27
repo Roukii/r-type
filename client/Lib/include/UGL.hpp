@@ -42,10 +42,12 @@ protected:
 	float alpha = 255;
 	int aState = 0;
 	int boxSelected = 0;
+	int joinSelected = 0;
     std::string players[4];
 	std::string item[2];
 	sf::RectangleShape ip;
 	sf::RectangleShape port;
+	sf::RectangleShape join[4];
 
 	void 		init() override;
 	void		loadLib() override;
@@ -85,6 +87,9 @@ protected:
 
 	std::string getIpAdress() {return item[0];};
 	std::string getPort(){return item[1];};
+
+	int         handleGame();
+	int getJoin() {return joinSelected;};
 
 	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;

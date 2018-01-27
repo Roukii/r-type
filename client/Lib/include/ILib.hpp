@@ -24,10 +24,13 @@ public:
 	virtual void		loadMusic(const std::string &path, const std::string &name) = 0;
 	virtual int         handleMenu() = 0;
 	virtual int         handleSplash() = 0;
+	virtual int         handleGame() = 0;
 	virtual int         handleConnexion() = 0;
 	virtual int         handleLobby() = 0;
 	virtual std::string getIpAdress() = 0;
 	virtual std::string getPort() = 0;
+	virtual int getJoin() = 0;
+	virtual void setPlayer(std::string room, std::string players) = 0;
 	virtual std::vector<char> handleClientAction() = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 };

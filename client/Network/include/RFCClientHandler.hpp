@@ -7,6 +7,7 @@
 
 #include <map>
 #include <iostream>
+#include "CoreInfo.hpp"
 #include "IRFCHandler.hpp"
 #include "IClientUdpSocket.hpp"
 
@@ -18,7 +19,7 @@ namespace RTypeClient
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCClientHandler(IClientUdpSocket &socket);
+        RFCClientHandler(std::shared_ptr<IClientUdpSocket> &socket, CoreInfo &info);
         ~RFCClientHandler() override = default;
         RFCClientHandler(const RFCClientHandler &) = delete;
         RFCClientHandler &operator=(const RFCClientHandler &) = delete;
@@ -32,9 +33,9 @@ namespace RTypeClient
         unsigned short getPortFromChar(RTypeProtocol::Message &currentMessage);
 
     private:
-        IClientUdpSocket &_socket;
+        std::shared_ptr<IClientUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
-
+        CoreInfo &_info;
 
     };
 }

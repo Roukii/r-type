@@ -7,10 +7,12 @@
 
 #include "IState.hpp"
 #include "Core.hpp"
+#include "RFCClientHandler.hpp"
 
 class LobbyState : public IState {
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
+
 public:
     LobbyState(CoreInfo &info) : _info(info) {};
     virtual ~LobbyState() = default;

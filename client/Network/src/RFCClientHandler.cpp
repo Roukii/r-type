@@ -6,7 +6,8 @@
 
 namespace RTypeClient
 {
-    RFCClientHandler::RFCClientHandler(IClientUdpSocket &socket) : _socket(socket)
+    RFCClientHandler::RFCClientHandler(std::shared_ptr<IClientUdpSocket> &socket, CoreInfo &info)
+            : _socket(socket), _info(info)
     {
         initMapOfCommandHandler();
     }
@@ -18,7 +19,13 @@ namespace RTypeClient
 
     void RFCClientHandler::RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        char *port = currentMessage._msg.get()->data._room._port;
+        CoreInfo::RoomInfo newRoom;
+
+        newRoom.port = getPortFromChar(currentMessage);
+        newRoom.playerNbr = currentMessage._msg.get()->data._room._nb_player;
+        newRoom.inGame = false;
+        _info.addElemToRoom(newRoom);
+
         std::cout << "room nb player : " << (int) currentMessage._msg.get()->data._room._nb_player << std::endl;
         std::cout << "room p ready : " << (int) currentMessage._msg.get()->data._room._player_ready[0] << std::endl;
         std::cout << "room port : " << getPortFromChar(currentMessage) << std::endl;

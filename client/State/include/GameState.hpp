@@ -11,6 +11,9 @@
 class GameState : public IState {
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
+	std::shared_ptr<IClientUdpSocket> _roomSocket;
+	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
+
 public:
     GameState(CoreInfo &info) : _info(info) {};
     virtual ~GameState() = default;
