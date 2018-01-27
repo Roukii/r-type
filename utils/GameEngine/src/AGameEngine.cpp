@@ -2,7 +2,7 @@
 // Created by sentrance on 10/01/18.
 //
 
-#include "include/TestComponent.hpp"
+#include "TestComponent.hpp"
 #include "../include/AGameEngine.hpp"
 
 namespace UgandaEngine {
@@ -31,8 +31,8 @@ namespace UgandaEngine {
 //        _libGraph->init();
     }
 
-    UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,
-                                                               const std::string &entityName) {
+//    UgandaEngine::entity::Entity *AGameEngine::createEnWithLua(const std::string &filePath,
+//                                                               const std::string &entityName) {
 //        lua_State* L = luaL_newstate();
 //        luaL_dofile(L, filePath.c_str());
 //        luaL_openlibs(L);
@@ -68,14 +68,14 @@ namespace UgandaEngine {
 //            }
 //        }
 //        throw std::invalid_argument("[X]Couldn't create entity [" + entityName + "] from file " + filePath);
-    }
+//    }
 
-    void
-    AGameEngine::registerComponent(const std::type_index &type_index,
-                                   const std::pair<std::string, AComponent> &component) {
-        if (_components.find(type_index) == _components.end()) {
-            _components[type_index] = component;
-            std::cout << "[OK] Successfully registered component [" << component.first << "]" << std::endl;
-        }
-    }
+//    void
+//    AGameEngine::registerComponent(const std::type_index &type_index,
+//                                   const std::pair<std::string, AComponent> &component) {
+//        if (_components.find(type_index) == _components.end()) {
+//            _components[type_index] = component;
+//            std::cout << "[OK] Successfully registered component [" << component.first << "]" << std::endl;
+//        }
+//    }
 }

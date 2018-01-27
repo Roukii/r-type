@@ -11,14 +11,14 @@
 #include <map>
 #include <functional>
 #include <memory>
-#include <dlfcn.h>
-#include <lua.hpp>
-#include <LuaBridge.h>
+//#include <dlfcn.h>
+//#include <lua.hpp>
+//#include <LuaBridge.h>
 #include "Entity.hpp"
 #include "LibGraph.hpp"
 #include "FactoryEntity.hpp"
-#include "../../../client/Lib/include/ILib.hpp"
-#include "../../../utils/Protocol/Message.hpp"
+#include "ILib.hpp"
+#include "Message.hpp"
 
 
 namespace UgandaEngine {
@@ -54,9 +54,9 @@ namespace UgandaEngine {
                   const std::map<std::string, std::vector<std::string>> &entity,
                   const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
 
-        void registerComponent(const std::type_index &type_index, const std::pair<std::string, AComponent> &component);
-        UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
-                                                                      const std::string &entityName);
+//        void registerComponent(const std::type_index &type_index, const std::pair<std::string, AComponent> &component);
+//        UgandaEngine::entity::Entity *createEnWithLua(const std::string &filePath,
+//                                                                      const std::string &entityName);
     };
 }
 

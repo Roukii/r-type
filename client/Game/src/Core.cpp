@@ -74,21 +74,20 @@ void    Core::start() {
     splash();
 
     //TODO: zone de test!!!
-    {
-        std::shared_ptr<UgandaEngine::entity::Entity> ship = std::move(
-                _engine->_factory->create("Ship", _engine->_libGraph));
+//    {
+        std::shared_ptr<UgandaEngine::entity::Entity> ship = _engine->_factory->create("Ship", _engine->_libGraph);
 	    RTypeProtocol::Message msg;
         ship->_funcComp["shoot"](msg);
 
         //Test
-        UgandaEngine::TestComponent testComponent;
-        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
-        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
-        if (!getter.expired())
-            std::cout << getter.lock().get()->getPhrase() << std::endl;
-        else
-            std::cout << "error "<< std::endl;
-    }
+//        UgandaEngine::TestComponent testComponent;
+//        UgandaEngine::entity::Entity *entity = _engine->createEnWithLua("../assets/entities.lua", "Test");
+//        std::weak_ptr<UgandaEngine::TestComponent> getter = entity->get<UgandaEngine::TestComponent>();
+//        if (!getter.expired())
+//            std::cout << getter.lock().get()->getPhrase() << std::endl;
+//        else
+//            std::cout << "error "<< std::endl;
+//    }
 
     while (ret != -2) {
         ret =  _state->exec();

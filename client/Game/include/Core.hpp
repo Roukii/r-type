@@ -5,6 +5,10 @@
 #ifndef R_TYPE_CORE_HPP
 #define R_TYPE_CORE_HPP
 
+#ifdef _WIN32
+#define _WIN32_WINNT 0x0501
+#endif
+
 #include "IState.hpp"
 #include "MenuState.hpp"
 #include "AGameEngine.hpp"
