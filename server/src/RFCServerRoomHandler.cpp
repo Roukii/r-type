@@ -37,6 +37,7 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::RFCPlayerLeaveRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
+        std::cout << "player leaving room" << std::endl;
         _roomInfo.delPlayer(_currentOwnerID);
     }
 

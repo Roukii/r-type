@@ -142,6 +142,7 @@ void		AnimatedSprite::update(sf::Time deltaTime) {
 }
 
 void		AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	std::cout << "hello animatedsprite" << std::endl;
 	if (_animation && _texture) {
 		states.transform *= getTransform();
 		states.texture = _texture.get();

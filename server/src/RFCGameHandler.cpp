@@ -24,7 +24,6 @@ namespace RTypeServer {
         RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end()) {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
-            //_CommandHandler[codeCommand](msg, ownerID);
         }
     }
 

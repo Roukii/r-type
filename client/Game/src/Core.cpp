@@ -62,8 +62,6 @@ Core::Core()
 void    Core::start() {
 	int ret = 0;
 
-	std::shared_ptr<UgandaEngine::Entity> ship = _engine->_factory->create(RTypeProtocol::types::SHIP, _engine->_libGraph);
-	ship->_funcComp["shoot"]();
 	this->_state->changeScreen(_state, "SPLASH",_info, _engine);
 
 	while (ret != -2) {

@@ -49,7 +49,6 @@ namespace RTypeProtocol
     struct header
     {
         char _code;
-        char _owner;
     };
 
     struct error

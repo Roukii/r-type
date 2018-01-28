@@ -6,7 +6,7 @@
 
 namespace RTypeClient
 {
-    RFCClientGameHandler::RFCClientGameHandler(std::shared_ptr<IClientUdpSocket> &socket, std::map<int, std::shared_ptr<UgandaEngine::Entity>> &ent,
+    RFCClientGameHandler::RFCClientGameHandler(std::shared_ptr<IClientUdpSocket> &socket, std::map<int, UgandaEngine::Entity *> &ent,
                                                std::shared_ptr<UgandaEngine::AGameEngine> &eng)
             : _socket(socket), _entity(ent), _engine(eng)
     {
@@ -23,6 +23,7 @@ namespace RTypeClient
     void RFCClientGameHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
         RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
+        std::cout << "code command : " << codeCommand <<  std::endl;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
@@ -30,7 +31,7 @@ namespace RTypeClient
     }
 
     void RFCClientGameHandler::RFCMoveEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        std::shared_ptr<UgandaEngine::Entity> ent = _entity[getIdFromChar(currentMessage)];
+        UgandaEngine::Entity *ent = _entity[getIdFromChar(currentMessage)];
         getPosFromMessage(currentMessage, ent);
     }
 
@@ -40,26 +41,27 @@ namespace RTypeClient
 
     void RFCClientGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
         std::cout << "new ship" << std::endl;
-//        _entity[getIdFromChar(currentMessage)] = _engine->_factory->create(static_cast<RTypeProtocol::types>(currentMessage._msg.get()->data._entity.type), _engine->_libGraph);
-        _entity[getIdFromChar(currentMessage)] = _engine->_factory->create(RTypeProtocol::types::SHIP, _engine->_libGraph);
+        _entity.insert(std::pair<int, UgandaEngine::Entity *>(getIdFromChar(currentMessage), _engine->_factory->create(static_cast<RTypeProtocol::types>(currentMessage._msg.get()->data._entity.type), _engine->_libGraph)));
 
         getPosFromMessage(currentMessage, _entity[getIdFromChar(currentMessage)]);
     }
 
 
-    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, std::shared_ptr<UgandaEngine::Entity> &ent)
+    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, UgandaEngine::Entity * &ent)
     {
-        //TODO a clean ca race de ces mort la gitane
         union
         {
             char ch[4];
             int n;
         } char2int;
 
+
         char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];
         char2int.ch[1] = currentMessage._msg.get()->data._entity._pos._x[1];
         char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
         char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
+
+        std::cout << "CLIENT x :" << (int)char2int.ch[0] << (int)char2int.ch[1] << (int)char2int.ch[2] << (int)char2int.ch[3] << std::endl;
 
         ent->_speedX = char2int.n - ent->_posX;
         ent->_posX = char2int.n;
@@ -71,6 +73,8 @@ namespace RTypeClient
 
         ent->_speedY = char2int.n - ent->_posY;
         ent->_posY = char2int.n;
+
+        std::cout << "i have pos " << ent->_posX << " " << ent->_posY;
 
     }
 
@@ -86,6 +90,8 @@ namespace RTypeClient
         char2int.ch[2] = currentMessage._msg.get()->data._entity.id[2];
         char2int.ch[3] = currentMessage._msg.get()->data._entity.id[3];
 
+
+        std::cout << "id :" << char2int.n << std::endl;
         return char2int.n;
 
     }

@@ -16,8 +16,8 @@ namespace UgandaEngine {
 
         }
 
-        std::shared_ptr<Entity> FactoryEntity::create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib) {
-            std::shared_ptr<Entity> newEntity;
+        Entity *FactoryEntity::create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib) {
+            Entity *newEntity;
             std::string name;
             if (type == RTypeProtocol::types::SHIP)
                 name = "Ship";
@@ -25,14 +25,18 @@ namespace UgandaEngine {
                 std::cout << "error name not found" << std::endl;
                 return newEntity;
             }
-            newEntity = std::make_shared<Entity>();
+            newEntity = new Entity();
             for (auto e : _entity[name]) {
                 newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
             }
-            // LibGraĥique => pour récupérer toutes les données lié à l'affichage
             newEntity->name = name;
-            newEntity->_myGraph = lib->factoryData("Ship");
+            // LibGraĥique => pour récupérer toutes les données lié à l'affichage
 
+            newEntity->_myGraph = lib->factoryData("Ship");
+            newEntity->_posX = 10;
+            newEntity->_posY = 10;
+            newEntity->_speedX = 0;
+            newEntity->_speedY = 0;
             // Initialiser par défaut de la vitesse / direction / position
             return newEntity;
         }

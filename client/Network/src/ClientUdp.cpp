@@ -47,16 +47,16 @@ void ClientUdp::run()
 
 void ClientUdp::SendToServer(RTypeProtocol::Message &message)
 {
-    _socket.send_to(boost::asio::buffer(message._msg.get(), sizeof(message._msg.get())), _serverEndpoint);
+    _socket.send_to(boost::asio::buffer(message._msg.get(), 22), _serverEndpoint);
 }
 
 void ClientUdp::startReceive()
 {
-    _socket.async_receive_from(boost::asio::buffer(_msg._msg.get(), sizeof(_msg._msg.get())),
+    _socket.async_receive_from(boost::asio::buffer(_msg._msg.get(), 22),
                                _remoteEndpoint,
                                [this](const boost::system::error_code &ec,
                                       std::size_t bytes)
-                               { 
+                               {
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);

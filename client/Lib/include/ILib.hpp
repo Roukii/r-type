@@ -29,7 +29,7 @@ public:
 	virtual void		loadMusic(const std::string &path, const std::string &name) = 0;
 	virtual int         handleMenu() = 0;
 	virtual int         handleSplash() = 0;
-	virtual int         handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &) = 0;
+	virtual int         handleGame(std::map<int, UgandaEngine::Entity *> &) = 0;
 	virtual int         handleConnexion() = 0;
 	virtual int         handleLobby() = 0;
 	virtual int         handleReady() = 0;

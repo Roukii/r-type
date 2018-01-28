@@ -20,7 +20,7 @@ namespace RTypeServer
 {
     enum RoomState
     {
-        WAITING_STATE,
+        WAITING_STATE = 0,
         PLAYING_STATE
     };
 

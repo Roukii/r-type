@@ -46,7 +46,7 @@ namespace RTypeGame {
         bool checkOutOfBound(const RTypeGame::AGameEntity &entity);
         RTypeProtocol::Message createMsgDelE(int id);
         RTypeProtocol::Message createMsgMoveE(int id);
-        RTypeProtocol::Message createMsgNewE(int id, RTypeProtocol::types type);
+        RTypeProtocol::Message createMsgNewE(Ship, RTypeProtocol::types type);
         Ship createNewEnnemy();
     };
 }
