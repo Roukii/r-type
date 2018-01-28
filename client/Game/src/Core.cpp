@@ -6,57 +6,32 @@
 
 Core::Core()
 {
-	//Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
-	// Demander des explications pour faire ça ^^
 
 	_engine = std::make_shared<UgandaEngine::AGameEngine>();
 
 
-	//SHIP
-	//Definition des entities et des fonctions associées
 	std::map<std::string, std::vector<std::string>> entities;
 	std::map<std::string, std::function<void()>> functions;
 	std::shared_ptr<EntityFunc> func = std::make_shared<EntityFunc>();
 
 	std::vector<UgandaEngine::Entity> entities1;
 
-	//On liste les components par nom
 	std::vector<std::string> componentNames;
-//	componentNames.emplace_back("moveLeft");
-//	componentNames.emplace_back("moveRight");
-//	componentNames.emplace_back("moveDown");
-//	componentNames.emplace_back("moveUp");
 	componentNames.emplace_back("shoot");
 
-	//On associe à ship les components par nom.
 	entities["Ship"] = componentNames;
 	entities["Ennemy"] = componentNames;
 	entities["Shoot"] = componentNames;
-	//On associe à chaque nom de component une fonction
-//    std::function<void(RTypeProtocol::Message&)> left = func->move_left;
-//	//std::function<void(RTypeProtocol::Message&)> left = EntityFunc::move_left;
-//    functions["moveLeft"] = left;
-//    std::function<void(RTypeProtocol::Message&)> right = func->move_right;
-//    functions["moveRight"] = right;
-//    std::function<void(RTypeProtocol::Message&)> down = func->move_down;
-//    functions["moveDown"] = down;
-//    std::function<void(RTypeProtocol::Message&)> up = func->move_up;
-//    functions["moveUp"] = up;
     std::function<void()> shoot = func->shoot;
     functions["shoot"] = shoot;
 
-	//Confirmation
 	_engine->init(componentNames, entities, functions);
 
-	//TODO: Remplir fonction associés aux ennemis si necessaire
-	//ENEMY
 	entities.clear();
 	functions.clear();
 	func.reset();
 
 	_state = std::make_shared<SplashState>(_info, _engine);
-
-
 }
 
 void    Core::start() {

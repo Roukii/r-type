@@ -34,8 +34,6 @@ int    OptionsState::exec() {
         std::cout << "get action" << std::endl;
         if (e == 27)
             return 1;
-        //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
-        // il faut faire une récupération des touches dans le state option
         if (opt == 1)
             myKeys->up = e;
         else if (opt == 2)

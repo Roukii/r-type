@@ -534,7 +534,6 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 			if (e.mouseButton.x > 400 && e.mouseButton.x < 900
 			    && e.mouseButton.y > 280 && e.mouseButton.y < 360) {
 				boxSelected = 1;
-				// TODO go exit
 				ip.setFillColor(sf::Color::Green);
 				port.setFillColor(sf::Color::White);
 			} else if (e.mouseButton.x > 400 && e.mouseButton.x < 900
@@ -650,7 +649,6 @@ int UGL::handleConnexion() {
 			getWindow()->close();
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Space) {
-				//TODO	if connexion reussi
 				return 1;
 			}
 			if (event.key.code == sf::Keyboard::Tab) {

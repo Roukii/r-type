@@ -80,8 +80,6 @@ int GameState::processInput()
     for (auto e : actions) {
         if (e == 27)
             return 1;
-            //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
-            // il faut faire une récupération des touches dans le state option
         if (e == _myKeys->down)
             msg._msg.get()->data._action._action = RTypeProtocol::DOWN;
         else if (e == _myKeys->up)

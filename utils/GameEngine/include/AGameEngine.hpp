@@ -27,7 +27,6 @@
 
 
 namespace UgandaEngine {
-    // TODO: Renommer la classe en GameEngine car ce n'est pas une abstract
 
 
     class AGameEngine {
@@ -35,7 +34,6 @@ namespace UgandaEngine {
          * Variables
          */
     private:
-        //List of entities and components
         std::vector<Entity> _entities;
 
     public:

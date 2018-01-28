@@ -45,8 +45,6 @@ private:
 	unsigned short _portRoom;
 	std::vector<RoomInfo> _rooms;
 	std::string _host;
-    // TODO put a message if connection failed
-    //bool connectionFailed;
 };
 
 
