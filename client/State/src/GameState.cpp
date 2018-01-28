@@ -7,6 +7,7 @@
 #include "OptionsState.hpp"
 #include "ConnexionState.hpp"
 #include "LobbyState.hpp"
+#include "ReadyState.hpp"
 
 void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
     if (s == "MENU")
@@ -27,6 +28,8 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
         state = std::make_shared<LobbyState>(info, engine);
     else if (s == "GAME")
         state = std::make_shared<GameState>(info, engine);
+    else if (s == "READY")
+        state = std::make_shared<ReadyState>(info, engine);
 }
 
 int    GameState::exec() {
@@ -34,6 +37,7 @@ int    GameState::exec() {
     std::chrono::duration<double> lag = std::chrono::seconds(0);
 	//TODO: Delete ligne suivante:
 	Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
+    engine->_libGraph->getMusic("Music")->play();
     while (true)
     {
         auto current = std::chrono::system_clock::now();

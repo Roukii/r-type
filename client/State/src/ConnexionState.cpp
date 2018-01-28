@@ -7,6 +7,7 @@
 #include "SplashState.hpp"
 #include "OptionsState.hpp"
 #include "LobbyState.hpp"
+#include "ReadyState.hpp"
 
 void ConnexionState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
     if (s == "MENU")
@@ -21,6 +22,8 @@ void ConnexionState::changeScreen(std::shared_ptr<IState> &state, std::string s,
         state = std::make_shared<LobbyState>(info, engine);
     else if (s == "GAME")
         state = std::make_shared<GameState>(info, engine);
+    else if (s == "READY")
+        state = std::make_shared<ReadyState>(info, engine);
 }
 
 int    ConnexionState::exec() {

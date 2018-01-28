@@ -2,6 +2,7 @@
 // Created by Samy on 10/01/2018.
 //
 
+#include <ReadyState.hpp>
 #include "MenuState.hpp"
 #include "SplashState.hpp"
 #include "GameState.hpp"
@@ -22,6 +23,8 @@ void MenuState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
         state = std::make_shared<LobbyState>(info, engine);
     else if (s == "GAME")
         state = std::make_shared<GameState>(info, engine);
+    else if (s == "READY")
+        state = std::make_shared<ReadyState>(info, engine);
 }
 
 int    MenuState::exec() {

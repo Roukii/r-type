@@ -10,6 +10,7 @@
 #include <vector>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Audio/Music.hpp>
 
 #include "EntityGraphique.hpp"
 #include "Entity.hpp"
@@ -31,6 +32,7 @@ public:
 	virtual int         handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &) = 0;
 	virtual int         handleConnexion() = 0;
 	virtual int         handleLobby() = 0;
+	virtual int         handleReady() = 0;
 	virtual int         handleOption() = 0;
 	virtual int         handleChangeOption() = 0;
 	virtual std::string getIpAdress() = 0;
@@ -40,6 +42,7 @@ public:
 	virtual std::vector<char> handleClientAction() = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 	virtual std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) = 0;
+	virtual std::shared_ptr<sf::Music>	getMusic(const std::string& name) = 0;
 	virtual std::shared_ptr<Animation>	getAnimation(const std::string& name) = 0;
 	virtual std::shared_ptr<sf::RenderWindow> getWindow() = 0;
 };

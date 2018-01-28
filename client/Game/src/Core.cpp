@@ -110,6 +110,10 @@ void    Core::start() {
 			this->_state->changeScreen(_state, "LOBBY",_info, _engine);
 			this->_state->init();
 		}
+		else if (ret == 6) {
+			this->_state->changeScreen(_state, "READY",_info, _engine);
+			this->_state->init();
+		}
 	}
 	_info.shutdownSocket();
 }

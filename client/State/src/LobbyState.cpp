@@ -2,6 +2,7 @@
 // Created by Samy on 22/01/2018.
 //
 
+#include <ReadyState.hpp>
 #include "LobbyState.hpp"
 #include "GameState.hpp"
 #include "SplashState.hpp"
@@ -21,6 +22,8 @@ void LobbyState::changeScreen(std::shared_ptr<IState> &state, std::string s, Cor
         state = std::make_shared<LobbyState>(info, engine);
     else if (s == "GAME")
         state = std::make_shared<GameState>(info, engine);
+    else if (s == "READY")
+        state = std::make_shared<ReadyState>(info, engine);
 }
 
 int    LobbyState::exec() {

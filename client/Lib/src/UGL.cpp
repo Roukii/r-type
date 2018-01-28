@@ -53,6 +53,7 @@ void 		UGL::init() {
 	getSprite("Cursor1")->setPosition(90 * 20 / 6, 580);
 
 	loadSound("../assets/cursor.ogg", "Cursor2");
+	loadMusic("../assets/Music.ogg", "Music");
 
 	loadFont("../assets/Enter-The-Grid.ttf");
 
@@ -60,7 +61,8 @@ void 		UGL::init() {
 	loadText(90 * 20 / 5, 650, 60, "Options", "Options");
 	loadText(90 * 20 / 5, 750, 60, "Quit", "Quit");
 	loadText(90 * 20 / 2.8, 150, 200, "R TYPE", "R TYPE");
-	loadText(250, 850, 100, "PRESS A KEY TO CONTINUE", "PRESS KEY");
+    loadText(250, 850, 100, "PRESS A KEY TO CONTINUE", "PRESS KEY");
+    loadText(250, 850, 100, "PRESS SPACE IF YOU ARE READY", "READY");
 	loadText(250, 850, 100, "PRESS SPACE TO CONTINUE", "PRESS SPACE");
 	loadText(400, 200, 60, "IP ADRESS", "IP ADRESS");
 	loadText(400, 400, 60, "PORT", "PORT");
@@ -275,7 +277,6 @@ int UGL::handleMenu() {
 	sf::Event event;
 	int ret;
 
-	getSprite("Background1").get()->setColor(sf::Color::Magenta);
 	while (getWindow()->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
 			getWindow()->close();
@@ -303,36 +304,53 @@ void UGL::handleAlpha() {
 	else if (alpha <= 0)
 		aState = 0;
 	if (aState == 0)
-		alpha += 0.2;
+		alpha += 1;
 	else
-		alpha -= 0.2;
+		alpha -= 1;
 	getText("PRESS KEY")->setColor(sf::Color(255,255,255,alpha));
-	getText("PRESS SPACE")->setColor(sf::Color(255,255,255,alpha));
+    getText("PRESS SPACE")->setColor(sf::Color(255,255,255,alpha));
+    getText("READY")->setColor(sf::Color(255,255,255,alpha));
 }
 
 int UGL::handleSplash() {
-//	std::cout << "test" << std::endl;
-	sf::Event event;
-	while (getWindow()->pollEvent(event)) {
-		if (event.type == sf::Event::Closed)
-			getWindow()->close();
-		if (event.type == sf::Event::KeyPressed) {
-			return 4;
-		}
-	}
-	if (getWindow() != nullptr) {
-		handleAlpha();
-		getWindow()->clear();
-		//TODO SPLASHSCREEN
-		getWindow()->draw(*getSprite("Background1").get());
-		getWindow()->draw(*getText("PRESS KEY").get());
-		getWindow()->display();
-		return -1;
-	} else
-		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+    sf::Event event;
+    while (getWindow()->pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            getWindow()->close();
+        if (event.type == sf::Event::KeyPressed) {
+            return 4;
+        }
+    }
+    if (getWindow() != nullptr) {
+        handleAlpha();
+        getWindow()->clear();
+        getWindow()->draw(*getSprite("Background1").get());
+        getWindow()->draw(*getText("PRESS KEY").get());
+        getWindow()->display();
+        return -1;
+    } else
+        throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
 }
 
-
+int UGL::handleReady() {
+    sf::Event event;
+    while (getWindow()->pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            getWindow()->close();
+        if (event.type == sf::Event::KeyPressed) {
+            return 3;
+        }
+    }
+    if (getWindow() != nullptr) {
+        handleAlpha();
+        getWindow()->clear();
+        getWindow()->draw(*getSprite("Background1").get());
+        getWindow()->draw(*getText("READY").get());
+        getWindow()->display();
+        return -1;
+    } else
+        throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
+}
 
 int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity) {
 	sf::Event event;
@@ -356,7 +374,6 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 			item.second->myGraph->_currentSprite->play();
 			getWindow()->draw(*item.second->myGraph->_currentSprite);
 		}
-
 		getWindow()->display();
 		return -1;
 	} else
@@ -373,29 +390,29 @@ int UGL::handleLobby() {
 				if (event.mouseButton.x > 90 * 20 / 5 + 550 && event.mouseButton.x < 90 * 20 / 5 + 550 + 170
 				    && event.mouseButton.y > 450 && event.mouseButton.y < 530) {
 					joinSelected = 0;
-					return 3;
+					return 6;
 				}
 				else if (event.mouseButton.x > 90 * 20 / 5 + 550 && event.mouseButton.x < 90 * 20 / 5 + 550 + 170
 					 && event.mouseButton.y > 550 && event.mouseButton.y < 630) {
 					joinSelected = 1;
-					return 3;
+					return 6;
 				}
 				else if (event.mouseButton.x > 90 * 20 / 5 + 550 && event.mouseButton.x < 90 * 20 / 5 + 550 + 170
 					 && event.mouseButton.y > 650 && event.mouseButton.y < 730) {
 					joinSelected = 2;
-					return 3;
+					return 6;
 				}
 				else if (event.mouseButton.x > 90 * 20 / 5 + 550 && event.mouseButton.x < 90 * 20 / 5 + 550 + 170
 					 && event.mouseButton.y > 750 && event.mouseButton.y < 830) {
 					joinSelected = 3;
-					return 3;
+					return 6;
 				}
 			}
 		}
 		else if (event.type == sf::Event::KeyPressed) {
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Space) {
-					return 3;
+					return 6;
 				}
 				if (event.key.code == sf::Keyboard::Escape) {
 					return 1;
@@ -425,7 +442,6 @@ int UGL::handleLobby() {
 	if (getWindow() != nullptr) {
 		handleAlpha();
 		getWindow()->clear();
-		//TODO LOBBY
 		getWindow()->draw(*getSprite("Background1").get());
 		getWindow()->draw(*getText("PRESS SPACE").get());
 		getWindow()->draw(*getText("ROOM 1").get());
