@@ -17,7 +17,9 @@ class GameState : public IState {
 	CoreInfo &_info;
 	std::shared_ptr<IClientUdpSocket> _roomSocket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
+
     std::map<int, std::shared_ptr<UgandaEngine::entity::Entity>> Entities;
+
     RTypeClient::RFCClientGameHandler _rfcGameHandler;
     std::shared_ptr<UgandaEngine::AGameEngine> engine;
 

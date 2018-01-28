@@ -89,7 +89,7 @@ protected:
 	std::string getIpAdress() {return item[0];};
 	std::string getPort(){return item[1];};
 
-	int         handleGame();
+	int         handleGame(std::map<int, std::shared_ptr<UgandaEngine::entity::Entity>> &entity);
 	int getJoin() {return joinSelected;};
 
 	int		handleOption() override;

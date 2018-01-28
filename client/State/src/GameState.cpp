@@ -101,5 +101,5 @@ void GameState::update()
 void GameState::render(double lag)
 {
 
-    lib->handleGame();
+    lib->handleGame(this->Entities);
 }
