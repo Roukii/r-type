@@ -21,6 +21,9 @@ namespace UgandaEngine {
             std::string name;
             if (type == RTypeProtocol::types::SHIP)
                 name = "Ship";
+            if (type == RTypeProtocol::types::ENNEMY)
+                name = "Ennemy";
+
             if (_entity.find(name) == _entity.end()) {
                 std::cout << "error name not found" << std::endl;
                 return newEntity;
@@ -30,14 +33,12 @@ namespace UgandaEngine {
                 newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
             }
             newEntity->name = name;
-            // LibGraĥique => pour récupérer toutes les données lié à l'affichage
 
-            newEntity->_myGraph = lib->factoryData("Ship");
+            newEntity->_myGraph = lib->factoryData(name);
             newEntity->_posX = 10;
             newEntity->_posY = 10;
             newEntity->_speedX = 0;
             newEntity->_speedY = 0;
-            // Initialiser par défaut de la vitesse / direction / position
             return newEntity;
         }
     }

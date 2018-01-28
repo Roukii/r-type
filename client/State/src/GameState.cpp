@@ -35,8 +35,6 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
 int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
     std::chrono::duration<double> lag = std::chrono::seconds(0);
-	//TODO: Delete ligne suivante:
-	Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
     engine->_libGraph->getMusic("Music")->play();
     while (true)
     {
@@ -113,11 +111,6 @@ void GameState::update()
 
 void GameState::render(double lag)
 {
-    for (auto e : Entities)
-    {
-        e.second->_posX += e.second->_speedX * lag;
-        e.second->_posY += e.second->_speedY * lag;
-    }
     engine->_libGraph->handleGame(this->Entities);
 }
 

@@ -30,6 +30,7 @@
 enum eEntityType {
 	NONE = 0,
 	SHIP,
+    ENNEMY,
 	BACKGROUND
 };
 

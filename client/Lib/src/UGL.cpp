@@ -39,12 +39,12 @@ void 		UGL::init() {
 	loadAnimation(_sprites["Ship"].second, "Ship_animation_none");
 	_animations["Ship_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
 
-	loadSprite("../assets/ship_3.png", "Enemy1");
-	loadAnimation(_sprites["Enemy1"].second, "Enemy1_animation_none");
-	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(5, 225, 16, 16));
-	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
-	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
-	_animations["Enemy1_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
+	loadSprite("../assets/ship_3.png", "Ennemy");
+	loadAnimation(_sprites["Ennemy"].second, "Ennemy_animation_none");
+	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(5, 225, 16, 16));
+	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
+	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
+	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
 
 	loadSprite("../assets/Stars.jpg", "Background1");
 	getSprite("Background1")->setColor(sf::Color::Cyan);
@@ -146,13 +146,17 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 eEntityType	UGL::getEntity(const std::string& entityType) {
 	if (entityType == "Ship")
 		return SHIP;
+    if (entityType == "Ennemy")
+        return ENNEMY;
 	return NONE;
 }
 
 std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) {
 	switch (getEntity(entityName)) {
-		case SHIP:
-			return getTexture("Ship");
+        case SHIP:
+            return getTexture("Ship");
+        case ENNEMY:
+            return getTexture("Ennemy");
 		default:
 			break;
 	};
@@ -396,7 +400,12 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 
 		for (auto& item : entity) {
 			std::cout << "there is a new entity right here " << item.first << " name "  << item.second->name << " position " << item.second->_posX << " " << item.second->_posY << std::endl;
-			item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+			if (item.second->name == "Ship") {
+				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+			}
+			if (item.second->name == "Ennemy") {
+				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ennemy_animation_none"));
+			}
 			item.second->_myGraph->_currentSprite->setPosition(item.second->_posX, item.second->_posY);
 			item.second->_myGraph->_currentSprite->setScale({4.f, 4.f});
 			item.second->_myGraph->_currentSprite->update(frameTime);
