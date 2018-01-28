@@ -575,7 +575,6 @@ int UGL::handleOption() {
 		getWindow()->draw(*getText("q").get());
 		getWindow()->draw(*getText("d").get());
 		getWindow()->draw(*getText("Space").get());
-
 		getWindow()->display();
 		return -1;
 	} else
