@@ -97,17 +97,9 @@ void    Core::start() {
 			this->_state->init();
 		}
 		else if (ret == 3) {
-			CoreInfo::RoomInfo choosenRoom =_info.getRooms()[_engine->_libGraph->getJoin()];
-			if (choosenRoom.inGame)
-			{
-				this->_state->changeScreen(_state, "LOBBY",_info, _engine);
-				this->_state->init();
-			}
-			else
-			{
-				this->_state->changeScreen(_state, "GAME",_info, _engine);
-				this->_state->init();
-			}
+			std::cout << "return game" << std::endl;
+			this->_state->changeScreen(_state, "GAME", _info, _engine);
+			this->_state->init();
 		}
 		else if (ret == 4) {
 			this->_state->changeScreen(_state, "CONNEXION",_info, _engine);
@@ -118,8 +110,17 @@ void    Core::start() {
 			this->_state->init();
 		}
 		else if (ret == 6) {
-			this->_state->changeScreen(_state, "READY",_info, _engine);
-			this->_state->init();
+			CoreInfo::RoomInfo choosenRoom =_info.getRooms()[_engine->_libGraph->getJoin()];
+			if (choosenRoom.inGame)
+			{
+				this->_state->changeScreen(_state, "LOBBY",_info, _engine);
+				this->_state->init();
+			}
+			else {
+				std::cout << "LE ROUX A FAIL!" << std::endl;
+				this->_state->changeScreen(_state, "READY", _info, _engine);
+				this->_state->init();
+			}
 		}
 	}
 	_info.shutdownSocket();

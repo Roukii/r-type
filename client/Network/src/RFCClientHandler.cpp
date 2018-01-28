@@ -4,8 +4,6 @@
 
 #include "RFCClientHandler.hpp"
 
-namespace RTypeClient
-{
     RFCClientHandler::RFCClientHandler(std::shared_ptr<IClientUdpSocket> &socket, CoreInfo &info)
             : _socket(socket), _info(info)
     {
@@ -23,7 +21,14 @@ namespace RTypeClient
 
         newRoom.port = getPortFromChar(currentMessage);
         newRoom.playerNbr = currentMessage._msg.get()->data._room._nb_player;
-        newRoom.inGame = currentMessage._msg->data._room._playing;
+        if (currentMessage._msg->data._room._playing == true)
+        {
+            std::cout << "in game" << std::endl;
+            newRoom.playerNbr = 4;
+            newRoom.inGame = true;
+        }
+        else
+            newRoom.inGame = false;
         _info.addElemToRoom(newRoom);
 
         std::cout << "room nb player : " << (int) currentMessage._msg.get()->data._room._nb_player << std::endl;
@@ -53,5 +58,3 @@ namespace RTypeClient
 
         return char2short.n;
     }
-
-}

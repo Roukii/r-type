@@ -31,8 +31,14 @@ namespace RTypeServer
         {
             getPortFromShortToChar(currentMessage, i);
             currentMessage._msg.get()->data._room._nb_player = i.get()->getPlayer();
-            currentMessage._msg.get()->data._room._playing = i.get()->getState();
-
+            if (i->getState() == RoomState::PLAYING_STATE)
+            {
+                std::cout << "playing lel" << std::endl;
+                currentMessage._msg.get()->data._room._nb_player = 4;
+                currentMessage._msg.get()->data._room._playing = true;
+            }
+            else
+                currentMessage._msg.get()->data._room._playing = false;
             for (int nb = 0; nb < 4; nb++)
                 currentMessage._msg.get()->data._room._player_ready[nb] = i.get()->getReady(nb);
             _socket.get()->SendToClient(currentMessage, _currentOwnerID);

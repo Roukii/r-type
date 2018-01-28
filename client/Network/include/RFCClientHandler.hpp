@@ -11,33 +11,35 @@
 #include "IRFCHandler.hpp"
 #include "IClientUdpSocket.hpp"
 
-namespace RTypeClient
-{
-    class RFCClientHandler : public RTypeProtocol::IRFCHandler
-    {
-        typedef void (RFCClientHandler::*function)(RTypeProtocol::Message &, std::size_t);
-        using mapOfCommand = std::map<RTypeProtocol::code, function>;
+class RFCClientHandler : public RTypeProtocol::IRFCHandler {
+    typedef void (RFCClientHandler::*function)(RTypeProtocol::Message &, std::size_t);
 
-    public:
-        RFCClientHandler(std::shared_ptr<IClientUdpSocket> &socket, CoreInfo &info);
-        ~RFCClientHandler() override = default;
-        RFCClientHandler(const RFCClientHandler &) = delete;
-        RFCClientHandler &operator=(const RFCClientHandler &) = delete;
+    using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
-        void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
+public:
+    RFCClientHandler(std::shared_ptr<IClientUdpSocket> &socket, CoreInfo &info);
 
-    private:
-        void initMapOfCommandHandler();
-        void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+    ~RFCClientHandler() override = default;
 
-        unsigned short getPortFromChar(RTypeProtocol::Message &currentMessage);
+    RFCClientHandler(const RFCClientHandler &) = delete;
 
-    private:
-        std::shared_ptr<IClientUdpSocket> &_socket;
-        mapOfCommand _CommandHandler;
-        CoreInfo &_info;
+    RFCClientHandler &operator=(const RFCClientHandler &) = delete;
 
-    };
-}
+    void executeCommand(RTypeProtocol::Message &msg, size_t ownerID) override;
+
+private:
+    void initMapOfCommandHandler();
+
+    void RFCInfoRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
+
+    unsigned short getPortFromChar(RTypeProtocol::Message &currentMessage);
+
+private:
+    std::shared_ptr<IClientUdpSocket> &_socket;
+    mapOfCommand _CommandHandler;
+    CoreInfo &_info;
+
+};
+
 
 #endif //R_TYPE_RFCCLIENTHANDLER_HPP

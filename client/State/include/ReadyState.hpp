@@ -7,10 +7,15 @@
 
 #include "IState.hpp"
 #include "Core.hpp"
+#include "RFCRoomHandler.hpp"
 
 class ReadyState : public IState {
+    bool ready = false;
     CoreInfo &_info;
     std::shared_ptr<UgandaEngine::AGameEngine> engine;
+    std::shared_ptr<IClientUdpSocket> _roomSocket;
+    RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
+
 public:
     ReadyState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~ReadyState() = default;

@@ -2,7 +2,8 @@
 // Created by Samy on 22/01/2018.
 //
 
-#include <ReadyState.hpp>
+#include "RFCClientHandler.hpp"
+#include "ReadyState.hpp"
 #include "LobbyState.hpp"
 #include "GameState.hpp"
 #include "SplashState.hpp"
@@ -27,7 +28,7 @@ void LobbyState::changeScreen(std::shared_ptr<IState> &state, std::string s, Cor
 }
 
 int    LobbyState::exec() {
-    RTypeClient::RFCClientHandler _rfcHandler(_info.getSocket(), _info);
+    RFCClientHandler _rfcHandler(_info.getSocket(), _info);
 
     RTypeClient::MessageQueue<RTypeProtocol::Message> &queue = _info.getMessageQueue();
 

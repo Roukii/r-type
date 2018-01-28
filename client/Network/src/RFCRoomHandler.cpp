@@ -7,7 +7,7 @@
 
 namespace RTypeClient
 {
-    RFCRoomHandler::RFCRoomHandler(IClientUdpSocket &socket) : _socket(socket)
+    RFCRoomHandler::RFCRoomHandler(std::shared_ptr<IClientUdpSocket> &socket) : _socket(socket)
     {
         initMapOfCommandHandler();
     }

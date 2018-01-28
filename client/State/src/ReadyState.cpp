@@ -11,7 +11,13 @@
 
 void ReadyState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
     if (s == "MENU")
+    {
+        RTypeProtocol::Message msg;
+        msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
+        _roomSocket->SendToServer(msg);
+        _roomSocket->shutdown();
         state = std::make_shared<MenuState>(info, engine);
+    }
     else if (s == "SPLASH")
         state = std::make_shared<SplashState>(info, engine);
     else if (s == "CONNEXION")
@@ -27,8 +33,49 @@ void ReadyState::changeScreen(std::shared_ptr<IState> &state, std::string s, Cor
 }
 
 int    ReadyState::exec() {
-    return engine->_libGraph->handleReady();
+    while (!_messageQueue.isEmpty())
+    {
+        if (_messageQueue.peekMessage()._msg->_header._code == (RTypeProtocol::code) RTypeProtocol::START_GAME)
+        {
+            std::cout << "message qqueue" << std::endl;
+            _roomSocket->shutdown();
+            return 3;
+        }
+        _messageQueue.pop();
+    }
+    int returnValue = engine->_libGraph->handleReady();
+    if (returnValue == 5)
+    {
+        RTypeProtocol::Message msg;
+        msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
+        _roomSocket->SendToServer(msg);
+        _roomSocket->shutdown();
+        return 5;
+    }
+    if (returnValue == 3 && !ready)
+    {
+        std::cout << "change status" << std::endl;
+        RTypeProtocol::Message msg;
+        msg._msg->_header._code = RTypeProtocol::PLAYER_READY;
+        _roomSocket->SendToServer(msg);
+        ready = true;
+    }
+    else if (returnValue == 3 && ready)
+    {
+        std::cout << "stop ready" << std::endl;
+        RTypeProtocol::Message msg;
+        msg._msg->_header._code = RTypeProtocol::PLAYER_NOT_READY;
+        _roomSocket->SendToServer(msg);
+        ready = false;
+    }
+    return -1;
 }
 
 void   ReadyState::init() {
+    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _messageQueue);
+    _roomSocket.get()->runWithThread();
+    RTypeProtocol::Message startMsg;
+    startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_JOIN_ROOM;
+    _roomSocket.get()->SendToServer(startMsg);
 }

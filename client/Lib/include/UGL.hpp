@@ -74,6 +74,7 @@ protected:
 public:
 	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) override { return _sprites[name].first; }
 	std::shared_ptr<sf::Sound>	getSound(const std::string& name) {return _sounds[name].first;};
+	std::shared_ptr<sf::Music>	getMusic(const std::string& name) {return _musics[name];};
 	std::shared_ptr<sf::Text>	getText(const std::string& name) {return _texts[name];};
 	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
@@ -109,11 +110,13 @@ protected:
 
 	void 	starfield();
 
-	int         handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity);
+	int         handleGame(std::map<int, UgandaEngine::Entity *> &) override;
 	int getJoin() {return joinSelected;};
 
 	int		handleOption() override;
 	int 	handleChangeOption() override;
+
+	int		handleReady() override;
 
 	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;
