@@ -346,10 +346,6 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 
 		for (auto& item : entity) {
 			item.second->myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
-			if (getAnimation("Ship_animation_up") == nullptr)
-				std::cout << "Animation NULL" << std::endl;
-			if (getAnimation("Ship_animation_up")->getSpriteSheet() == nullptr)
-				std::cout << "Texture NULL" << std::endl;
 			item.second->myGraph->_currentSprite->setPosition(item.second->posX, item.second->posY);
 			item.second->myGraph->_currentSprite->setScale({2.f, 2.f});
 			item.second->myGraph->_currentSprite->update(frameTime);
