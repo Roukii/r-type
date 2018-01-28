@@ -17,10 +17,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 #Add include
-include_directories(include ../utils/GameEngine ../utils/Protocol Game/include State/include Lib/include ../utils/GameEngine/include Network/include)
+include_directories(include ../utils/ ../utils/GameEngine ../utils/Protocol Game/include State/include Lib/include ../utils/GameEngine/include Network/include)
 
 #Add sources
-file(GLOB SERVER_SOURCE_FILES src/*.cpp include/*.h include/*.hpp ../utils/*.h ../utils/Protocol/*.hpp Game/include/*.hpp Game/src/*.cpp State/include/*.hpp State/src/*.cpp Network/include/*.hpp ../utils/GameEngine/include/*.hpp ../utils/GameEngine/src/*.cpp)
+file(GLOB SERVER_SOURCE_FILES src/*.cpp include/*.h include/*.hpp ../utils/*.h ../utils/Protocol/*.hpp Game/include/*.hpp Game/src/*.cpp State/include/*.hpp State/src/*.cpp Network/include/*.hpp ../utils/GameEngine/include/*.hpp ../utils/GameEngine/src/*.cpp ../utils/RTypeException.hpp)
 #set(SERVER_SOURCE_FILES src/Rtype.cpp include/ServerUdp.hpp src/ServerUdp.cpp src/Network.cpp include/Network.h src/ServerCore.cpp include/ServerCore.hpp)
 
 # Detect and add SFML

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "AnimatedSprite.hpp"
+#include "RTypeException.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
 	: _animation(nullptr), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(
@@ -14,10 +15,10 @@ AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
 void		AnimatedSprite::setAnimation(std::shared_ptr<Animation> animation) {
 	//std::const_pointer_cast<Animation>(_animation) = std::make_shared<Animation>(animation);
 	if (animation == nullptr)
-		throw std::invalid_argument("Error: AnimatedSprite.cpp : animation is null");
+		throw RTypeException("Error: AnimatedSprite.cpp : animation is null");
 	_animation = std::move(animation);
 	if (_animation == nullptr) {
-		throw std::invalid_argument("Error: AnimatedSprite.cpp : Failed to load texture");
+		throw RTypeException("Error: AnimatedSprite.cpp : Failed to load texture");
 	}
 	_texture = _animation->getSpriteSheet();
 	_currentFrame = 0;

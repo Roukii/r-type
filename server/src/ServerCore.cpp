@@ -3,6 +3,7 @@
 //
 
 #include "ServerCore.hpp"
+#include "RTypeException.hpp"
 
 namespace RTypeServer
 {
@@ -10,6 +11,8 @@ namespace RTypeServer
     : _lobbyServer(std::make_shared<ServerUdp>(_messageQueue, PORT_MAIN_SERVER)),
       _rooms(NUMBER_OF_ROOM)
     {
+        if (_lobbyServer.get() == nullptr)
+            throw RTypeException("Error : can't start socket");
     }
 
     void ServerCore::start()

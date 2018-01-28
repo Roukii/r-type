@@ -3,24 +3,19 @@
 //
 
 #include "ServerCore.hpp"
+#include "RTypeException.hpp"
 
 int main(int ac, char **av)
 {
     RTypeServer::ServerCore core;
 
-    core.start();
-    /*
-    try
-    {
-        boost::asio::io_service io_service;
-        RTypeServer::ServerUdp server(io_service);
-        io_service.run();
+    try {
+        core.start();
     }
-    catch (std::exception& e)
-    {
-        std::cerr << e.what() << std::endl;
+    catch (RTypeException &e){
+        std::cout << e.what() << std::endl;
     }
-*/
+
 
     return 0;
 }
