@@ -8,28 +8,19 @@
 #include "OptionsState.hpp"
 #include "ConnexionState.hpp"
 
-
-void	LobbyState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>(_info, engine);
-}
-
-void	LobbyState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info, engine);
-}
-
-void	LobbyState::options(std::shared_ptr<IState> &state) {
-    state = std::make_shared<OptionsState>(_info, engine);
-}
-
-void	LobbyState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>(_info, engine);
-}
-
-void	LobbyState::connexion(std::shared_ptr<IState> &state) {
-    state = std::make_shared<ConnexionState>(_info, engine);
-}
-
-void	LobbyState::lobby(std::shared_ptr<IState> &state) {
+void LobbyState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
+    if (s == "MENU")
+        state = std::make_shared<MenuState>(info, engine);
+    else if (s == "SPLASH")
+        state = std::make_shared<SplashState>(info, engine);
+    else if (s == "CONNEXION")
+        state = std::make_shared<ConnexionState>(info, engine);
+    else if (s == "OPTIONS")
+        state = std::make_shared<OptionsState>(info, engine);
+    else if (s == "LOBBY")
+        state = std::make_shared<LobbyState>(info, engine);
+    else if (s == "GAME")
+        state = std::make_shared<GameState>(info, engine);
 }
 
 int    LobbyState::exec() {
@@ -47,14 +38,13 @@ int    LobbyState::exec() {
 
     for (unsigned int i = 0; i < rooms.size(); i++)
     {
-        lib->setPlayer("ROOM " + std::to_string(i + 1) , std::to_string(rooms[i].playerNbr));
+        engine->_libGraph->setPlayer("ROOM " + std::to_string(i + 1) , std::to_string(rooms[i].playerNbr));
     }
-    return lib->handleLobby();
+    return engine->_libGraph->handleLobby();
 }
 
-void   LobbyState::init(std::shared_ptr<ILib> &lib) {
+void   LobbyState::init() {
     RTypeProtocol::Message msg;
     msg._msg.get()->_header._code = RTypeProtocol::ROOMS;
     _info.getSocket().get()->SendToServer(msg);
-    this->lib = lib;
 }

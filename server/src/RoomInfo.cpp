@@ -20,7 +20,7 @@ namespace RTypeServer {
 
     void RoomInfo::delPlayer(std::size_t id)
     {
-        for (int i = 0; i < _player.size(); i++)
+        for (unsigned int i = 0; i < _player.size(); i++)
         {
             _player[i].second = false;
             if (_player[i].first == id)
@@ -30,7 +30,7 @@ namespace RTypeServer {
 
     void RoomInfo::playerReady(std::size_t id)
     {
-        for (int i = 0; i < _player.size(); i++)
+        for (unsigned int i = 0; i < _player.size(); i++)
         {
             if (_player[i].first == id)
                 _player[i].second = true;
@@ -45,7 +45,7 @@ namespace RTypeServer {
 
     void RoomInfo::playerUnReady(std::size_t id)
     {
-        for (int i = 0; i < _player.size(); i++)
+        for (unsigned int i = 0; i < _player.size(); i++)
         {
             if (_player[i].first == id)
                 _player[i].second = false;

@@ -14,7 +14,6 @@
 #define MS_PER_UPDATE 16
 
 class GameState : public IState {
-    std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
 	std::shared_ptr<IClientUdpSocket> _roomSocket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
@@ -28,15 +27,10 @@ class GameState : public IState {
 public:
     GameState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), _rfcGameHandler(_roomSocket, Entities, engine), engine(eng), myKeys(key::instance()) {};
     virtual ~GameState() = default;
-    virtual void splash(std::shared_ptr<IState> &state);
-    virtual void menu(std::shared_ptr<IState> &state);
-    virtual void options(std::shared_ptr<IState> &state);
-    virtual void game(std::shared_ptr<IState> &state);
-    virtual void connexion(std::shared_ptr<IState> &state);
-    virtual void lobby(std::shared_ptr<IState> &state);
+	virtual void changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib);
+    virtual void init();
 
     int processInput();
 

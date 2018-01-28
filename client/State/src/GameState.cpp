@@ -8,28 +8,25 @@
 #include "ConnexionState.hpp"
 #include "LobbyState.hpp"
 
-
-void	GameState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>(_info, engine);
-}
-
-void	GameState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info, engine);
-}
-
-void	GameState::options(std::shared_ptr<IState> &state) {
-    state = std::make_shared<OptionsState>(_info, engine);
-}
-
-void	GameState::game(std::shared_ptr<IState> &state) {
-}
-
-void	GameState::connexion(std::shared_ptr<IState> &state) {
-    state = std::make_shared<ConnexionState>(_info, engine);
-}
-
-void	GameState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>(_info, engine);
+void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
+    if (s == "MENU")
+    {
+        RTypeProtocol::Message msg;
+        msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
+        _roomSocket->SendToServer(msg);
+        _roomSocket->shutdown();
+        state = std::make_shared<MenuState>(info, engine);
+    }
+    else if (s == "SPLASH")
+        state = std::make_shared<SplashState>(info, engine);
+    else if (s == "CONNEXION")
+        state = std::make_shared<ConnexionState>(info, engine);
+    else if (s == "OPTIONS")
+        state = std::make_shared<OptionsState>(info, engine);
+    else if (s == "LOBBY")
+        state = std::make_shared<LobbyState>(info, engine);
+    else if (s == "GAME")
+        state = std::make_shared<GameState>(info, engine);
 }
 
 int    GameState::exec() {
@@ -58,8 +55,8 @@ int    GameState::exec() {
     }
 }
 
-void   GameState::init(std::shared_ptr<ILib> &lib) {
-    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[lib->getJoin()];
+void   GameState::init() {
+    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
     _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _messageQueue);
     _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
@@ -68,12 +65,11 @@ void   GameState::init(std::shared_ptr<ILib> &lib) {
     startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_READY;
     _roomSocket.get()->SendToServer(startMsg);
 
-    this->lib = lib;
 }
 
 int GameState::processInput()
 {
-    std::vector<char> actions = lib->handleClientAction();
+    std::vector<char> actions = engine->_libGraph->handleClientAction();
     RTypeProtocol::Message msg;
     msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 
@@ -126,5 +122,6 @@ void GameState::render(double lag)
         e.second->_posX += e.second->_speedX * lag;
         e.second->_posY += e.second->_speedY * lag;
     }
-    lib->handleGame(this->Entities);
+    engine->_libGraph->handleGame(this->Entities);
 }
+

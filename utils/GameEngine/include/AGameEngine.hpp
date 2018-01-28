@@ -12,13 +12,11 @@
 #include <functional>
 #include <memory>
 
-#include <boost/asio.hpp>
 #ifdef __linux__
 #include <dlfcn.h>
 #elif _WIN32
+#include <boost/asio.hpp>
 #include <windows.h>
-//#include <minwindef.h>
-//#include <libloaderapi.h>
 #endif
 
 #include "Entity.hpp"
