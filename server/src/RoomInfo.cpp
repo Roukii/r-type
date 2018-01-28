@@ -18,6 +18,7 @@ namespace RTypeServer {
         _player.emplace_back(p);
     }
 
+
     void RoomInfo::delPlayer(std::size_t id)
     {
         for (unsigned int i = 0; i < _player.size(); i++)
