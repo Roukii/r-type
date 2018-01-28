@@ -6,14 +6,14 @@
 #define R_TYPE_ROOMINFO_HPP
 
 
-#include <IServerUdpSocket.hpp>
+#include "IServerUdpSocket.hpp"
 #include <vector>
 
 namespace RTypeServer {
     class RoomInfo {
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         unsigned short _port;
-        std::vector<std::pair<size_t, bool>> _player;
+        std::vector<std::pair<std::size_t, bool>> _player;
         bool _roomReady;
 
     public:
@@ -29,15 +29,15 @@ namespace RTypeServer {
 
         void setPort(unsigned short p) { _port = p; }
 
-        void addPlayer(size_t);
+        void addPlayer(std::size_t);
 
-        void delPlayer(size_t);
+        void delPlayer(std::size_t);
 
-        std::vector<std::pair<size_t, bool>> getPlayers() const {return _player;};
+        std::vector<std::pair<std::size_t, bool>> getPlayers() const {return _player;};
 
-        void playerReady(size_t id);
+        void playerReady(std::size_t id);
 
-        void playerUnReady(size_t id);
+        void playerUnReady(std::size_t id);
 
         bool getRoomReady() const { return _roomReady; }
     };

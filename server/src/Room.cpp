@@ -21,8 +21,8 @@ namespace RTypeServer
 
     void Room::runGame()
     {
-        std::vector<UgandaEngine::entity::Entity> testo;
-        RFCGameHandler gameHandler(_roomServer, testo);
+        std::vector<UgandaEngine::entity::Entity> entityList;
+        RFCGameHandler gameHandler(_roomServer, entityList);
         RTypeGame::Game game;
         game.init();
 
@@ -78,8 +78,12 @@ namespace RTypeServer
             _messageQueue.pop();
             if (_rfcHandler.getRoomInfo().getRoomReady())
             {
+                std::cout << "init game " << std::endl;
                 _state = RoomState::PLAYING_STATE;
                 _serviceThread = std::thread(&Room::runGame, this);
+                RTypeProtocol::Message msg;
+                msg._msg.get()->_header._code = RTypeProtocol::START_GAME;
+                _roomServer.get()->SendToAll(msg);
             }
         }
     }

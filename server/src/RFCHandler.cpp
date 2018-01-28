@@ -91,7 +91,5 @@ namespace RTypeServer
         char2short.n = room.get()->getPort();
         currentMessage._msg.get()->data._room._port[0] = char2short.ch[0];
         currentMessage._msg.get()->data._room._port[1] = char2short.ch[1];
-        std::cout << "port 1 = " << (int) char2short.ch[0] << std::endl;
-        std::cout << "port 2 = " << (int) char2short.ch[1] << std::endl;
     }
 }

@@ -2,6 +2,7 @@
 // Created by zozo on 25/01/18.
 //
 
+#include <iostream>
 #include "RoomInfo.hpp"
 
 namespace RTypeServer {
@@ -11,51 +12,43 @@ namespace RTypeServer {
         _roomReady = false;
     }
 
-    void RoomInfo::addPlayer(size_t id)
+    void RoomInfo::addPlayer(std::size_t id)
     {
-        std::pair<size_t, bool>  p  = std::make_pair(id, false);
+        std::pair<std::size_t, bool>  p  = std::make_pair(id, false);
         _player.emplace_back(p);
     }
 
-    void RoomInfo::delPlayer(size_t id)
+    void RoomInfo::delPlayer(std::size_t id)
     {
-        int k = 0;
-        for (auto i : _player)
+        for (int i = 0; i < _player.size(); i++)
         {
-            i.second = false;
-            if (i.first == id)
-            {
-                _player.erase(_player.begin() + k);
-            }
-            k++;
+            _player[i].second = false;
+            if (_player[i].first == id)
+                _player.erase(_player.begin() + i);
         }
     }
 
-    void RoomInfo::playerReady(size_t id)
+    void RoomInfo::playerReady(std::size_t id)
     {
-        for (auto i : _player)
+        for (int i = 0; i < _player.size(); i++)
         {
-            if (i.first == id)
-            {
-                i.second = true;
-            }
+            if (_player[i].first == id)
+                _player[i].second = true;
         }
         for (auto i : _player)
         {
             if (i.second == false)
-                return ;
+                return;
         }
         _roomReady = true;
     }
 
-    void RoomInfo::playerUnReady(size_t id)
+    void RoomInfo::playerUnReady(std::size_t id)
     {
-        for (auto i : _player)
+        for (int i = 0; i < _player.size(); i++)
         {
-            if (i.first == id)
-            {
-                i.second = false;
-            }
+            if (_player[i].first == id)
+                _player[i].second = false;
         }
         _roomReady = false;
     }

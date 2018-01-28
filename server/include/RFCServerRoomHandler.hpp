@@ -5,6 +5,7 @@
 #ifndef R_TYPE_RFCSERVERROOMHANDLER_HPP
 #define R_TYPE_RFCSERVERROOMHANDLER_HPP
 
+#include <iostream>
 #include <map>
 #include "IRFCHandler.hpp"
 #include "IServerUdpSocket.hpp"
@@ -26,7 +27,6 @@ namespace RTypeServer {
         void executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID) override;
 
         void RFCPlayerJoinRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
-        void RFCReadyRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCPlayerLeaveRoom(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCPlayerReady(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCPlayerNotReady(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
