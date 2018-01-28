@@ -33,6 +33,7 @@ namespace RTypeServer
                 gameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
                 _messageQueue.pop();
             }
+
             auto current = std::chrono::system_clock::now();
 
             //Ici boucle de jeu
@@ -44,7 +45,6 @@ namespace RTypeServer
             game.play(elapsed_seconds.count());
 
             std::this_thread::sleep_for(std::chrono::milliseconds(1000 / FRAME_RATE));
-            std::cout << "Elapsed time : " << elapsed_seconds.count() << std::endl;
         }
     }
 
@@ -73,12 +73,10 @@ namespace RTypeServer
     {
         while (!_messageQueue.isEmpty())
         {
-            std::cout << "a room was updated" << std::endl;
             _rfcHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
             _messageQueue.pop();
             if (_rfcHandler.getRoomInfo().getRoomReady())
             {
-                std::cout << "init game " << std::endl;
                 _state = RoomState::PLAYING_STATE;
                 _serviceThread = std::thread(&Room::runGame, this);
                 RTypeProtocol::Message msg;
