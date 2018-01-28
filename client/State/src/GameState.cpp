@@ -2,6 +2,7 @@
 // Created by Samy on 10/01/2018.
 //
 
+#include <KeyHandler.hpp>
 #include "GameState.hpp"
 #include "SplashState.hpp"
 #include "OptionsState.hpp"
@@ -74,6 +75,7 @@ int GameState::processInput()
     std::vector<char> actions = lib->handleClientAction();
     RTypeProtocol::Message msg;
     msg._msg.get()->_header._code = RTypeProtocol::ACTION;
+    std::shared_ptr<key::KeyHandler> myKeys(key::instance());
 
     for (auto e : actions) {
         std::cout << "get action" << std::endl;
