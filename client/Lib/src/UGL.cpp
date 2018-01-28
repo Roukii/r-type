@@ -345,26 +345,19 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 		getWindow()->draw(*getSprite("Background1").get());
 
 		for (auto& item : entity) {
-			std::cout << "ID: " << item.first << std::endl;
 			//item.second->myGraph->_currentSprite.setPosition(item.second->x, item.second->y);
 			item.second->myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+			if (getAnimation("Ship_animation_up") == nullptr)
+				std::cout << "Animation NULL" << std::endl;
+			if (getAnimation("Ship_animation_up")->getSpriteSheet() == nullptr)
+				std::cout << "Texture NULL" << std::endl;
 			item.second->myGraph->_currentSprite->setPosition(500, 500);
 			item.second->myGraph->_currentSprite->setScale({2.f, 2.f});
-			if (item.second->myGraph->_currentSprite->getAnimation() == nullptr)
-				std::cout << "Animation NULL" << std::endl;
 			item.second->myGraph->_currentSprite->update(frameTime);
 			item.second->myGraph->_currentSprite->play();
 			getWindow()->draw(*item.second->myGraph->_currentSprite);
-			/*sf::Sprite	lol;
-			Animation	lil = *getAnimation("Ship_animation_none");
-
-			if (item.second->myGraph->_texture == nullptr)
-				std::cout << "NULL" << std::endl;
-			lol.setTexture(*lil.getSpriteSheet());
-			getWindow()->draw(lol);*/
 		}
 
-		std::cout << "Refresh Display" << std::endl;
 		getWindow()->display();
 		return -1;
 	} else

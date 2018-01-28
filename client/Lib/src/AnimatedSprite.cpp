@@ -19,7 +19,7 @@ void		AnimatedSprite::setAnimation(std::shared_ptr<Animation> animation) {
 	if (_animation == nullptr) {
 		throw std::invalid_argument("Error: AnimatedSprite.cpp : Failed to load texture");
 	}
-	std::const_pointer_cast<sf::Texture>(_texture) = _animation->getSpriteSheet();
+	_texture = _animation->getSpriteSheet();
 	_currentFrame = 0;
 	setFrame(_currentFrame);
 }
@@ -143,10 +143,8 @@ void		AnimatedSprite::update(sf::Time deltaTime) {
 
 void		AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (_animation && _texture) {
-		std::cout << "Display" << std::endl;
 		states.transform *= getTransform();
 		states.texture = _texture.get();
 		target.draw(_vertices, 4, sf::Quads, states);
 	}
-	std::cout << "NOT Display" << std::endl;
 }
