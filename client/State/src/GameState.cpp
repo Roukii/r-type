@@ -36,7 +36,7 @@ int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
     std::chrono::duration<double> lag = std::chrono::seconds(0);
 	//TODO: Delete ligne suivante:
-	Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
+	//Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
     while (true)
     {
         auto current = std::chrono::system_clock::now();
@@ -47,6 +47,7 @@ int    GameState::exec() {
         if (processInput())
             return 1;
 
+        update();
         while (lag.count() >= MS_PER_UPDATE)
         {
             update();
@@ -105,6 +106,7 @@ int GameState::processInput()
 void GameState::update()
 {
     // check if message
+    std::cout << "i am in update" << std::endl;
     while (!_messageQueue.isEmpty())
     {
         _rfcGameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
@@ -114,10 +116,15 @@ void GameState::update()
 
 void GameState::render(double lag)
 {
+    if (this->Entities.empty())
+        std::cout << "render it's empty" << std::endl;
+    else
+        std::cout << "render it's not empty" << std::endl;
     for (auto e : Entities)
     {
-        e.second->posX += e.second->speedX * lag;
-        e.second->posY += e.second->speedY * lag;
+        std::cout << "change speed" << std::endl;
+        e.second->_posX += e.second->_speedX * lag;
+        e.second->_posY += e.second->_speedY * lag;
     }
     lib->handleGame(this->Entities);
 }

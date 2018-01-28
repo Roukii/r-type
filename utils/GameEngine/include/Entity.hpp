@@ -24,31 +24,26 @@ namespace UgandaEngine {
         public:
             // Factory
             std::map<std::string, std::function<void()>> _funcComp;
-            std::string _name;
+            std::shared_ptr<EntityFactoryData> _myGraph;
+            std::string     name;
+            // Position
+            int _posX;
+            int _posY;
 
-            std::shared_ptr<EntityFactoryData> myGraph;
+            // Speed
+            float _speedX;
+            float _speedY;
 
-            //position
-            float posX;
-            float posY;
-
-            //speed
-
-            float speedX;
-            float speedY;
-
+            // Size
+            int _width;
+            int _height;
 
             /*
              * Constructors / Destructor
              */
         public:
             Entity() = default;
-
-            ~Entity() = default;
-
-            /*
-             * Function and methods
-             */
+            virtual ~Entity() = default;
         };
 }
 

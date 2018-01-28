@@ -39,7 +39,10 @@ namespace RTypeClient
     }
 
     void RFCClientGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        _entity[getIdFromChar(currentMessage)] = _engine->_factory->create(static_cast<RTypeProtocol::types>(currentMessage._msg.get()->data._entity.type), _engine->_libGraph);
+        std::cout << "new ship" << std::endl;
+//        _entity[getIdFromChar(currentMessage)] = _engine->_factory->create(static_cast<RTypeProtocol::types>(currentMessage._msg.get()->data._entity.type), _engine->_libGraph);
+        _entity[getIdFromChar(currentMessage)] = _engine->_factory->create(RTypeProtocol::types::SHIP, _engine->_libGraph);
+
         getPosFromMessage(currentMessage, _entity[getIdFromChar(currentMessage)]);
     }
 
@@ -50,24 +53,24 @@ namespace RTypeClient
         union
         {
             char ch[4];
-            float n;
-        } char2float;
+            int n;
+        } char2int;
 
-        char2float.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];
-        char2float.ch[1] = currentMessage._msg.get()->data._entity._pos._x[1];
-        char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
-        char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
+        char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];
+        char2int.ch[1] = currentMessage._msg.get()->data._entity._pos._x[1];
+        char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
+        char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
 
-        ent->speedX = char2float.n - ent->posX;
-        ent->posX = char2float.n;
+        ent->_speedX = char2int.n - ent->_posX;
+        ent->_posX = char2int.n;
 
-        char2float.ch[0] = currentMessage._msg.get()->data._entity._pos._y[0];
-        char2float.ch[1] = currentMessage._msg.get()->data._entity._pos._y[1];
-        char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._y[2];
-        char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._y[3];
+        char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._y[0];
+        char2int.ch[1] = currentMessage._msg.get()->data._entity._pos._y[1];
+        char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._y[2];
+        char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._y[3];
 
-        ent->speedY = char2float.n - ent->posY;
-        ent->posY = char2float.n;
+        ent->_speedY = char2int.n - ent->_posY;
+        ent->_posY = char2int.n;
 
     }
 

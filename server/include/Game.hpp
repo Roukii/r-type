@@ -7,20 +7,31 @@
 
 
 #include <vector>
-#include <include/Entity.hpp>
+#include "IServerUdpSocket.hpp"
+#include "include/Entity.hpp"
+#include "include/AGameEngine.hpp"
+#include "AGameEntity.hpp"
+#include "Ship.hpp"
+#include "Bullet.hpp"
 
 namespace RTypeGame {
     class Game {
         /*
          * Variables
          */
-        std::vector<UgandaEngine::Entity> _entities;
+    private:
+        std::shared_ptr<UgandaEngine::AGameEngine> _engine;
+        std::vector<RTypeGame::AGameEntity> _entities;
+
+    public:
+        int _nbrPlayers;
+        int _ticks;
 
         /*
          * Constructor and destructor
          */
     public:
-        Game() = default;
+        Game() : _nbrPlayers(0), _ticks(1) {}
         ~Game() = default;
 
         /*
@@ -28,10 +39,15 @@ namespace RTypeGame {
          */
     public:
         void init();
-        void play(double elapsedTime);
+        void play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room);
 
     private:
-        void updateWorld();
+        bool checkCollision(const RTypeGame::AGameEntity &entity1, const RTypeGame::AGameEntity &entity2);
+        bool checkOutOfBound(const RTypeGame::AGameEntity &entity);
+        RTypeProtocol::Message createMsgDelE(int id);
+        RTypeProtocol::Message createMsgMoveE(int id);
+        RTypeProtocol::Message createMsgNewE(int id, RTypeProtocol::types type);
+        Ship createNewEnnemy();
     };
 }
 
