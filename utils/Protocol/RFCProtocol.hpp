@@ -82,6 +82,7 @@ namespace RTypeProtocol
         char _port[2];
         char _nb_player;
         bool _player_ready[4];
+        bool _playing;
     };
 
     struct nb_room
