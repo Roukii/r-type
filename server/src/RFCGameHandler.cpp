@@ -7,7 +7,7 @@
 
 namespace RTypeServer {
     RFCGameHandler::RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket,
-                                   std::vector<UgandaEngine::entity::Entity> &_entities) : _socket(socket), _entities(_entities)
+                                   std::vector<UgandaEngine::Entity> &_entities) : _socket(socket), _entities(_entities)
     {
         initMapOfCommandHandler();
     }
