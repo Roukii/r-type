@@ -58,6 +58,7 @@ protected:
 public:
 	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) override { return _sprites[name].first; }
 	std::shared_ptr<sf::Sound>	getSound(const std::string& name) {return _sounds[name].first;};
+	std::shared_ptr<sf::Music>	getMusic(const std::string& name) override {return _musics[name];};
 	std::shared_ptr<sf::Text>	getText(const std::string& name) {return _texts[name];};
 	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
@@ -87,6 +88,8 @@ protected:
 
 	int handleLobby() override;
 	void setPlayer(std::string room, std::string players);
+
+	int handleReady() override;
 
 	std::string getIpAdress() {return item[0];};
 	std::string getPort(){return item[1];};

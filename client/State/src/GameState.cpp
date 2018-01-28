@@ -7,6 +7,7 @@
 #include "OptionsState.hpp"
 #include "ConnexionState.hpp"
 #include "LobbyState.hpp"
+#include "ReadyState.hpp"
 
 void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
     if (s == "MENU")
@@ -27,13 +28,16 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
         state = std::make_shared<LobbyState>(info, engine);
     else if (s == "GAME")
         state = std::make_shared<GameState>(info, engine);
+    else if (s == "READY")
+        state = std::make_shared<ReadyState>(info, engine);
 }
 
 int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
     std::chrono::duration<double> lag = std::chrono::seconds(0);
 	//TODO: Delete ligne suivante:
-	//Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
+	Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
+    engine->_libGraph->getMusic("Music")->play();
     while (true)
     {
         auto current = std::chrono::system_clock::now();
@@ -41,8 +45,10 @@ int    GameState::exec() {
         previous = current;
         lag += elapsed;
 
-        if (processInput())
+        if (processInput()) {
+            engine->_libGraph->getMusic("Music")->stop();
             return 1;
+        }
 
         update();
         while (lag.count() >= MS_PER_UPDATE)
@@ -102,7 +108,6 @@ int GameState::processInput()
 void GameState::update()
 {
     // check if message
-    std::cout << "i am in update" << std::endl;
     while (!_messageQueue.isEmpty())
     {
         _rfcGameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
@@ -112,13 +117,8 @@ void GameState::update()
 
 void GameState::render(double lag)
 {
-    if (this->Entities.empty())
-        std::cout << "render it's empty" << std::endl;
-    else
-        std::cout << "render it's not empty" << std::endl;
     for (auto e : Entities)
     {
-        std::cout << "change speed" << std::endl;
         e.second->_posX += e.second->_speedX * lag;
         e.second->_posY += e.second->_speedY * lag;
     }
