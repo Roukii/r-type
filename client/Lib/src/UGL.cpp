@@ -20,23 +20,23 @@ void 		UGL::init() {
 	if (!_texture->loadFromFile("assets/ship_1.png"))
 	    throw std::invalid_argument("Error: Cannot load image");*/
 
-	loadSprite("../assets/ship_1.png", "Ship1");
+	loadSprite("../assets/ship_1.png", "Ship");
 	// UP ANIM
-	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_up");
-	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
-	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
-	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
-	_animations["Ship1_animation_up"]->addFrame(sf::IntRect(8, 11, 23, 15));
+	loadAnimation(_sprites["Ship"].second, "Ship_animation_up");
+	_animations["Ship_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
+	_animations["Ship_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
+	_animations["Ship_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
+	_animations["Ship_animation_up"]->addFrame(sf::IntRect(8, 11, 23, 15));
 
 	// DOWN ANIM
-	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_down");
-	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
-	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
-	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
-	_animations["Ship1_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
+	loadAnimation(_sprites["Ship"].second, "Ship_animation_down");
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
 
-	loadAnimation(_sprites["Ship1"].second, "Ship1_animation_none");
-	_animations["Ship1_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
+	loadAnimation(_sprites["Ship"].second, "Ship_animation_none");
+	_animations["Ship_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
 
 	loadSprite("../assets/ship_3.png", "Enemy1");
 	loadAnimation(_sprites["Enemy1"].second, "Enemy1_animation_none");
@@ -149,7 +149,7 @@ eEntityType	UGL::getEntity(const std::string& entityType) {
 std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) {
 	switch (getEntity(entityName)) {
 		case SHIP:
-			return getTexture("Ship1");
+			return getTexture("Ship");
 		default:
 			break;
 	};
@@ -337,10 +337,34 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 		if (event.type == sf::Event::Closed)
 			getWindow()->close();
 	}
+	sf::Clock	frameClock;
 	if (getWindow() != nullptr) {
+		sf::Time	frameTime = frameClock.restart();
 		handleAlpha();
 		getWindow()->clear();
 		getWindow()->draw(*getSprite("Background1").get());
+
+		for (auto& item : entity) {
+			std::cout << "ID: " << item.first << std::endl;
+			//item.second->myGraph->_currentSprite.setPosition(item.second->x, item.second->y);
+			item.second->myGraph->_currentSprite.setPosition(500, 500);
+			item.second->myGraph->_currentSprite.setScale({2.f, 2.f});
+			item.second->myGraph->_currentSprite.setAnimation(getAnimation("Ship_animation_up"));
+			if (item.second->myGraph->_currentSprite.getAnimation() == nullptr)
+				std::cout << "Animation NULL" << std::endl;
+			item.second->myGraph->_currentSprite.update(frameTime);
+			item.second->myGraph->_currentSprite.play();
+			getWindow()->draw(item.second->myGraph->_currentSprite);
+			/*sf::Sprite	lol;
+			Animation	lil = *getAnimation("Ship_animation_none");
+
+			if (item.second->myGraph->_texture == nullptr)
+				std::cout << "NULL" << std::endl;
+			lol.setTexture(*lil.getSpriteSheet());
+			getWindow()->draw(lol);*/
+		}
+
+		std::cout << "Refresh Display" << std::endl;
 		getWindow()->display();
 		return -1;
 	} else

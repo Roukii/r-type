@@ -5,12 +5,16 @@
 #include "AnimatedSprite.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
-	: _animation(nullptr), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(NULL) {
+	: _animation(nullptr), _frameTime(frameTime), _currentFrame(0), _isPaused(paused), _isLooped(looped), _texture(
+	nullptr) {
 
 }
 
-void		AnimatedSprite::setAnimation(const Animation& animation) {
-	std::const_pointer_cast<Animation>(_animation) = std::make_shared<Animation>(animation);
+void		AnimatedSprite::setAnimation(std::shared_ptr<Animation> animation) {
+	//std::const_pointer_cast<Animation>(_animation) = std::make_shared<Animation>(animation);
+	if (animation == nullptr)
+		throw std::invalid_argument("Error: AnimatedSprite.cpp : animation is null");
+	_animation = std::move(animation);
 	if (_animation == nullptr) {
 		throw std::invalid_argument("Error: AnimatedSprite.cpp : Failed to load texture");
 	}
@@ -27,8 +31,8 @@ void		AnimatedSprite::play() {
 	_isPaused = false;
 }
 
-void		AnimatedSprite::play(const Animation& animation) {
-	if (getAnimation() != std::make_shared<Animation>(animation))
+void		AnimatedSprite::play(std::shared_ptr<Animation> animation) {
+	if (getAnimation() != animation)
 		setAnimation(animation);
 	play();
 }

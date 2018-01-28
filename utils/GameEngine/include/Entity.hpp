@@ -23,7 +23,7 @@ namespace UgandaEngine {
              */
         public:
             // Factory
-            std::map<std::string, std::function<void(RTypeProtocol::Message &)>> _funcComp;
+            std::map<std::string, std::function<void()>> _funcComp;
             std::string _name;
 
             std::shared_ptr<EntityFactoryData> myGraph;

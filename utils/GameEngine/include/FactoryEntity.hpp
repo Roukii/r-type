@@ -22,11 +22,11 @@ namespace UgandaEngine {
         class FactoryEntity {
         public:
             FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
-                          const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
+                          const std::map<std::string, std::function<void()>> &action);
             std::shared_ptr<Entity> create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib);
 
             std::map<std::string, std::vector<std::string>>     _entity;
-            std::map<std::string, std::function<void(RTypeProtocol::Message&)>>        _action;
+            std::map<std::string, std::function<void()>>        _action;
         };
     }
 }

@@ -35,7 +35,8 @@ void	GameState::lobby(std::shared_ptr<IState> &state) {
 int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
     std::chrono::duration<double> lag = std::chrono::seconds(0);
-
+	//TODO: Delete ligne suivante:
+	//Entities[1] = engine->_factory->create(RTypeProtocol::types::SHIP, engine->_libGraph);
     while (true)
     {
         auto current = std::chrono::system_clock::now();

@@ -58,6 +58,7 @@ namespace RTypeClient
         char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
         char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
 
+        ent->speedX = char2float.n - ent->posX;
         ent->posX = char2float.n;
 
         char2float.ch[0] = currentMessage._msg.get()->data._entity._pos._y[0];
@@ -65,6 +66,7 @@ namespace RTypeClient
         char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._y[2];
         char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._y[3];
 
+        ent->speedY = char2float.n - ent->posY;
         ent->posY = char2float.n;
 
     }

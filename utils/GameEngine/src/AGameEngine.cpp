@@ -9,7 +9,7 @@ namespace UgandaEngine {
 
     void AGameEngine::init(const std::vector<std::string> &component,
                            const std::map<std::string, std::vector<std::string>> &entity,
-                           const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action) {
+                           const std::map<std::string, std::function<void()>> &action) {
         _factory = std::make_shared<Factory::FactoryEntity>(entity, action);
     }
 
