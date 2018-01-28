@@ -20,7 +20,7 @@ public:
 	std::size_t				getSize() const;
 	const sf::IntRect&			getFrame(std::size_t n) const;
 
-//private:
+private:
 	std::vector<sf::IntRect>	_frames;
 	std::shared_ptr<sf::Texture>	_texture;
 };

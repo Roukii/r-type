@@ -347,14 +347,14 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 		for (auto& item : entity) {
 			std::cout << "ID: " << item.first << std::endl;
 			//item.second->myGraph->_currentSprite.setPosition(item.second->x, item.second->y);
-			item.second->myGraph->_currentSprite.setPosition(500, 500);
-			item.second->myGraph->_currentSprite.setScale({2.f, 2.f});
-			item.second->myGraph->_currentSprite.setAnimation(getAnimation("Ship_animation_up"));
-			if (item.second->myGraph->_currentSprite.getAnimation() == nullptr)
+			item.second->myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+			item.second->myGraph->_currentSprite->setPosition(500, 500);
+			item.second->myGraph->_currentSprite->setScale({2.f, 2.f});
+			if (item.second->myGraph->_currentSprite->getAnimation() == nullptr)
 				std::cout << "Animation NULL" << std::endl;
-			item.second->myGraph->_currentSprite.update(frameTime);
-			item.second->myGraph->_currentSprite.play();
-			getWindow()->draw(item.second->myGraph->_currentSprite);
+			item.second->myGraph->_currentSprite->update(frameTime);
+			item.second->myGraph->_currentSprite->play();
+			getWindow()->draw(*item.second->myGraph->_currentSprite);
 			/*sf::Sprite	lol;
 			Animation	lil = *getAnimation("Ship_animation_none");
 

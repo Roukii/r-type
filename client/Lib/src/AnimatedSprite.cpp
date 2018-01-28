@@ -2,6 +2,7 @@
 // Created by alex on 1/11/18.
 //
 
+#include <iostream>
 #include "AnimatedSprite.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
@@ -142,8 +143,10 @@ void		AnimatedSprite::update(sf::Time deltaTime) {
 
 void		AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (_animation && _texture) {
+		std::cout << "Display" << std::endl;
 		states.transform *= getTransform();
 		states.texture = _texture.get();
 		target.draw(_vertices, 4, sf::Quads, states);
 	}
+	std::cout << "NOT Display" << std::endl;
 }

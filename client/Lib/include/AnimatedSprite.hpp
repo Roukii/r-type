@@ -41,7 +41,7 @@ private:
 	std::size_t		_currentFrame;
 	bool			_isPaused;
 	bool			_isLooped;
-	const std::shared_ptr<sf::Texture>	_texture;
+	std::shared_ptr<sf::Texture>	_texture;
 	sf::Vertex		_vertices[4];
 
 	virtual void		draw(sf::RenderTarget& target, sf::RenderStates states) const;

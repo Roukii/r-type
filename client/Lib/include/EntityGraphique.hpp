@@ -19,10 +19,11 @@ public:
 	{
 		_texture = std::move(texture);
 		_anims = std::move(anims);
+		_currentSprite = std::make_shared<AnimatedSprite>();
 	}
 	std::shared_ptr<sf::Texture>	        _texture;
 	std::vector<std::shared_ptr<Animation>>	_anims;
-	AnimatedSprite				_currentSprite;
+	std::shared_ptr<AnimatedSprite>		_currentSprite;
 
 };
 
