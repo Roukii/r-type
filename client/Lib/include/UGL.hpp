@@ -19,16 +19,31 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 #include "Animation.hpp"
 #include "ILib.hpp"
 #include "EntityGraphique.hpp"
+#include "Random.h"
 
 
 enum eEntityType {
 	NONE = 0,
 	SHIP,
 	BACKGROUND
+};
+
+struct Star {
+	Star() : _shape(2), _beginPos({0, 0}), _actualPos({0, 0}) {
+		Random<int> rdm;
+		_beginPos.x = rdm.Generate(0, 1920);
+		_shape.setFillColor(sf::Color::White);
+		_reset = false;
+	}
+	sf::CircleShape	_shape;
+	sf::Vector2f 	_beginPos;
+	sf::Vector2f 	_actualPos;
+	bool 		_reset;
 };
 
 class UGL : public ILib {
@@ -58,7 +73,6 @@ protected:
 public:
 	std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) override { return _sprites[name].first; }
 	std::shared_ptr<sf::Sound>	getSound(const std::string& name) {return _sounds[name].first;};
-	std::shared_ptr<sf::Music>	getMusic(const std::string& name) override {return _musics[name];};
 	std::shared_ptr<sf::Text>	getText(const std::string& name) {return _texts[name];};
 	std::shared_ptr<sf::Texture>	getTexture(const std::string& name) { return _sprites[name].second; }
 	eEntityType	getEntity(const std::string&);
@@ -89,12 +103,12 @@ protected:
 	int handleLobby() override;
 	void setPlayer(std::string room, std::string players);
 
-	int handleReady() override;
-
 	std::string getIpAdress() {return item[0];};
 	std::string getPort(){return item[1];};
 
-	int         handleGame(std::map<int, UgandaEngine::Entity *> &entity);
+	void 	starfield();
+
+	int         handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity);
 	int getJoin() {return joinSelected;};
 
 	int		handleOption() override;
