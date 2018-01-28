@@ -44,7 +44,7 @@ int    GameState::exec() {
         lag += elapsed;
 
         if (processInput())
-            return -2;
+            return 1;
 
         while (lag.count() >= MS_PER_UPDATE)
         {
