@@ -22,9 +22,10 @@ namespace RTypeServer {
     {
         for (unsigned int i = 0; i < _player.size(); i++)
         {
-            _player[i].second = false;
             if (_player[i].first == id)
+            {
                 _player.erase(_player.begin() + i);
+            }
         }
     }
 
