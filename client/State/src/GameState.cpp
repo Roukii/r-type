@@ -48,6 +48,7 @@ int    GameState::exec() {
         if (processInput())
             return 1;
 
+        update();
         while (lag.count() >= MS_PER_UPDATE)
         {
             update();

@@ -29,10 +29,9 @@ namespace UgandaEngine {
             for (auto e : _entity[name]) {
                 newEntity->_funcComp.insert(std::pair<std::string, std::function<void()>>(e, _action[e]));
             }
-            newEntity->_name = name;
             // LibGraĥique => pour récupérer toutes les données lié à l'affichage
-
-            newEntity->myGraph = lib->factoryData("Ship");
+            newEntity->name = name;
+            newEntity->_myGraph = lib->factoryData("Ship");
 
             // Initialiser par défaut de la vitesse / direction / position
             return newEntity;

@@ -24,26 +24,25 @@ namespace RTypeServer
         std::vector<UgandaEngine::Entity> entityList;
         RFCGameHandler gameHandler(_roomServer, entityList);
         RTypeGame::Game game;
-        game.init();
+//        game.init();
 
         while(_roomServer.get()->isRunning())
         {
+            auto current = std::chrono::system_clock::now();
+
             if (!_messageQueue.isEmpty())
             {
                 gameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
                 _messageQueue.pop();
             }
 
-            auto current = std::chrono::system_clock::now();
-
-            //Ici boucle de jeu
-//            _roomServer.get()->SendToAllExcept();
-
             auto end = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed_seconds = end - current;
 
-            game.play(elapsed_seconds.count());
-
+            game.play(elapsed_seconds.count(), _roomServer);
+            ++game._ticks;
+            if (game._ticks > (20 * 20))
+                game._ticks = 1;
             std::this_thread::sleep_for(std::chrono::milliseconds(1000 / FRAME_RATE));
         }
     }

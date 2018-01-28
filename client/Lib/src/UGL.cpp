@@ -367,12 +367,13 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 		getWindow()->draw(*getSprite("Background1"));
 
 		for (auto& item : entity) {
-			item.second->myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
-			item.second->myGraph->_currentSprite->setPosition(item.second->posX, item.second->posY);
-			item.second->myGraph->_currentSprite->setScale({4.f, 4.f});
-			item.second->myGraph->_currentSprite->update(frameTime);
-			item.second->myGraph->_currentSprite->play();
-			getWindow()->draw(*item.second->myGraph->_currentSprite);
+			std::cout << "there is a new entity right here " << item.first << " name "  << item.second->name << " position " << item.second->_posX << " " << item.second->_posY << std::endl;
+			item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+			item.second->_myGraph->_currentSprite->setPosition(item.second->_posX, item.second->_posY);
+			item.second->_myGraph->_currentSprite->setScale({4.f, 4.f});
+			item.second->_myGraph->_currentSprite->update(frameTime);
+			item.second->_myGraph->_currentSprite->play();
+			getWindow()->draw(*item.second->_myGraph->_currentSprite);
 		}
 		getWindow()->display();
 		return -1;

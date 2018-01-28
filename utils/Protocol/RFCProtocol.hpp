@@ -12,7 +12,8 @@ namespace RTypeProtocol
     enum types
     {
         SHIP,
-        BULLET
+        BULLET,
+        ENNEMY
     };
     enum code
     {

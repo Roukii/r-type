@@ -40,5 +40,5 @@ void EntityFunc::leave(RTypeProtocol::Message& msg, CoreInfo& info) {
 
 void EntityFunc::updatePosition(sf::Vector2f pos, const UgandaEngine::Entity& entity) {
 	//
-	entity.myGraph->_anims;
+	entity._myGraph->_anims;
 }
