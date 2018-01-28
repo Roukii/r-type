@@ -40,6 +40,7 @@ struct Star {
 		_shape.setFillColor(sf::Color::White);
 		_reset = false;
 	}
+
 	sf::CircleShape	_shape;
 	sf::Vector2f 	_beginPos;
 	sf::Vector2f 	_actualPos;

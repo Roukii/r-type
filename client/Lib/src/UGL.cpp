@@ -352,8 +352,6 @@ void UGL::starfield() {
 	}
 }
 
-
-
 int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity) {
 	sf::Event event;
 	while (getWindow()->pollEvent(event)) {
