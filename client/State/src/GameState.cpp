@@ -45,8 +45,10 @@ int    GameState::exec() {
         previous = current;
         lag += elapsed;
 
-        if (processInput())
+        if (processInput()) {
+            engine->_libGraph->getMusic("Music")->stop();
             return 1;
+        }
 
         update();
         while (lag.count() >= MS_PER_UPDATE)
@@ -117,8 +119,8 @@ void GameState::render(double lag)
 {
     for (auto e : Entities)
     {
-        e.second->posX += e.second->speedX * lag;
-        e.second->posY += e.second->speedY * lag;
+        e.second->_posX += e.second->_speedX * lag;
+        e.second->_posY += e.second->_speedY * lag;
     }
     engine->_libGraph->handleGame(this->Entities);
 }
