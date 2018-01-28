@@ -7,6 +7,7 @@
 
 UGL::UGL() : _window(std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "R-Type"))
 {
+	_window->setFramerateLimit(60);
 	// Tous les emplacement sprite avec un nom => remplir toutes ses map
 }
 
@@ -331,6 +332,8 @@ int UGL::handleSplash() {
 		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
 }
 
+
+
 int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity) {
 	sf::Event event;
 	while (getWindow()->pollEvent(event)) {
@@ -342,12 +345,13 @@ int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity
 		sf::Time	frameTime = frameClock.restart();
 		handleAlpha();
 		getWindow()->clear();
-		getWindow()->draw(*getSprite("Background1").get());
+		getSprite("Background1")->setPosition({getSprite("Background1")->getPosition().x - .1f, getSprite("Background1")->getPosition().y});
+		getWindow()->draw(*getSprite("Background1"));
 
 		for (auto& item : entity) {
 			item.second->myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
 			item.second->myGraph->_currentSprite->setPosition(item.second->posX, item.second->posY);
-			item.second->myGraph->_currentSprite->setScale({2.f, 2.f});
+			item.second->myGraph->_currentSprite->setScale({4.f, 4.f});
 			item.second->myGraph->_currentSprite->update(frameTime);
 			item.second->myGraph->_currentSprite->play();
 			getWindow()->draw(*item.second->myGraph->_currentSprite);
