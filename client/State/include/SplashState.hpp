@@ -9,21 +9,15 @@
 #include "Core.hpp"
 
 class SplashState : public IState {
-    std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
 	std::shared_ptr<UgandaEngine::AGameEngine> engine;
 public:
     SplashState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~SplashState() = default;
-    virtual void splash(std::shared_ptr<IState> &state);
-    virtual void menu(std::shared_ptr<IState> &state);
-    virtual void options(std::shared_ptr<IState> &state);
-    virtual void game(std::shared_ptr<IState> &state);
-    virtual void connexion(std::shared_ptr<IState> &state);
-    virtual void lobby(std::shared_ptr<IState> &state);
+	virtual void changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib);
+    virtual void init();
 };
 
 #endif //R_TYPE_SPLASH_HPP

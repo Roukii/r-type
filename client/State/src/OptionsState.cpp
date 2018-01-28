@@ -8,32 +8,24 @@
 #include "ConnexionState.hpp"
 #include "LobbyState.hpp"
 
-void	OptionsState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>(_info, engine);
-}
-
-void	OptionsState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info, engine);
-}
-
-void	OptionsState::options(std::shared_ptr<IState> &state) {
-}
-
-void	OptionsState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>(_info, engine);
-}
-
-void	OptionsState::connexion(std::shared_ptr<IState> &state) {
-    state = std::make_shared<ConnexionState>(_info, engine);
-}
-
-void	OptionsState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>(_info, engine);
+void OptionsState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
+    if (s == "MENU")
+        state = std::make_shared<MenuState>(info, engine);
+    else if (s == "SPLASH")
+        state = std::make_shared<SplashState>(info, engine);
+    else if (s == "CONNEXION")
+        state = std::make_shared<ConnexionState>(info, engine);
+    else if (s == "OPTIONS")
+        state = std::make_shared<OptionsState>(info, engine);
+    else if (s == "LOBBY")
+        state = std::make_shared<LobbyState>(info, engine);
+    else if (s == "GAME")
+        state = std::make_shared<GameState>(info, engine);
 }
 
 int    OptionsState::exec() {
-    std::vector<char> actions = lib->handleClientAction();
-    int opt = lib->handleChangeOption();
+    std::vector<char> actions = engine->_libGraph->handleClientAction();
+    int opt = engine->_libGraph->handleChangeOption();
 
     for (auto e : actions) {
         std::cout << "get action" << std::endl;
@@ -52,10 +44,9 @@ int    OptionsState::exec() {
         else if (opt == 5)
             myKeys->shoot = e;
     }
-    lib->handleOption();
+    engine->_libGraph->handleOption();
     return -1;
 }
 
-void   OptionsState::init(std::shared_ptr<ILib> &lib) {
-    this->lib = lib;
+void   OptionsState::init() {
 }

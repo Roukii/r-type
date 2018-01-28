@@ -20,7 +20,7 @@ ClientUdp::ClientUdp(const std::string &host,
 
 ClientUdp::~ClientUdp()
 {
-//    _socket.close();
+    _socket.close();
 }
 
 void ClientUdp::run()

@@ -19,21 +19,15 @@
 
 class MenuState : public IState {
     int selected = 0;
-    std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
 	std::shared_ptr<UgandaEngine::AGameEngine> engine;
 public:
     MenuState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~MenuState() = default;
-    virtual void splash(std::shared_ptr<IState> &state);
-    virtual void menu(std::shared_ptr<IState> &state);
-    virtual void options(std::shared_ptr<IState> &state);
-    virtual void game(std::shared_ptr<IState> &state);
-    virtual void connexion(std::shared_ptr<IState> &state);
-    virtual void lobby(std::shared_ptr<IState> &state);
+	virtual void changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine);
 
     virtual int exec();
-    virtual void init(std::shared_ptr<ILib> &lib);
+    virtual void init();
 
     void    moveUp();
     int handleKeys(const sf::Event&e);

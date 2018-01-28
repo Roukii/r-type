@@ -12,19 +12,10 @@
 
 class IState {
 public:
-    virtual void splash(std::shared_ptr<IState> &state) = 0;
-    virtual void menu(std::shared_ptr<IState> &state) = 0;
-    virtual void options(std::shared_ptr<IState> &state) = 0;
-    virtual void game(std::shared_ptr<IState> &state) = 0;
-    virtual void connexion(std::shared_ptr<IState> &state) = 0;
-    virtual void lobby(std::shared_ptr<IState> &state) = 0;
+    virtual void changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) = 0;
 
     virtual int exec() = 0;
-    virtual void init(std::shared_ptr<ILib> &lib) = 0;
-    template<typename T>
-    IState* screen() {
-        return new T();
-    }
+    virtual void init() = 0;
 };
 
 #endif //R_TYPE_ISTATE_HPP

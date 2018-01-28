@@ -64,64 +64,54 @@ void    Core::start() {
 
 	std::shared_ptr<UgandaEngine::Entity> ship = _engine->_factory->create(RTypeProtocol::types::SHIP, _engine->_libGraph);
 	ship->_funcComp["shoot"]();
-	splash();
+	this->_state->changeScreen(_state, "SPLASH",_info, _engine);
 
 	while (ret != -2) {
 		ret =  _state->exec();
-		if (ret == 0)
-			splash();
+		if (ret == 0) {
+			this->_state->changeScreen(_state, "SPLASH",_info, _engine);
+			this->_state->init();
+		}
 		else if (ret == 1) {
-			if (!_info.isRunning())
-				_info.startSocket(_engine->_libGraph->getIpAdress(), std::atoi(_engine->_libGraph->getPort().c_str()));
-			if (checkServer())
+			if (_engine->_libGraph->getIpAdress() == ""
+					|| _engine->_libGraph->getIpAdress().size() > 14
+					|| _engine->_libGraph->getPort() == "")
 			{
-				menu();
+				this->_state->changeScreen(_state, "CONNEXION", _info, _engine);
+				this->_state->init();
 			}
 			else {
-				_info.shutdownSocket();
-				connexion();
+				if (!_info.isRunning())
+					_info.startSocket(_engine->_libGraph->getIpAdress(),
+									  std::atoi(_engine->_libGraph->getPort().c_str()));
+				if (checkServer()) {
+					this->_state->changeScreen(_state, "MENU", _info, _engine);
+					this->_state->init();
+				} else {
+					_info.shutdownSocket();
+					this->_state->changeScreen(_state, "CONNEXION", _info, _engine);
+					this->_state->init();
+				}
 			}
 		}
-		else if (ret == 2)
-			options();
-		else if (ret == 3)
-			game();
-		else if (ret == 4)
-			connexion();
-		else if (ret == 5)
-			lobby();
+		else if (ret == 2) {
+			this->_state->changeScreen(_state, "OPTIONS",_info, _engine);
+			this->_state->init();
+		}
+		else if (ret == 3) {
+			this->_state->changeScreen(_state, "GAME",_info, _engine);
+			this->_state->init();
+		}
+		else if (ret == 4) {
+			this->_state->changeScreen(_state, "CONNEXION",_info, _engine);
+			this->_state->init();
+		}
+		else if (ret == 5) {
+			this->_state->changeScreen(_state, "LOBBY",_info, _engine);
+			this->_state->init();
+		}
 	}
 	_info.shutdownSocket();
-}
-
-void	Core::splash(){
-	this->_state->splash(_state);
-	this->_state->init(_engine->_libGraph);
-}
-
-void	Core::menu() {
-	this->_state->menu(_state);
-	this->_state->init(_engine->_libGraph);
-}
-
-void	Core::options() {
-	this->_state->options(_state);
-	this->_state->init(_engine->_libGraph);
-}
-
-void	Core::game() {
-	this->_state->game(_state);
-	this->_state->init(_engine->_libGraph);
-}
-
-void	Core::connexion() {
-	this->_state->connexion(_state);
-	this->_state->init(_engine->_libGraph);
-}
-
-void	Core::lobby() {
-	this->_state->lobby(_state);
-	this->_state->init(_engine->_libGraph);
 }
 
 bool Core::checkServer() {

@@ -8,33 +8,24 @@
 #include "OptionsState.hpp"
 #include "LobbyState.hpp"
 
-void	ConnexionState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>(_info, engine);
-}
-
-void	ConnexionState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info, engine);
-}
-
-void	ConnexionState::options(std::shared_ptr<IState> &state) {
-    state = std::make_shared<OptionsState>(_info, engine);
-}
-
-void	ConnexionState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>(_info, engine);
-}
-
-void	ConnexionState::connexion(std::shared_ptr<IState> &state) {
-}
-
-void	ConnexionState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>(_info, engine);
+void ConnexionState::changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine) {
+    if (s == "MENU")
+        state = std::make_shared<MenuState>(info, engine);
+    else if (s == "SPLASH")
+        state = std::make_shared<SplashState>(info, engine);
+    else if (s == "CONNEXION")
+        state = std::make_shared<ConnexionState>(info, engine);
+    else if (s == "OPTIONS")
+        state = std::make_shared<OptionsState>(info, engine);
+    else if (s == "LOBBY")
+        state = std::make_shared<LobbyState>(info, engine);
+    else if (s == "GAME")
+        state = std::make_shared<GameState>(info, engine);
 }
 
 int    ConnexionState::exec() {
-    return lib->handleConnexion();
+    return engine->_libGraph->handleConnexion();
 }
 
-void   ConnexionState::init(std::shared_ptr<ILib> &lib) {
-    this->lib = lib;
+void   ConnexionState::init() {
 }
