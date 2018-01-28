@@ -28,13 +28,7 @@ add_library(UGL SHARED ${CLIENT_GRAPHIC_LIBRARY_SOURCES})
 #Create executable
 add_executable(UgandaPilote ${CLIENT_GAME_SOURCES})
 
-if (WINDOW)
-    target_link_libraries(UgandaPilote UGL)
-endif()
-
-if (UNIX)
-    target_link_libraries(UgandaPilote UGL)
-endif()
+target_link_libraries(UgandaPilote UGL)
 
 if(SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})

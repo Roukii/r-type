@@ -90,7 +90,12 @@ namespace RTypeServer
         for (auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
+            {
+                RTypeProtocol::Message msg;
+                msg._msg.get()->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
+                _messageQueue.addMessage(msg, i);
                 _clientsList.erase(_clientsList.begin() + i);
+            }
         }
     }
 

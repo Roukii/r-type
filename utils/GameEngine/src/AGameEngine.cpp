@@ -29,14 +29,17 @@ namespace UgandaEngine {
         _libGraph->init();
 #elif _WIN32
         ILib *(*create_graph)();
-        HINSTANCE hGetProcIDDLL = LoadLibrary("..\\build\\libUGL.dll");
+        HINSTANCE hGetProcIDDLL = LoadLibrary("../build/UGL.dll");
         if (hGetProcIDDLL != NULL)
             create_graph = reinterpret_cast<ILib *(*)()>(GetProcAddress(hGetProcIDDLL, "create_lib"));
         else
             std::cout << "Path for dll not found" << std::endl;
+        std::cout << "test" << std::endl;
         ILib *get = create_graph();
+        std::cout << "getshared" << std::endl;
         std::shared_ptr<ILib> getShared(get);
         _libGraph = getShared;
+        std::cout << "init" << std::endl;
         _libGraph->init();
 #endif
     }

@@ -582,17 +582,23 @@ int UGL::handleOption() {
 		throw std::invalid_argument("Error: UGL.cpp: Windows is null");
 }
 
+typedef ILib * graph;
+
+#ifdef __linux__
 extern "C"
 {
-#ifdef __linux__
 
 ILib		*create_lib() {
 	return new UGL();
 }
-
+}
 #elif _WIN32
-ILib *__declspec(dllexport) create_lib() {
+extern "C"
+{
+
+graph __declspec(dllexport) create_lib()
+{
 	return new UGL();
 }
-#endif
 }
+#endif
