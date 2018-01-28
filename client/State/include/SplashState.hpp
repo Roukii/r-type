@@ -11,8 +11,9 @@
 class SplashState : public IState {
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
+	std::shared_ptr<UgandaEngine::AGameEngine> engine;
 public:
-    SplashState(CoreInfo &info) : _info(info) {};
+    SplashState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~SplashState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);

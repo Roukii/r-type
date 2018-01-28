@@ -6,9 +6,9 @@
 #define R_TYPE_ISTATE_HPP
 
 #include <memory>
-#include <CoreInfo.hpp>
-
 #include "ILib.hpp"
+#include <AGameEngine.hpp>
+#include "CoreInfo.hpp"
 
 class IState {
 public:

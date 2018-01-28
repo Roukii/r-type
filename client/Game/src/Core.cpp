@@ -2,19 +2,15 @@
 // Created by Samy on 10/01/2018.
 //
 
-
-#include <TestComponent.hpp>
 #include <SplashState.hpp>
 
-Core::Core() : _state(std::make_shared<SplashState>(_info))
+Core::Core()
 {
 	//Game Engine => lib Graphique // Game Engine + LibGraphique => Entity
-	// TODO : ALexis stp rempli les 2 map, ainsi que le petit vector qui les accompagnent
 	// Demander des explications pour faire ça ^^
 
 	_engine = std::make_shared<UgandaEngine::AGameEngine>();
 
-	// TODO : Init all the functions needed for the Entities action here and in EntityFunc.cpp/hpp
 
 	//SHIP
 	//Definition des entities et des fonctions associées
@@ -58,25 +54,8 @@ Core::Core() : _state(std::make_shared<SplashState>(_info))
 	functions.clear();
 	func.reset();
 
+	_state = std::make_shared<SplashState>(_info, _engine);
 
-
-
-	//Exemple de création d'entity.
-	UgandaEngine::entity::Entity entity;
-
-	//On créer les component
-	std::shared_ptr<UgandaEngine::TestComponent> component = std::make_shared<UgandaEngine::TestComponent>();
-	component->setPhrase("LOL");
-
-	//On ajoute les component
-	entity.addComponent(std::type_index(typeid(UgandaEngine::TestComponent)), component);
-
-	//Pour récupérer depuis une entity un component:
-	std::weak_ptr<UgandaEngine::TestComponent> getter = entity.get<UgandaEngine::TestComponent>();
-	if (!getter.expired())
-		std::cout << getter.lock()->getPhrase() << std::endl;
-	else
-		std::cout << "Ce component n'existe pas!" << std::endl;
 
 }
 

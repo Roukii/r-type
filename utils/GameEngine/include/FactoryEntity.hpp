@@ -15,6 +15,7 @@
 #include "Entity.hpp"
 #include "../../../client/Lib/include/ILib.hpp"
 #include "../../../utils/Protocol/Message.hpp"
+#include "RFCProtocol.hpp"
 
 namespace UgandaEngine {
     namespace Factory {
@@ -22,7 +23,7 @@ namespace UgandaEngine {
         public:
             FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
                           const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
-            std::shared_ptr<entity::Entity> create(const std::string &name, std::shared_ptr<ILib> lib);
+            std::shared_ptr<entity::Entity> create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib);
 
             std::map<std::string, std::vector<std::string>>     _entity;
             std::map<std::string, std::function<void(RTypeProtocol::Message&)>>        _action;

@@ -9,26 +9,26 @@
 #include "LobbyState.hpp"
 
 void	ConnexionState::splash(std::shared_ptr<IState> &state) {
-    state = std::make_shared<SplashState>(_info);
+    state = std::make_shared<SplashState>(_info, engine);
 }
 
 void	ConnexionState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info);
+    state = std::make_shared<MenuState>(_info, engine);
 }
 
 void	ConnexionState::options(std::shared_ptr<IState> &state) {
-    state = std::make_shared<OptionsState>(_info);
+    state = std::make_shared<OptionsState>(_info, engine);
 }
 
 void	ConnexionState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>(_info);
+    state = std::make_shared<GameState>(_info, engine);
 }
 
 void	ConnexionState::connexion(std::shared_ptr<IState> &state) {
 }
 
 void	ConnexionState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>(_info);
+    state = std::make_shared<LobbyState>(_info, engine);
 }
 
 int    ConnexionState::exec() {

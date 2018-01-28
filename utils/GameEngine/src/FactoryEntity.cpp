@@ -16,8 +16,11 @@ namespace UgandaEngine {
 
         }
 
-        std::shared_ptr<entity::Entity> FactoryEntity::create(const std::string &name, std::shared_ptr<ILib> lib) {
+        std::shared_ptr<entity::Entity> FactoryEntity::create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib) {
             std::shared_ptr<entity::Entity> newEntity;
+            std::string name;
+            if (type == RTypeProtocol::types::SHIP)
+                name = "Ship";
             if (_entity.find(name) == _entity.end()) {
                 std::cout << "error name not found" << std::endl;
                 return newEntity;

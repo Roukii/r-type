@@ -29,6 +29,9 @@ namespace UgandaEngine {
 
             std::shared_ptr<EntityFactoryData>              myGraph;
 
+            int x;
+            int y;
+
             // LUA
             std::map<std::type_index, std::shared_ptr<AComponent> > _components;
             std::string _type;

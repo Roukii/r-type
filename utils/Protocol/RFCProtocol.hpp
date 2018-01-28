@@ -9,6 +9,11 @@
 
 namespace RTypeProtocol
 {
+    enum types
+    {
+        SHIP,
+        BULLET
+    };
     enum code
     {
         ERR = 0,
@@ -68,6 +73,7 @@ namespace RTypeProtocol
     {
         pos _pos;
         char id[4];
+        char type;
     };
 
     struct room

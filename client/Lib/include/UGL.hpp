@@ -41,7 +41,7 @@ protected:
 	int selected = 0;
 	float alpha = 255;
 	int aState = 0;
-	int boxSelected = 0;
+	int boxSelected = 1;
 	int joinSelected = 0;
 	std::string players[4];
 	std::string item[2];

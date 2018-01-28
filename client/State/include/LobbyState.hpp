@@ -12,9 +12,10 @@
 class LobbyState : public IState {
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
+	std::shared_ptr<UgandaEngine::AGameEngine> engine;
 
 public:
-    LobbyState(CoreInfo &info) : _info(info) {};
+    LobbyState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~LobbyState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);

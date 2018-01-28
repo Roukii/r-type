@@ -1,5 +1,4 @@
 #include <iostream>
-#include <TestComponent.hpp>
 #include "Core.hpp"
 
 int main() {

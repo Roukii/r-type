@@ -56,8 +56,7 @@ void ClientUdp::startReceive()
                                _remoteEndpoint,
                                [this](const boost::system::error_code &ec,
                                       std::size_t bytes)
-                               {
-                                   std::cout << "before crash" << std::endl;
+                               { 
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);

@@ -12,23 +12,23 @@
 void	SplashState::splash(std::shared_ptr<IState> &state) {}
 
 void	SplashState::menu(std::shared_ptr<IState> &state) {
-    state = std::make_shared<MenuState>(_info);
+    state = std::make_shared<MenuState>(_info, engine);
 }
 
 void	SplashState::options(std::shared_ptr<IState> &state) {
-    state = std::make_shared<OptionsState>(_info);
+    state = std::make_shared<OptionsState>(_info, engine);
 }
 
 void	SplashState::game(std::shared_ptr<IState> &state) {
-    state = std::make_shared<GameState>(_info);
+    state = std::make_shared<GameState>(_info, engine);
 }
 
 void	SplashState::connexion(std::shared_ptr<IState> &state) {
-    state = std::make_shared<ConnexionState>(_info);
+    state = std::make_shared<ConnexionState>(_info, engine);
 }
 
 void	SplashState::lobby(std::shared_ptr<IState> &state) {
-    state = std::make_shared<LobbyState>(_info);
+    state = std::make_shared<LobbyState>(_info, engine);
 }
 
 int    SplashState::exec() {

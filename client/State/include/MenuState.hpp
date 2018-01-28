@@ -21,8 +21,9 @@ class MenuState : public IState {
     int selected = 0;
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
+	std::shared_ptr<UgandaEngine::AGameEngine> engine;
 public:
-    MenuState(CoreInfo &info) : _info(info) {};
+    MenuState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~MenuState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);
