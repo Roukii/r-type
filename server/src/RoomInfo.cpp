@@ -25,6 +25,7 @@ namespace RTypeServer {
         {
             if (_player[i].first == id)
             {
+                std::cout << "removing player from room" << std::endl;
                 _player.erase(_player.begin() + i);
             }
         }
