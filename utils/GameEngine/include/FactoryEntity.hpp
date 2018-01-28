@@ -23,7 +23,7 @@ namespace UgandaEngine {
         public:
             FactoryEntity(const std::map<std::string, std::vector<std::string>> &entity,
                           const std::map<std::string, std::function<void(RTypeProtocol::Message&)>> &action);
-            std::shared_ptr<entity::Entity> create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib);
+            std::shared_ptr<Entity> create(const RTypeProtocol::types &type, std::shared_ptr<ILib> lib);
 
             std::map<std::string, std::vector<std::string>>     _entity;
             std::map<std::string, std::function<void(RTypeProtocol::Message&)>>        _action;

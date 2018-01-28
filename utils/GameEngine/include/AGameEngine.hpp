@@ -38,7 +38,7 @@ namespace UgandaEngine {
          */
     private:
         //List of entities and components
-        std::vector<entity::Entity> _entities;
+        std::vector<Entity> _entities;
 
     public:
         std::shared_ptr<ILib> _libGraph;

@@ -40,7 +40,7 @@ void EntityFunc::leave(RTypeProtocol::Message& msg, CoreInfo& info) {
 	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::updatePosition(sf::Vector2f pos, const UgandaEngine::entity::Entity& entity) {
+void EntityFunc::updatePosition(sf::Vector2f pos, const UgandaEngine::Entity& entity) {
 	//
 	entity.myGraph->_anims;
 }

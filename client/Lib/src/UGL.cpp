@@ -331,7 +331,7 @@ int UGL::handleSplash() {
 		throw std::invalid_argument("Error: MenuState.cpp: Windows is null");
 }
 
-int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::entity::Entity>> &entity) {
+int UGL::handleGame(std::map<int, std::shared_ptr<UgandaEngine::Entity>> &entity) {
 	sf::Event event;
 	while (getWindow()->pollEvent(event)) {
 		if (event.type == sf::Event::Closed)

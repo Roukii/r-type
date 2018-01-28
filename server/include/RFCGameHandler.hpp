@@ -18,7 +18,7 @@ namespace RTypeServer {
         using mapOfCommand = std::map<RTypeProtocol::code, function>;
 
     public:
-        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket, std::vector<UgandaEngine::entity::Entity> &_entities);
+        RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket, std::vector<UgandaEngine::Entity> &_entities);
         ~RFCGameHandler() = default;
         RFCGameHandler(const RFCGameHandler &) = delete;
         RFCGameHandler &operator=(const RFCGameHandler &) = delete;
@@ -35,7 +35,7 @@ namespace RTypeServer {
         void initMapOfCommandHandler();
 
 
-        std::vector<UgandaEngine::entity::Entity> _entities;
+        std::vector<UgandaEngine::Entity> _entities;
         std::shared_ptr<RTypeProtocol::IServerUdpSocket> &_socket;
         mapOfCommand _CommandHandler;
     };
