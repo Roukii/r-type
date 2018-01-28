@@ -19,7 +19,7 @@ struct EntityFunc {
 	static void		move_down(RTypeProtocol::Message &msg, CoreInfo& info);
 	static void		move_right(RTypeProtocol::Message &msg, CoreInfo& info);
 	static void		move_left(RTypeProtocol::Message &msg, CoreInfo& info);
-	static void		shoot(RTypeProtocol::Message &msg, CoreInfo& info);
+	static void		shoot();
 	static void		leave(RTypeProtocol::Message &msg, CoreInfo& info);
 	static void		updatePosition(sf::Vector2f, const UgandaEngine::Entity&);
 };

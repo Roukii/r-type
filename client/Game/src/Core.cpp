@@ -15,17 +15,17 @@ Core::Core()
 	//SHIP
 	//Definition des entities et des fonctions associées
 	std::map<std::string, std::vector<std::string>> entities;
-	std::map<std::string, std::function<void(RTypeProtocol::Message&)>> functions;
+	std::map<std::string, std::function<void()>> functions;
 	std::shared_ptr<EntityFunc> func = std::make_shared<EntityFunc>();
 
 	std::vector<UgandaEngine::Entity> entities1;
 
 	//On liste les components par nom
 	std::vector<std::string> componentNames;
-	componentNames.emplace_back("moveLeft");
-	componentNames.emplace_back("moveRight");
-	componentNames.emplace_back("moveDown");
-	componentNames.emplace_back("moveUp");
+//	componentNames.emplace_back("moveLeft");
+//	componentNames.emplace_back("moveRight");
+//	componentNames.emplace_back("moveDown");
+//	componentNames.emplace_back("moveUp");
 	componentNames.emplace_back("shoot");
 
 	//On associe à ship les components par nom.
@@ -42,8 +42,8 @@ Core::Core()
 //    functions["moveDown"] = down;
 //    std::function<void(RTypeProtocol::Message&)> up = func->move_up;
 //    functions["moveUp"] = up;
-//    std::function<void(RTypeProtocol::Message&)> shoot = func->shoot;
-//    functions["shoot"] = shoot;
+    std::function<void()> shoot = func->shoot;
+    functions["shoot"] = shoot;
 
 	//Confirmation
 	_engine->init(componentNames, entities, functions);
@@ -62,6 +62,8 @@ Core::Core()
 void    Core::start() {
 	int ret = 0;
 
+	std::shared_ptr<UgandaEngine::Entity> ship = _engine->_factory->create(RTypeProtocol::types::SHIP, _engine->_libGraph);
+	ship->_funcComp["shoot"]();
 	splash();
 
 	while (ret != -2) {

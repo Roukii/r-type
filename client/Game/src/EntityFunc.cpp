@@ -28,10 +28,8 @@ void EntityFunc::move_left(RTypeProtocol::Message &msg, CoreInfo& info) {
 	info.getSocket().get()->SendToServer(msg);
 }
 
-void EntityFunc::shoot(RTypeProtocol::Message &msg, CoreInfo& info) {
-	msg._msg.get()->_header._code = RTypeProtocol::ACTION;
-	msg._msg.get()->data._action._action = RTypeProtocol::actions::SHOOT;
-	info.getSocket().get()->SendToServer(msg);
+void EntityFunc::shoot() {
+	std::cout << "boom bomm" << std::endl;
 }
 
 void EntityFunc::leave(RTypeProtocol::Message& msg, CoreInfo& info) {
