@@ -32,7 +32,28 @@ void	OptionsState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    OptionsState::exec() {
-    return lib->handleOption();
+    std::vector<char> actions = lib->handleClientAction();
+    int opt = lib->handleChangeOption();
+
+    for (auto e : actions) {
+        std::cout << "get action" << std::endl;
+        if (e == 27)
+            return 1;
+        //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
+        // il faut faire une récupération des touches dans le state option
+        if (opt == 1)
+            myKeys->up = e;
+        else if (opt == 2)
+            myKeys->down = e;
+        else if (opt == 3)
+            myKeys->left = e;
+        else if (opt == 4)
+            myKeys->right = e;
+        else if (opt == 5)
+            myKeys->shoot = e;
+    }
+    lib->handleOption();
+    return -1;
 }
 
 void   OptionsState::init(std::shared_ptr<ILib> &lib) {

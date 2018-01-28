@@ -93,6 +93,7 @@ protected:
 	int getJoin() {return joinSelected;};
 
 	int		handleOption() override;
+	int 	handleChangeOption() override;
 
 	std::shared_ptr<sf::RenderWindow>	_window;
 	sf::Font			_font;

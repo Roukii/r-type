@@ -9,6 +9,7 @@
 #include "IState.hpp"
 #include "Core.hpp"
 #include "RFCClientGameHandler.hpp"
+#include "KeyHandler.hpp"
 
 #define MS_PER_UPDATE 16
 
@@ -22,9 +23,10 @@ class GameState : public IState {
 
     RTypeClient::RFCClientGameHandler _rfcGameHandler;
     std::shared_ptr<UgandaEngine::AGameEngine> engine;
+	std::shared_ptr<key::KeyHandler> myKeys;
 
 public:
-    GameState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), _rfcGameHandler(_roomSocket, Entities, engine), engine(eng) {};
+    GameState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), _rfcGameHandler(_roomSocket, Entities, engine), engine(eng), myKeys(key::instance()) {};
     virtual ~GameState() = default;
     virtual void splash(std::shared_ptr<IState> &state);
     virtual void menu(std::shared_ptr<IState> &state);

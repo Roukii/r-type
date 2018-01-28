@@ -29,6 +29,7 @@ public:
 	virtual int         handleConnexion() = 0;
 	virtual int         handleLobby() = 0;
 	virtual int         handleOption() = 0;
+	virtual int         handleChangeOption() = 0;
 	virtual std::string getIpAdress() = 0;
 	virtual std::string getPort() = 0;
 	virtual int getJoin() = 0;

@@ -5,6 +5,8 @@
 #ifndef R_TYPE_KEYHANDLER_HPP
 #define R_TYPE_KEYHANDLER_HPP
 
+#include <memory>
+
 namespace key
 {
     struct KeyHandler
@@ -26,11 +28,11 @@ namespace key
         }
 
     };
-    static KeyHandler *instance()
+    static std::shared_ptr<KeyHandler> instance()
     {
-        static KeyHandler *s_instance;
+        static std::shared_ptr<KeyHandler> s_instance;
         if (!s_instance)
-            s_instance = new KeyHandler;
+            s_instance = std::make_shared<KeyHandler>();
         return s_instance;
     }
 

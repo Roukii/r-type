@@ -14,7 +14,7 @@ namespace RTypeGame {
         /*
          * Variables
          */
-        std::vector<UgandaEngine::entity::Entity> _entities;
+        std::vector<UgandaEngine::Entity> _entities;
 
         /*
          * Constructor and destructor

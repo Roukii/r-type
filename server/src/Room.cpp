@@ -21,7 +21,7 @@ namespace RTypeServer
 
     void Room::runGame()
     {
-        std::vector<UgandaEngine::entity::Entity> entityList;
+        std::vector<UgandaEngine::Entity> entityList;
         RFCGameHandler gameHandler(_roomServer, entityList);
         RTypeGame::Game game;
         game.init();

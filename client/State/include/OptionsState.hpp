@@ -5,6 +5,7 @@
 #ifndef R_TYPE_OPTIONSSCREEN_HPP
 #define R_TYPE_OPTIONSSCREEN_HPP
 
+#include <KeyHandler.hpp>
 #include "IState.hpp"
 #include "Core.hpp"
 
@@ -12,6 +13,7 @@ class OptionsState : public IState {
     std::shared_ptr<ILib> lib;
 	CoreInfo &_info;
 	std::shared_ptr<UgandaEngine::AGameEngine> engine;
+	std::shared_ptr<key::KeyHandler> myKeys;
 public:
     OptionsState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
     virtual ~OptionsState() = default;

@@ -484,8 +484,49 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 	}
 }
 
-std::vector<char> UGL::handleClientAction()
-{
+int UGL::handleChangeOption() {
+	sf::Event e;
+
+	while (getWindow()->pollEvent(e))
+	{
+		if (e.type == sf::Event::Closed)
+		{
+			getWindow()->close();
+			return 0;
+		}
+		if (e.type == sf::Event::MouseButtonPressed)
+		{
+			if (e.mouseButton.button == sf::Mouse::Left)
+			{
+				if (e.mouseButton.x > 1200 && e.mouseButton.x < 1300
+					&& e.mouseButton.y > 500 && e.mouseButton.y < 560)
+				{
+					return 1;
+				} else if (e.mouseButton.x > 1200 && e.mouseButton.x < 1300
+						   && e.mouseButton.y > 600 && e.mouseButton.y < 660)
+				{
+					return 2;
+				} else if (e.mouseButton.x > 1200 && e.mouseButton.x < 1300
+						   && e.mouseButton.y > 700 && e.mouseButton.y < 760)
+				{
+					return 3;
+				} else if (e.mouseButton.x > 1200 && e.mouseButton.x < 1300
+						   && e.mouseButton.y > 800 && e.mouseButton.y < 860)
+				{
+					return 4;
+				} else if (e.mouseButton.x > 1200 && e.mouseButton.x < 1300
+						   && e.mouseButton.y > 900 && e.mouseButton.y < 960)
+				{
+					return 5;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+
+std::vector<char> UGL::handleClientAction() {
 	sf::Event event;
 	std::vector<char> unicodeEvent;
 
@@ -551,16 +592,6 @@ int UGL::handleConnexion() {
 }
 
 int UGL::handleOption() {
-	sf::Event event;
-	while (getWindow()->pollEvent(event)) {
-		if (event.type == sf::Event::Closed)
-			getWindow()->close();
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Escape) {
-				return 1;
-			}
-		}
-	}
 	if (getWindow() != nullptr) {
 		handleAlpha();
 		getWindow()->clear();

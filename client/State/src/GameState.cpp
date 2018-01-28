@@ -2,7 +2,6 @@
 // Created by Samy on 10/01/2018.
 //
 
-#include <KeyHandler.hpp>
 #include "GameState.hpp"
 #include "SplashState.hpp"
 #include "OptionsState.hpp"
@@ -75,7 +74,7 @@ int GameState::processInput()
     std::vector<char> actions = lib->handleClientAction();
     RTypeProtocol::Message msg;
     msg._msg.get()->_header._code = RTypeProtocol::ACTION;
-    std::shared_ptr<key::KeyHandler> myKeys(key::instance());
+
 
     for (auto e : actions) {
         std::cout << "get action" << std::endl;
@@ -83,8 +82,20 @@ int GameState::processInput()
             return 1;
             //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
             // il faut faire une récupération des touches dans le state option
+        if (myKeys->down)
+        {
+            std::cout << "it is a down" << std::endl;
+            msg._msg.get()->data._action._action = RTypeProtocol::DOWN;
+        }
+        else if (myKeys->up)
             msg._msg.get()->data._action._action = RTypeProtocol::UP;
-            _roomSocket.get()->SendToServer(msg);
+        else if (myKeys->left)
+            msg._msg.get()->data._action._action = RTypeProtocol::LEFT;
+        else if (myKeys->right)
+            msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
+        else if (myKeys->shoot)
+            msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
+        _roomSocket.get()->SendToServer(msg);
     }
     return 0;
 
