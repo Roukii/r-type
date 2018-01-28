@@ -5,7 +5,3 @@
 #include <utility>
 
 #include "../include/Entity.hpp"
-
-void UgandaEngine::entity::Entity::addComponent(std::type_index type, std::shared_ptr<UgandaEngine::AComponent> component) {
-    _components[type] = component;
-}

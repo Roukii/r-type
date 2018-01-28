@@ -6,7 +6,7 @@
 
 namespace RTypeClient
 {
-    RFCClientGameHandler::RFCClientGameHandler(std::shared_ptr<IClientUdpSocket> &socket, std::map<int, std::shared_ptr<UgandaEngine::entity::Entity>> &ent,
+    RFCClientGameHandler::RFCClientGameHandler(std::shared_ptr<IClientUdpSocket> &socket, std::map<int, std::shared_ptr<UgandaEngine::Entity>> &ent,
                                                std::shared_ptr<UgandaEngine::AGameEngine> &eng)
             : _socket(socket), _entity(ent), _engine(eng)
     {
@@ -30,7 +30,7 @@ namespace RTypeClient
     }
 
     void RFCClientGameHandler::RFCMoveEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        std::shared_ptr<UgandaEngine::entity::Entity> ent = _entity[getIdFromChar(currentMessage)];
+        std::shared_ptr<UgandaEngine::Entity> ent = _entity[getIdFromChar(currentMessage)];
         getPosFromMessage(currentMessage, ent);
     }
 
@@ -44,28 +44,28 @@ namespace RTypeClient
     }
 
 
-    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, std::shared_ptr<UgandaEngine::entity::Entity> &ent)
+    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, std::shared_ptr<UgandaEngine::Entity> &ent)
     {
         //TODO a clean ca race de ces mort la gitane
         union
         {
             char ch[4];
-            int n;
-        } char2int;
+            float n;
+        } char2float;
 
-        char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];
-        char2int.ch[1] = currentMessage._msg.get()->data._entity._pos._x[1];
-        char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
-        char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
+        char2float.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];
+        char2float.ch[1] = currentMessage._msg.get()->data._entity._pos._x[1];
+        char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
+        char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
 
-        ent->x = char2int.n;
+        ent->posX = char2float.n;
 
-        char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._y[0];
-        char2int.ch[1] = currentMessage._msg.get()->data._entity._pos._y[1];
-        char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._y[2];
-        char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._y[3];
+        char2float.ch[0] = currentMessage._msg.get()->data._entity._pos._y[0];
+        char2float.ch[1] = currentMessage._msg.get()->data._entity._pos._y[1];
+        char2float.ch[2] = currentMessage._msg.get()->data._entity._pos._y[2];
+        char2float.ch[3] = currentMessage._msg.get()->data._entity._pos._y[3];
 
-        ent->y = char2int.n;
+        ent->posY = char2float.n;
 
     }
 

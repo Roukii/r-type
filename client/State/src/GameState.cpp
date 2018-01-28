@@ -100,6 +100,10 @@ void GameState::update()
 
 void GameState::render(double lag)
 {
-
+    for (auto e : Entities)
+    {
+        e.second->posX += e.second->speedX * lag;
+        e.second->posY += e.second->speedY * lag;
+    }
     lib->handleGame(this->Entities);
 }

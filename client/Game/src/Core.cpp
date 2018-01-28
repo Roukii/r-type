@@ -18,7 +18,7 @@ Core::Core()
 	std::map<std::string, std::function<void(RTypeProtocol::Message&)>> functions;
 	std::shared_ptr<EntityFunc> func = std::make_shared<EntityFunc>();
 
-	std::vector<UgandaEngine::entity::Entity> entities1;
+	std::vector<UgandaEngine::Entity> entities1;
 
 	//On liste les components par nom
 	std::vector<std::string> componentNames;
