@@ -33,28 +33,27 @@ void	GameState::lobby(std::shared_ptr<IState> &state) {
 }
 
 int    GameState::exec() {
-//    double previous = getCurrentTime();
-//    double lag = 0.0;
-//    while (true)
-//    {
-//        double current = getCurrentTime();
-//        double elapsed = current - previous;
-//        previous = current;
-//        lag += elapsed;
-//
-        processInput();
-//
-//        while (lag >= MS_PER_UPDATE)
-//        {
-        update();
-//            lag -= MS_PER_UPDATE;
-//        }
-// lag / MS_PER_UPDATE
-        render();
-//    }
+    auto previous = std::chrono::system_clock::now();
+    std::chrono::duration<double> lag = std::chrono::seconds(0);
 
-    // send msg
-    return lib->handleGame();
+    while (true)
+    {
+        auto current = std::chrono::system_clock::now();
+        std::chrono::duration<double> elapsed = current - previous;
+        previous = current;
+        lag += elapsed;
+
+        if (processInput())
+            return -2;
+
+        while (lag.count() >= MS_PER_UPDATE)
+        {
+            update();
+            lag -= std::chrono::seconds(MS_PER_UPDATE);
+        }
+
+        render(lag.count() / MS_PER_UPDATE);
+    }
 }
 
 void   GameState::init(std::shared_ptr<ILib> &lib) {
@@ -70,18 +69,22 @@ void   GameState::init(std::shared_ptr<ILib> &lib) {
     this->lib = lib;
 }
 
-void GameState::processInput()
+int GameState::processInput()
 {
-    //TODO : Youssef tu fais ça
     std::vector<char> actions = lib->handleClientAction();
+    RTypeProtocol::Message msg;
+    msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 
     for (auto e : actions) {
-        RTypeProtocol::Message msg;
-        msg._msg.get()->_header._code = RTypeProtocol::ACTION;
-        //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
-        msg._msg.get()->data._action._action = RTypeProtocol::UP;
-        _roomSocket.get()->SendToServer(msg);
+        std::cout << "get action" << std::endl;
+        if (e == 27)
+            return 1;
+            //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
+            // il faut faire une récupération des touches dans le state option
+            msg._msg.get()->data._action._action = RTypeProtocol::UP;
+            _roomSocket.get()->SendToServer(msg);
     }
+    return 0;
 
 }
 
@@ -95,6 +98,8 @@ void GameState::update()
     }
 }
 
-void GameState::render() {
+void GameState::render(double lag)
+{
 
+    lib->handleGame();
 }

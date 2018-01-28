@@ -60,8 +60,6 @@ void ClientUdp::startReceive()
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);
-                                       std::cout << "receive a message" << std::endl;
-                                       std::cout << "msg code : " << (int) _msg._msg.get()->_header._code << std::endl;
                                    }
                                    else
                                    {

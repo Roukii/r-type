@@ -492,14 +492,17 @@ std::vector<char> UGL::handleClientAction()
 	while (getWindow()->pollEvent(event)) {
 		if (event.type == sf::Event::Closed) {
 			getWindow()->close();
-			unicodeEvent.push_back(27);
 			return unicodeEvent;
 		}
 		if (event.type == sf::Event::KeyPressed) {
-			if (unicodeEvent.empty())
+			if (unicodeEvent.empty()) {
+				if (event.key.code == sf::Keyboard::Escape)
+					unicodeEvent.push_back(27);
 				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
-			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode))
+			}
+			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode)) {
 				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+			}
 		}
 	}
 	return unicodeEvent;
@@ -579,8 +582,17 @@ int UGL::handleOption() {
 		throw std::invalid_argument("Error: UGL.cpp: Windows is null");
 }
 
-extern "C" {
+extern "C"
+{
+#ifdef __linux__
+
 ILib		*create_lib() {
 	return new UGL();
 }
+
+#elif _WIN32
+ILib *__declspec(dllexport) create_lib() {
+	return new UGL();
+}
+#endif
 }

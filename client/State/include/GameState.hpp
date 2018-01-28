@@ -5,9 +5,12 @@
 #ifndef R_TYPE_GAMESCREEN_HPP
 #define R_TYPE_GAMESCREEN_HPP
 
+#include <chrono>
 #include "IState.hpp"
 #include "Core.hpp"
 #include "RFCClientGameHandler.hpp"
+
+#define MS_PER_UPDATE 16
 
 class GameState : public IState {
     std::shared_ptr<ILib> lib;
@@ -31,11 +34,11 @@ public:
     virtual int exec();
     virtual void init(std::shared_ptr<ILib> &lib);
 
-    void processInput();
+    int processInput();
 
     void update();
 
-    void render();
+    void render(double lag);
 };
 
 #endif //R_TYPE_GAMESCREEN_HPP
