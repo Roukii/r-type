@@ -28,16 +28,16 @@ namespace RTypeServer {
     void RFCGameHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
         switch (static_cast<RTypeProtocol::actions>(currentMessage._msg->data._action._action)) {
             case RTypeProtocol::actions::UP :
-                _game._entities[_currentOwnerID]._speedY = -7;
+                _game._entities[_currentOwnerID]._speedY = -15;
                 break;
             case RTypeProtocol::actions::DOWN :
-                _game._entities[_currentOwnerID]._speedY = 7;
+                _game._entities[_currentOwnerID]._speedY = 15;
                 break;
             case RTypeProtocol::actions::LEFT :
-                _game._entities[_currentOwnerID]._speedX = -7;
+                _game._entities[_currentOwnerID]._speedX = -15;
                 break;
             case RTypeProtocol::actions::RIGHT :
-                _game._entities[_currentOwnerID]._speedX = 7;
+                _game._entities[_currentOwnerID]._speedX = 15;
                 break;
             case RTypeProtocol::actions::SHOOT :
                 _game._entities.push_back(_game.createNewBullet(_game._entities[_currentOwnerID]));

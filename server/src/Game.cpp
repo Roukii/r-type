@@ -34,7 +34,10 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
             } else {
                 msg = createMsgMoveE(*entity);
                 for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
-                    if (checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
+                    if (checkCollision(*entity, *collision)
+                        && entity->_id != collision->_id
+                        && !entity->_removable
+                        && (collision->_type != SHIP && entity->_type != SHIP)) {
                         std::cout << "[DBG] COLLISION!!" << std::endl;
                         room.get()->SendToAll(createMsgDelE(collision->_id));
                         msg = createMsgDelE(entity->_id);
