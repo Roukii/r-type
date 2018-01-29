@@ -26,23 +26,23 @@ namespace RTypeServer {
     }
 
     void RFCGameHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        std::cout << "[OK] Received action" << std::endl;
+        std::cout << "[OK] Received action from owner : " << _currentOwnerID << std::endl;
         switch (static_cast<RTypeProtocol::actions>(currentMessage._msg->data._action._action)) {
             case RTypeProtocol::actions::UP :
                 std::cout << "[OK] Action is up." << std::endl;
-                _game._entities[_currentOwnerID]._speedY += 5;
+                _game._entities[(_currentOwnerID - 1)]._speedY += 5;
                 break;
             case RTypeProtocol::actions::DOWN :
                 std::cout << "[OK] Action is down." << std::endl;
-                _game._entities[_currentOwnerID]._speedY -= 5;
+                _game._entities[(_currentOwnerID - 1)]._speedY -= 5;
                 break;
             case RTypeProtocol::actions::LEFT :
                 std::cout << "[OK] Action is left." << std::endl;
-                _game._entities[_currentOwnerID]._speedX -= 5;
+                _game._entities[(_currentOwnerID - 1)]._speedX -= 5;
                 break;
             case RTypeProtocol::actions::RIGHT :
                 std::cout << "[OK] Action is right." << std::endl;
-                _game._entities[_currentOwnerID]._speedX += 5;
+                _game._entities[(_currentOwnerID - 1)]._speedX += 5;
                 break;
             default:
                 break;
