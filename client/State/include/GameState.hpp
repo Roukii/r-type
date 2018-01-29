@@ -18,14 +18,14 @@ class GameState : public IState {
 	std::shared_ptr<IClientUdpSocket> _roomSocket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 
-    std::map<int, UgandaEngine::Entity *> Entities;
+    std::map<int, UgandaEngine::Entity *> _entities;
 
     RTypeClient::RFCClientGameHandler _rfcGameHandler;
-    std::shared_ptr<UgandaEngine::AGameEngine> engine;
-	std::shared_ptr<key::KeyHandler> myKeys;
+    std::shared_ptr<UgandaEngine::AGameEngine> _engine;
+	std::shared_ptr<key::KeyHandler> _myKeys;
 
 public:
-    GameState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), _rfcGameHandler(_roomSocket, Entities, engine), engine(eng), myKeys(key::instance()) {};
+    GameState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), _rfcGameHandler(_roomSocket, _entities, _engine), _engine(eng), _myKeys(key::instance()) {};
     virtual ~GameState() = default;
 	virtual void changeScreen(std::shared_ptr<IState> &state, std::string s, CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> engine);
 

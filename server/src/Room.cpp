@@ -24,7 +24,6 @@ namespace RTypeServer
         std::vector<UgandaEngine::Entity> entityList;
         RFCGameHandler gameHandler(_roomServer, entityList);
         RTypeGame::Game game;
-//        game.init();
 
         while(_roomServer.get()->isRunning())
         {
@@ -42,8 +41,7 @@ namespace RTypeServer
             game.play(elapsed_seconds.count(), _roomServer);
             ++game._ticks;
             if (game._ticks > (20 * 20))
-                //TODO: remettre à 1
-                game._ticks = 2;
+                game._ticks = 1;
             std::this_thread::sleep_for(std::chrono::milliseconds(1000 / FRAME_RATE));
         }
     }

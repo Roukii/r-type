@@ -34,7 +34,7 @@ namespace RTypeClient {
         void RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
         void RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID);
 
-        void getPosFromMessage(RTypeProtocol::Message &, UgandaEngine::Entity * &ent);
+        void getPosFromMessage(RTypeProtocol::Message &, UgandaEngine::Entity *ent);
         int getIdFromChar(RTypeProtocol::Message &);
     private:
         std::shared_ptr<IClientUdpSocket> &_socket;

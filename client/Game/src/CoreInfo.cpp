@@ -13,7 +13,6 @@ std::shared_ptr<IClientUdpSocket>& CoreInfo::getSocket() {
 }
 
 void CoreInfo::startSocket(const std::string& host, unsigned short hostPort) {
-    std::cout << "start socket lel" << std::endl;
     _host = host;
     getRandomPort();
     std::cout << "get random port : " << _port << std::endl;
