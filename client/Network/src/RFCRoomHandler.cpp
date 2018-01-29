@@ -2,8 +2,8 @@
 // Created by zozo on 21/01/18.
 //
 
-#include "../../server/include/RFCHandler.hpp"
-#include "../include/RFCRoomHandler.hpp"
+#include "RFCProtocol.hpp"
+#include "RFCRoomHandler.hpp"
 
 namespace RTypeClient
 {
@@ -19,11 +19,12 @@ namespace RTypeClient
 
     void RFCRoomHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
+        if (ownerID == WRONG_OWNER_ID)
+            return ;
         auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
-            //_CommandHandler[codeCommand](msg, ownerID);
         }
     }
 

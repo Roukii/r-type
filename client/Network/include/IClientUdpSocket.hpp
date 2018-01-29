@@ -8,6 +8,8 @@
 #include <thread>
 #include "Message.hpp"
 
+#define WRONG_OWNER_ID 666
+
 class IClientUdpSocket
 {
 public:

@@ -47,10 +47,12 @@ namespace RTypeServer
 
     void RFCHandler::RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
+        _socket->SendToClient(currentMessage, _currentOwnerID);
     }
 
     void RFCHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
+        std::cout << "rfc handler main : " << (RTypeProtocol::code)msg._msg->_header._code << std::endl;
         auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {

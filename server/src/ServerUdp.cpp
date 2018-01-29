@@ -6,6 +6,7 @@
 
 #include "ServerUdp.hpp"
 
+#define WRONG_OWNER_ID 666
 namespace RTypeServer
 {
     ServerUdp::ServerUdp(MessageQueue<RTypeProtocol::Message> &queue, unsigned short port)
@@ -49,11 +50,10 @@ namespace RTypeServer
                         if (!endpointExist(_lastEndpoint))
                         {
                             _clientsList.push_back(_lastEndpoint);
+                            std::cout << "sizeof client list : " << _clientsList.size() << std::endl;
                             _readylist.push_back(false);
                         }
-                        SendToClient(_msg, _clientsList.size() - 1);
                         _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
-                        SendToAllExcept(_msg, _clientsList.size() - 1);
                     }
                     else
                     {
@@ -87,6 +87,7 @@ namespace RTypeServer
 
     void ServerUdp::removeDisconnectedClient(endpoint target)
     {
+        std::cout << "remove a client list : " << _clientsList.size() << std::endl;
         for (auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
@@ -97,6 +98,7 @@ namespace RTypeServer
                 _clientsList.erase(_clientsList.begin() + i);
             }
         }
+        std::cout << "after remove a client list : " << _clientsList.size() << std::endl;
     }
 
     void ServerUdp::runServer()
@@ -122,9 +124,11 @@ namespace RTypeServer
         for(auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
+            {
                 return i;
+            }
         }
-        return _clientsList.size();
+        return WRONG_OWNER_ID;
     }
 
     bool ServerUdp::isRunning() const
