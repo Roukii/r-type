@@ -83,6 +83,7 @@ RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
     currentMessage._msg.get()->data._entity.id[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity.id[3] = char2int.ch[3];
 
+    std::cout << "[DBG] Created new delete msg" << std::endl;
     return currentMessage;
 }
 
@@ -112,6 +113,7 @@ RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(AGameEntity gameEntity) {
     currentMessage._msg.get()->data._entity._pos._y[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity._pos._y[3] = char2int.ch[3];
 
+    std::cout << "[DBG] Created new move msg" << std::endl;
     return currentMessage;
 }
 
@@ -143,6 +145,7 @@ RTypeProtocol::Message RTypeGame::Game::createMsgNewE(AGameEntity gameEntity, RT
 
     currentMessage._msg.get()->data._entity.type = type;
 
+    std::cout << "[DBG] Created new entity msg" << std::endl;
     return currentMessage;
 }
 
@@ -188,4 +191,5 @@ RTypeGame::Bullet RTypeGame::Game::createNewBullet(const AGameEntity &entity) {
             newBullet._speedY = 0;
             break;
     }
+    return newBullet;
 }
