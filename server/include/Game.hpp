@@ -39,6 +39,9 @@ namespace RTypeGame {
     public:
         void init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room);
         void play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room);
+        Bullet createNewBullet(const AGameEntity &entity);
+        Ship createNewEnnemy();
+        Ship createNewPlayer();
 
     private:
         bool checkCollision(const RTypeGame::AGameEntity &entity1, const RTypeGame::AGameEntity &entity2);
@@ -46,8 +49,6 @@ namespace RTypeGame {
         RTypeProtocol::Message createMsgDelE(int id);
         RTypeProtocol::Message createMsgMoveE(AGameEntity gameEntity);
         RTypeProtocol::Message createMsgNewE(AGameEntity gameEntity, RTypeProtocol::types type);
-        Ship createNewEnnemy();
-        Ship createNewPlayer();
     };
 }
 
