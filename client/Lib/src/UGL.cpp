@@ -113,7 +113,8 @@ void 		UGL::init() {
 
 	ip.setSize(sf::Vector2f(500, 80));
 	ip.setPosition(sf::Vector2f(400, 280));
-
+	ip.setFillColor(sf::Color::Green);
+	
 	port.setSize(sf::Vector2f(500, 80));
 	port.setPosition(sf::Vector2f(400, 480));
 
@@ -546,7 +547,7 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 				item[boxSelected - 1].erase(item[boxSelected - 1].size() - 1, 1);
 			if (boxSelected == 1)
 				(*getText("ITEM 0").get()).setString(item[0]);
-			else if (boxSelected == 1)
+			else if (boxSelected == 2)
 				(*getText("ITEM 1").get()).setString(item[1]);
 		} else if ((e.text.unicode >= '0' && e.text.unicode <= '9') ||
 			   e.text.unicode == '.') {
@@ -617,10 +618,18 @@ std::vector<char> UGL::handleClientAction() {
 			if (unicodeEvent.empty()) {
 				if (event.key.code == sf::Keyboard::Escape)
 					unicodeEvent.push_back(27);
-				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+				else if (event.key.code == sf::Keyboard::Space)
+					unicodeEvent.push_back(32);
+				else
+					unicodeEvent.push_back(static_cast<char>(event.text.unicode + 97));
 			}
 			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode)) {
-				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+				if (event.key.code == sf::Keyboard::Escape)
+					unicodeEvent.push_back(27);
+				else if (event.key.code == sf::Keyboard::Space)
+					unicodeEvent.push_back(32);
+				else
+					unicodeEvent.push_back(static_cast<char>(event.text.unicode + 97));
 			}
 		}
 	}
