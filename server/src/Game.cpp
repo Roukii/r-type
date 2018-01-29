@@ -12,12 +12,10 @@ void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket
         Ship newPlayer = createNewPlayer();
         _entities.push_back(newPlayer);
         room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::SHIP));
-        std::cout << "[OK] Created new player with id : " << newPlayer._id << std::endl;
     }
 }
 
 void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
-    std::cout << "Total of entities : " << _entities.size() << std::endl;
     for (auto entity = _entities.begin(); entity != _entities.end(); ++entity) {
         RTypeProtocol::Message msg;
         int prevX = entity->_posX;
@@ -34,7 +32,7 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
         } else {
             msg = createMsgMoveE(*entity);
 //            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
-//                if (checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
+//                if (  checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
 //                    room.get()->SendToAll(createMsgDelE(collision->_id));
 //                    msg = createMsgDelE(entity->_id);
 //                    entity->_removable = true;
@@ -44,6 +42,7 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
 //            }
         }
         room.get()->SendToAll(msg);
+        std::cout << "[DBG] Message sent" << std::endl;
     }
 
     _entities.erase(
@@ -54,7 +53,6 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
     if (_ticks == 1) {
         Ship ennemy = createNewEnnemy();
         ennemy._type = RTypeGame::eType::ENNEMY;
-        std::cout << "Ennemy pos:" << ennemy._posX << "|" << ennemy._posY << std::endl;
         _entities.push_back(ennemy);
         room.get()->SendToAll(createMsgNewE(ennemy, RTypeProtocol::ENNEMY));
     }
@@ -72,7 +70,6 @@ bool RTypeGame::Game::checkOutOfBound(const RTypeGame::AGameEntity &entity) {
 }
 
 RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
-    std::cout << "[OK] Deleted entity : " << id << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::DEL_ENTITY;
     union
@@ -90,7 +87,6 @@ RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
 }
 
 RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(AGameEntity gameEntity) {
-    std::cout << "[OK] Moved entity : " << gameEntity._id  << " at positions : " << gameEntity._posX << "|" << gameEntity._posY << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::MOV_ENTITY;
     union
@@ -120,7 +116,6 @@ RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(AGameEntity gameEntity) {
 }
 
 RTypeProtocol::Message RTypeGame::Game::createMsgNewE(AGameEntity gameEntity, RTypeProtocol::types type) {
-    std::cout << "[OK] New entity id : " << gameEntity._id << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::NEW_ENTITY;
     union
@@ -173,4 +168,24 @@ RTypeGame::Ship RTypeGame::Game::createNewPlayer() {
     newPlayer._height = 40;
     newPlayer._width = 92;
     return newPlayer;
+}
+
+RTypeGame::Bullet RTypeGame::Game::createNewBullet(const AGameEntity &entity) {
+    Bullet newBullet(static_cast<int>(_entities.size()));
+    newBullet._id = static_cast<int>(_entities.size());
+    newBullet._posY = entity._posY;
+    newBullet._height = 3;
+    newBullet._width = 33;
+    switch (entity._type) {
+        case SHIP:
+            newBullet._posX = entity._posX + (entity._width + 5);
+            newBullet._speedX = 10;
+            newBullet._speedY = 0;
+            break;
+        default:
+            newBullet._posX = entity._posX - 5;
+            newBullet._speedX = -10;
+            newBullet._speedY = 0;
+            break;
+    }
 }

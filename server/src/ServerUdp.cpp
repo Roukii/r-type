@@ -121,7 +121,10 @@ namespace RTypeServer
         for(auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
+            {
+                std::cout << "sending msg to onwer id : " << i << std::endl;
                 return i;
+            }
         }
         return WRONG_OWNER_ID;
     }
