@@ -28,6 +28,8 @@ namespace RTypeProtocol
 
         virtual char getClients() const = 0;
 
+        virtual void removeClient(const std::size_t &) = 0;
+
         virtual bool getReady(int nb) const = 0;
 
         virtual void shutdown() = 0;

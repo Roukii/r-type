@@ -29,7 +29,7 @@ namespace RTypeServer
             currentMessage._msg.get()->data._room._nb_player = i.get()->getPlayer();
             if (i->getState() == RoomState::PLAYING_STATE)
             {
-                std::cout << "playing lel" << std::endl;
+                std::cout << "Room is playing" << std::endl;
                 currentMessage._msg.get()->data._room._nb_player = 4;
                 currentMessage._msg.get()->data._room._playing = true;
             }

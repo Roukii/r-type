@@ -50,7 +50,6 @@ namespace RTypeServer
                             _clientsList.push_back(_lastEndpoint);
                             _readylist.push_back(false);
                         }
-                        std::cout << "message" << std::endl;
                         SendToClient(_msg, _clientsList.size() - 1);
                         _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
                         SendToAllExcept(_msg, _clientsList.size() - 1);
@@ -166,5 +165,11 @@ namespace RTypeServer
     unsigned short ServerUdp::getPort() const
     {
         return _port;
+    }
+
+    void ServerUdp::removeClient(const std::size_t &id)
+    {
+        if (id < _clientsList.size())
+            _clientsList.erase(_clientsList.begin() + id);
     }
 }

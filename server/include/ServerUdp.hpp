@@ -37,6 +37,8 @@ namespace RTypeServer
         void SendToAll(const RTypeProtocol::Message &) override;
         void SendToAllExcept(const RTypeProtocol::Message &, std::size_t) override;
 
+        void removeClient(const std::size_t &) override;
+
         void runServer() override;
         void runServerWithThread() override;
         bool isRunning() const override;

@@ -29,15 +29,15 @@ namespace RTypeServer {
 
         void setPort(unsigned short p) { _port = p; }
 
-        void addPlayer(std::size_t);
+        void addPlayer(const std::size_t);
 
-        void delPlayer(std::size_t);
+        void delPlayer(const std::size_t);
 
         std::vector<std::pair<std::size_t, bool>> getPlayers() const {return _player;};
 
-        void playerReady(std::size_t id);
+        void playerReady(const std::size_t id);
 
-        void playerUnReady(std::size_t id);
+        void playerUnReady(const std::size_t id);
 
         bool getRoomReady() const { return _roomReady; }
     };

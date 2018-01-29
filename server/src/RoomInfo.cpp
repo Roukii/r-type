@@ -8,30 +8,30 @@
 namespace RTypeServer {
     RoomInfo::RoomInfo(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket) : _socket(socket)
     {
-        _port = _socket.get()->getPort();
+        _port = _socket->getPort();
         _roomReady = false;
     }
 
-    void RoomInfo::addPlayer(std::size_t id)
+    void RoomInfo::addPlayer(const std::size_t id)
     {
         std::pair<std::size_t, bool>  p  = std::make_pair(id, false);
         _player.emplace_back(p);
     }
 
 
-    void RoomInfo::delPlayer(std::size_t id)
+    void RoomInfo::delPlayer(const std::size_t id)
     {
         for (unsigned int i = 0; i < _player.size(); i++)
         {
             if (_player[i].first == id)
             {
-                std::cout << "removing player from room" << std::endl;
+                _socket->removeClient(id);
                 _player.erase(_player.begin() + i);
             }
         }
     }
 
-    void RoomInfo::playerReady(std::size_t id)
+    void RoomInfo::playerReady(const std::size_t id)
     {
         for (unsigned int i = 0; i < _player.size(); i++)
         {
@@ -46,7 +46,7 @@ namespace RTypeServer {
         _roomReady = true;
     }
 
-    void RoomInfo::playerUnReady(std::size_t id)
+    void RoomInfo::playerUnReady(const std::size_t id)
     {
         for (unsigned int i = 0; i < _player.size(); i++)
         {

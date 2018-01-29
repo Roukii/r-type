@@ -2,6 +2,7 @@
 // Created by zozo on 26/01/18.
 //
 
+#include "RTypeException.hpp"
 #include "ClientUdp.hpp"
 
 
@@ -70,6 +71,7 @@ void ClientUdp::startReceive()
                                            std::cout << "bad file descriptor wala" << std::endl;
                                            _isRunning = false;
                                            shutdown();
+                                           throw RTypeException("Error : socket crashed");
                                            return ;
                                        }
                                    }
