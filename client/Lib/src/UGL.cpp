@@ -159,6 +159,8 @@ eEntityType	UGL::getEntity(const std::string& entityType) {
 		return SHIP;
     	if (entityType == "Ennemy")
         	return ENNEMY;
+	if (entityType == "Shoot")
+		return SHOOT;
 	return NONE;
 }
 
@@ -168,6 +170,8 @@ std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) 
             return getTexture("Ship");
         case ENNEMY:
             return getTexture("Ennemy");
+	case SHOOT:
+		return getTexture("Shoot");
 		default:
 			break;
 	};
@@ -418,6 +422,10 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 			if (item.second->name == "Ennemy") {
 				_sprites["Ennemy"].first->setPosition(item.second->_posX, item.second->_posY);
 				getWindow()->draw(*_sprites["Ennemy"].first);
+			}
+			if (item.second->name == "Shoot") {
+				_sprites["Shoot"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Shoot"].first);
 			}
 		}
 		getWindow()->display();
