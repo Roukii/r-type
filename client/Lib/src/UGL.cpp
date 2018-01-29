@@ -402,7 +402,8 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 			std::cout << "[OK] New entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
 			if (item.second->name == "Ship") {
 				std::cout << "[DBG] In ship" << std::endl;
-				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+				try {item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up")); }
+				catch (std::exception &exception) { std::wcerr << "[X] ERROR ON SET ANIMATION!" << exception.what() << std::endl; }
 				std::cout << "[DBG] Passed ship" << std::endl;
 			}
 			if (item.second->name == "Ennemy") {

@@ -85,14 +85,21 @@ int GameState::processInput()
             std::cout << "it is a down" << std::endl;
             msg._msg.get()->data._action._action = RTypeProtocol::DOWN;
         }
-        else if (_myKeys->up)
+        else if (_myKeys->up) {
+            std::cout << "it is a up" << std::endl;
             msg._msg.get()->data._action._action = RTypeProtocol::UP;
-        else if (_myKeys->left)
+        }
+        else if (_myKeys->left) {
+            std::cout << "it is a left" << std::endl;
             msg._msg.get()->data._action._action = RTypeProtocol::LEFT;
-        else if (_myKeys->right)
+        }
+        else if (_myKeys->right) {
+            std::cout << "it is a right" << std::endl;
             msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
-        else if (_myKeys->shoot)
+        }
+        else if (_myKeys->shoot) {
             msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
+        }
         _roomSocket.get()->SendToServer(msg);
     }
     return 0;
