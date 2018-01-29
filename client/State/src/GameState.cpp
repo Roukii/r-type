@@ -14,8 +14,8 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
     {
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
-        _roomSocket->SendToServer(msg);
-        _roomSocket->shutdown();
+        _info.getSocketRoom()->SendToServer(msg);
+        _info.getSocketRoom()->shutdown();
         state = std::make_shared<MenuState>(info, engine);
     }
     else if (s == "SPLASH")
@@ -47,8 +47,8 @@ int    GameState::exec() {
             RTypeProtocol::Message msg;
             msg._msg->_header._code = RTypeProtocol::ACTION;
             msg._msg->data._action._action = RTypeProtocol::LEAVE;
-            _roomSocket->SendToServer(msg);
-            _roomSocket->shutdown();
+            _info.getSocketRoom()->SendToServer(msg);
+            _info.getSocketRoom()->shutdown();
             return 1;
         }
 
@@ -65,10 +65,6 @@ int    GameState::exec() {
 
 void   GameState::init() {
     std::cout << "Start Game" << std::endl;
-    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[_engine->_libGraph->getJoin()];
-    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, ClientUdp::createAPort(), _info.getMessageQueue());
-    _roomSocket.get()->runWithThread();
-    RTypeProtocol::Message startMsg;
 }
 
 int GameState::processInput()
@@ -94,7 +90,7 @@ int GameState::processInput()
             msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
         else if (e == _myKeys->shoot)
             msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
-        _roomSocket.get()->SendToServer(msg);
+        _info.getSocketRoom().get()->SendToServer(msg);
     }
     return 0;
 

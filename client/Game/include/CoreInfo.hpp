@@ -37,8 +37,11 @@ public:
 	void resetRoom() { _rooms.clear(); }
 	const std::string &getHost() const { return _host; };
 
+	std::shared_ptr<IClientUdpSocket> &getSocketRoom() { return _socketRoom; }
+
 private:
 	std::shared_ptr<IClientUdpSocket> _socket;
+	std::shared_ptr<IClientUdpSocket> _socketRoom;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 	unsigned short _port;
 	std::vector<RoomInfo> _rooms;

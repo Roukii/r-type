@@ -50,7 +50,6 @@ namespace RTypeServer
                         if (!endpointExist(_lastEndpoint))
                         {
                             _clientsList.push_back(_lastEndpoint);
-                            std::cout << "sizeof client list : " << _clientsList.size() << std::endl;
                             _readylist.push_back(false);
                         }
                         _messageQueue.addMessage(_msg, clientIDFromEndpoint(_lastEndpoint));
@@ -87,7 +86,6 @@ namespace RTypeServer
 
     void ServerUdp::removeDisconnectedClient(endpoint target)
     {
-        std::cout << "remove a client list : " << _clientsList.size() << std::endl;
         for (auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
@@ -98,7 +96,6 @@ namespace RTypeServer
                 _clientsList.erase(_clientsList.begin() + i);
             }
         }
-        std::cout << "after remove a client list : " << _clientsList.size() << std::endl;
     }
 
     void ServerUdp::runServer()
@@ -115,7 +112,7 @@ namespace RTypeServer
             if (_clientsList[i] == target)
                 return true;
         }
-        std::cout << "new client" << std::endl;
+        std::cout << "New client arrived at server" << std::endl;
         return false;
     }
 
@@ -124,9 +121,7 @@ namespace RTypeServer
         for(auto i = 0; i < _clientsList.size(); i++)
         {
             if (_clientsList[i] == target)
-            {
                 return i;
-            }
         }
         return WRONG_OWNER_ID;
     }
