@@ -7,16 +7,14 @@
 
 namespace RTypeServer {
     RFCGameHandler::RFCGameHandler(std::shared_ptr<RTypeProtocol::IServerUdpSocket> &socket,
-                                   std::vector<UgandaEngine::Entity> &_entities) : _socket(socket), _entities(_entities)
+                                   RTypeGame::Game &game) : _socket(socket), _game(game)
     {
         initMapOfCommandHandler();
     }
 
     void RFCGameHandler::initMapOfCommandHandler()
     {
-        _CommandHandler.insert({RTypeProtocol::NEW_ENTITY, &RFCGameHandler::RFCNewEntity});
-        _CommandHandler.insert({RTypeProtocol::MOV_ENTITY, &RFCGameHandler::RFCMovEntity});
-        _CommandHandler.insert({RTypeProtocol::DEL_ENTITY, &RFCGameHandler::RFCDelEntity});
+        _CommandHandler.insert({RTypeProtocol::ACTION, &RFCGameHandler::RFCAction});
     }
 
     void RFCGameHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
@@ -27,18 +25,27 @@ namespace RTypeServer {
         }
     }
 
-    void RFCGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        //TODO: recup les donnes du AENTITY et les envoyer pareil pour les fonctions en dessous
-    }
-
-    void RFCGameHandler::RFCMovEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCmoveantitai lol" << std::endl;
-    }
-
-    void RFCGameHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
-    {
-        std::cout << "RFCdelentitaie lol" << std::endl;
+    void RFCGameHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
+        std::cout << "[OK] Received action" << std::endl;
+        switch (static_cast<RTypeProtocol::actions>(currentMessage._msg->data._action._action)) {
+            case RTypeProtocol::actions::UP :
+                std::cout << "[OK] Action is up." << std::endl;
+                _game._entities[_currentOwnerID]._speedY += 5;
+                break;
+            case RTypeProtocol::actions::DOWN :
+                std::cout << "[OK] Action is down." << std::endl;
+                _game._entities[_currentOwnerID]._speedY -= 5;
+                break;
+            case RTypeProtocol::actions::LEFT :
+                std::cout << "[OK] Action is left." << std::endl;
+                _game._entities[_currentOwnerID]._speedX -= 5;
+                break;
+            case RTypeProtocol::actions::RIGHT :
+                std::cout << "[OK] Action is right." << std::endl;
+                _game._entities[_currentOwnerID]._speedX += 5;
+                break;
+            default:
+                break;
+        }
     }
 }

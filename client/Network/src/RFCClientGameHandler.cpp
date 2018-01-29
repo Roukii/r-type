@@ -65,8 +65,6 @@ namespace RTypeClient
         char2int.ch[2] = currentMessage._msg.get()->data._entity._pos._x[2];
         char2int.ch[3] = currentMessage._msg.get()->data._entity._pos._x[3];
 
-        std::cout << "CLIENT x :" << (int)char2int.ch[0] << (int)char2int.ch[1] << (int)char2int.ch[2] << (int)char2int.ch[3] << std::endl;
-
         ent->_speedX = char2int.n - ent->_posX;
         ent->_posX = char2int.n;
 
@@ -78,7 +76,7 @@ namespace RTypeClient
         ent->_speedY = char2int.n - ent->_posY;
         ent->_posY = char2int.n;
 
-        std::cout << "i have pos " << ent->_posX << " " << ent->_posY;
+        std::cout << "i have pos " << ent->_posX << " " << ent->_posY << std::endl;
 
     }
 
@@ -94,8 +92,8 @@ namespace RTypeClient
         char2int.ch[2] = currentMessage._msg.get()->data._entity.id[2];
         char2int.ch[3] = currentMessage._msg.get()->data._entity.id[3];
 
+        std::cout << "[DBG] ID : " << char2int.n << std::endl;
 
-        std::cout << "id :" << char2int.n << std::endl;
         return char2int.n;
 
     }
