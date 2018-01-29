@@ -410,7 +410,7 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 		starfield();
 
 		for (auto& item : entity) {
-			std::cout << "[OK] New entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
+			std::cout << "[OK] Entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
 			if (item.second->name == "Ship") {
 				_sprites["Ship"].first->setPosition(item.second->_posX, item.second->_posY);
 				getWindow()->draw(*_sprites["Ship"].first);

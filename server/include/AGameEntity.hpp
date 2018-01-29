@@ -11,6 +11,7 @@ namespace RTypeGame {
     typedef enum EntityType {
         UNKNOWN,
         SHIP,
+        ENNEMY,
         BULLET
     } eType;
 
