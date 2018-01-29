@@ -46,11 +46,15 @@ void 		UGL::init() {
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
 
+	//SHOOT
+	loadSprite("../assets/ship_1.png", "Shoot");
+
 
 	_sprites["Ship"].first->setTextureRect(sf::IntRect(111, 13, 23, 11));
 	_sprites["Ship"].first->setScale(4.f, 4.f);
 	_sprites["Ennemy"].first->setTextureRect(sf::IntRect(5, 225, 16, 16));
 	_sprites["Ennemy"].first->setScale(4.f, 4.f);
+	_sprites["Shoot"].first->setTextureRect(sf::IntRect(104, 73, 33, 3));
 
 	loadSprite("../assets/Stars.jpg", "Background1");
 	getSprite("Background1")->setColor(sf::Color::Cyan);

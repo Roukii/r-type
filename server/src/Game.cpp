@@ -11,7 +11,7 @@ void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket
     for (int i = 0; i < _nbrPlayers; i++) {
         Ship newPlayer = createNewPlayer();
         _entities.push_back(newPlayer);
-        room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::ENNEMY));
+        room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::SHIP));
         std::cout << "[OK] Created new player with id : " << newPlayer._id << std::endl;
     }
 }
