@@ -15,7 +15,7 @@ namespace RTypeProtocol
     {
 
     public:
-        Message() : _msg(new msg), _sizeMsg(sizeof(msg))
+        Message() : _msg(new msg), _sizeMsg(sizeof(_msg->_header) + sizeof(_msg->data))
         {}
 
         ~Message() = default;
