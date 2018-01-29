@@ -26,27 +26,21 @@ namespace RTypeServer {
     }
 
     void RFCGameHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        std::cout << "[DBG] Received command from id : " << _currentOwnerID << std::endl;
         switch (static_cast<RTypeProtocol::actions>(currentMessage._msg->data._action._action)) {
             case RTypeProtocol::actions::UP :
-                std::cout << "[DBG] It's up!" << std::endl;
-                _game._entities[_currentOwnerID]._speedY = -7;
+                _game._entities[(_currentOwnerID - 1)]._speedY = -7;
                 break;
             case RTypeProtocol::actions::DOWN :
-                std::cout << "[DBG] It's down!" << std::endl;
-                _game._entities[_currentOwnerID]._speedY = 7;
+                _game._entities[(_currentOwnerID - 1)]._speedY = 7;
                 break;
             case RTypeProtocol::actions::LEFT :
-                std::cout << "[DBG] It's left!" << std::endl;
-                _game._entities[_currentOwnerID]._speedX = -7;
+                _game._entities[(_currentOwnerID - 1)]._speedX = -7;
                 break;
             case RTypeProtocol::actions::RIGHT :
-                std::cout << "[DBG] It's right!" << std::endl;
-                _game._entities[_currentOwnerID]._speedX = 7;
+                _game._entities[(_currentOwnerID - 1)]._speedX = 7;
                 break;
             case RTypeProtocol::actions::SHOOT :
-                std::cout << "[DBG] It's shoot!" << std::endl;
-                _game._entities.push_back(_game.createNewBullet(_game._entities[_currentOwnerID]));
+                _game._entities.push_back(_game.createNewBullet(_game._entities[(_currentOwnerID - 1)]));
                 break;
             default:
                 break;

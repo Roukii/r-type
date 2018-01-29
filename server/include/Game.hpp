@@ -20,6 +20,7 @@ namespace RTypeGame {
          */
     private:
         std::shared_ptr<UgandaEngine::AGameEngine> _engine;
+        std::shared_ptr<RTypeProtocol::IServerUdpSocket> _room;
 
     public:
         std::vector<RTypeGame::AGameEntity> _entities;
