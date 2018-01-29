@@ -21,14 +21,14 @@ namespace RTypeGame {
          */
     public:
         eType _type;
-        int _id;
+        unsigned long int _id;
         bool _removable;
 
         /*
          * Constructor and destructor
          */
     public:
-        AGameEntity(int id) : _type(UNKNOWN), _id(id), _removable(false) {}
+        AGameEntity(unsigned long int id) : _type(UNKNOWN), _id(id), _removable(false) {}
         ~AGameEntity() override = default;
 
         /*

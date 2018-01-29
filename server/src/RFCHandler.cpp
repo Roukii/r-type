@@ -29,7 +29,6 @@ namespace RTypeServer
             currentMessage._msg.get()->data._room._nb_player = i.get()->getPlayer();
             if (i->getState() == RoomState::PLAYING_STATE)
             {
-                std::cout << "Room is playing" << std::endl;
                 currentMessage._msg.get()->data._room._nb_player = 4;
                 currentMessage._msg.get()->data._room._playing = true;
             }
@@ -52,7 +51,6 @@ namespace RTypeServer
 
     void RFCHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        std::cout << "rfc handler main : " << (RTypeProtocol::code)msg._msg->_header._code << std::endl;
         auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {

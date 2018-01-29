@@ -52,7 +52,6 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
 
     if (_ticks == 1) {
         Ship ennemy = createNewEnnemy();
-        ennemy._type = RTypeGame::eType::ENNEMY;
         _entities.push_back(ennemy);
         room.get()->SendToAll(createMsgNewE(ennemy, RTypeProtocol::ENNEMY));
     }
@@ -147,8 +146,10 @@ RTypeProtocol::Message RTypeGame::Game::createMsgNewE(AGameEntity gameEntity, RT
 }
 
 RTypeGame::Ship RTypeGame::Game::createNewEnnemy() {
-    Ship newEnnemy(static_cast<int>(_entities.size()));
-    newEnnemy._id = static_cast<int>(_entities.size());
+    Ship newEnnemy(_nextId);
+    newEnnemy._id = _nextId;
+    ++_nextId;
+    newEnnemy._type = RTypeGame::eType::ENNEMY;
     newEnnemy._posX = 800;
     newEnnemy._posY = 800;
     newEnnemy._speedX = -5;
@@ -159,8 +160,9 @@ RTypeGame::Ship RTypeGame::Game::createNewEnnemy() {
 }
 
 RTypeGame::Ship RTypeGame::Game::createNewPlayer() {
-    Ship newPlayer(static_cast<int>(_entities.size()));
-    newPlayer._id = static_cast<int>(_entities.size());
+    Ship newPlayer(_nextId);
+    newPlayer._id = _nextId;
+    ++_nextId;
     newPlayer._posX = 100;
     newPlayer._posY = 100;
     newPlayer._speedX = 0;
@@ -171,8 +173,9 @@ RTypeGame::Ship RTypeGame::Game::createNewPlayer() {
 }
 
 RTypeGame::Bullet RTypeGame::Game::createNewBullet(const AGameEntity &entity) {
-    Bullet newBullet(static_cast<int>(_entities.size()));
-    newBullet._id = static_cast<int>(_entities.size());
+    Bullet newBullet(_nextId);
+    newBullet._id = _nextId;
+    ++_nextId;
     newBullet._posY = entity._posY + (entity._height / 2);
     newBullet._height = 3;
     newBullet._width = 33;

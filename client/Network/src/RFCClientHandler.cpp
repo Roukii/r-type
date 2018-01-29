@@ -23,16 +23,12 @@
         newRoom.playerNbr = currentMessage._msg.get()->data._room._nb_player;
         if (currentMessage._msg->data._room._playing == true)
         {
-            std::cout << "in game" << std::endl;
             newRoom.playerNbr = 4;
             newRoom.inGame = true;
         }
         else
             newRoom.inGame = false;
         _info.addElemToRoom(newRoom);
-
-        std::cout << "room nb player : " << (int) currentMessage._msg.get()->data._room._nb_player << std::endl;
-        std::cout << "room port : " << getPortFromChar(currentMessage) << std::endl;
     }
 
     void RFCClientHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)

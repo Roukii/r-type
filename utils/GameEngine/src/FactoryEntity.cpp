@@ -26,7 +26,6 @@ namespace UgandaEngine {
             if (type == RTypeProtocol::types::BULLET)
                 name = "Shoot";
             if (_entity.find(name) == _entity.end()) {
-                std::cout << "error name not found" << std::endl;
                 return newEntity;
             }
             newEntity = new Entity();

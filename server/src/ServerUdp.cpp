@@ -56,8 +56,6 @@ namespace RTypeServer
                     }
                     else
                     {
-                        std::cout << "error : " << std::endl;
-                        std::cout << error.message() << std::endl;
                         handleError(error, _lastEndpoint);
                     }
                     startReceive();
@@ -75,7 +73,6 @@ namespace RTypeServer
         if ((boost::asio::error::eof == error) ||
             (boost::asio::error::connection_reset == error))
         {
-            std::cout << "client disconnected" << std::endl;
             removeDisconnectedClient(_lastEndpoint);
         }
         else
@@ -112,7 +109,6 @@ namespace RTypeServer
             if (_clientsList[i] == target)
                 return true;
         }
-        std::cout << "New client arrived at server" << std::endl;
         return false;
     }
 
@@ -122,7 +118,6 @@ namespace RTypeServer
         {
             if (_clientsList[i] == target)
             {
-                std::cout << "sending msg to onwer id : " << i << std::endl;
                 return i;
             }
         }

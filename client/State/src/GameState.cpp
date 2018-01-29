@@ -64,7 +64,6 @@ int    GameState::exec() {
 }
 
 void   GameState::init() {
-    std::cout << "Start Game" << std::endl;
     CoreInfo::RoomInfo choosenRoom = _info.getRooms()[_engine->_libGraph->getJoin()];
     _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getPortRoom(), _info.getMessageQueue());
     _roomSocket.get()->runWithThread();
@@ -79,7 +78,6 @@ int GameState::processInput()
 
 
     for (auto e : actions) {
-        std::cout << "get action" << std::endl;
         if (e == 27)
             return 1;
             //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
@@ -92,8 +90,10 @@ int GameState::processInput()
             msg._msg.get()->data._action._action = RTypeProtocol::LEFT;
         else if (e == _myKeys->right)
             msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
-        else if (e == _myKeys->shoot)
+        else if (e == _myKeys->shoot) {
+            _engine->_libGraph->getSound("Piou")->play();
             msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
+        }
         _roomSocket.get()->SendToServer(msg);
     }
     return 0;

@@ -58,17 +58,14 @@ void ClientUdp::startReceive()
                                [this](const boost::system::error_code &ec,
                                       std::size_t bytes)
                                {
-                                   std::cout << "[DBG] Receive message with code : " << (int) this->_msg._msg->_header._code << std::endl;
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);
                                    }
                                    else
                                    {
-                                       std::cout << "error : " << ec.message() << std::endl;
                                        if (boost::asio::error::bad_descriptor)
                                        {
-                                           std::cout << "bad file descriptor wala" << std::endl;
                                            _isRunning = false;
                                        }
                                    }

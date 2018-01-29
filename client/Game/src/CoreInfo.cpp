@@ -16,9 +16,6 @@ std::shared_ptr<IClientUdpSocket>& CoreInfo::getSocket() {
 void CoreInfo::startSocket(const std::string& host, unsigned short hostPort) {
     _host = host;
     _port = ClientUdp::createAPort();
-    std::cout << "get random port : " << _port << std::endl;
-    std::cout << "host : " << host  << std::endl;
-    std::cout << "host port : " << hostPort << std::endl;
     _socket = std::make_shared<ClientUdp>(host, hostPort, _port, _messageQueue);
 	_socket.get()->runWithThread();
 }

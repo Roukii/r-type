@@ -97,7 +97,6 @@ void    Core::start() {
 			this->_state->init();
 		}
 		else if (ret == 3) {
-			std::cout << "return game" << std::endl;
 			this->_state->changeScreen(_state, "GAME", _info, _engine);
 			this->_state->init();
 		}
@@ -138,7 +137,6 @@ bool Core::checkServer() {
 
 	_info.getSocket().get()->SendToServer(sendOk);
 
-	std::cout << "Try connection to server" << std::endl;
 	while (wait)
 	{
 		clock_elapsed = std::chrono::system_clock::now();

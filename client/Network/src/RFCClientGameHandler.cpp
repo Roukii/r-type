@@ -25,7 +25,6 @@ namespace RTypeClient
         if (ownerID == WRONG_OWNER_ID)
             return ;
         auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
-        std::cout << "code command : " << codeCommand <<  std::endl;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
@@ -35,9 +34,6 @@ namespace RTypeClient
     void RFCClientGameHandler::RFCMoveEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
         UgandaEngine::Entity *ent = _entity[getIdFromChar(currentMessage)];
         getPosFromMessage(currentMessage, ent);
-        std::cout << "Received new movement message. Pos : " << ent->_posX
-                  << "|" << ent->_posY
-                  << ". Id : " << getIdFromChar(currentMessage) << std::endl;
     }
 
     void RFCClientGameHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
@@ -45,7 +41,6 @@ namespace RTypeClient
     }
 
     void RFCClientGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        std::cout << "new ship" << std::endl;
         _entity.insert(std::pair<int, UgandaEngine::Entity *>(getIdFromChar(currentMessage), _engine->_factory->create(static_cast<RTypeProtocol::types>(currentMessage._msg.get()->data._entity.type), _engine->_libGraph)));
 
         getPosFromMessage(currentMessage, _entity[getIdFromChar(currentMessage)]);
@@ -77,9 +72,6 @@ namespace RTypeClient
 
         ent->_speedY = char2int.n - ent->_posY;
         ent->_posY = char2int.n;
-
-        std::cout << "i have pos " << ent->_posX << " " << ent->_posY << std::endl;
-
     }
 
     int RFCClientGameHandler::getIdFromChar(RTypeProtocol::Message &currentMessage) {
@@ -93,10 +85,7 @@ namespace RTypeClient
         char2int.ch[1] = currentMessage._msg.get()->data._entity.id[1];
         char2int.ch[2] = currentMessage._msg.get()->data._entity.id[2];
         char2int.ch[3] = currentMessage._msg.get()->data._entity.id[3];
-
-        std::cout << "[DBG] ID : " << char2int.n << std::endl;
-
+        
         return char2int.n;
-
     }
 }

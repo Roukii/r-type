@@ -22,7 +22,6 @@ namespace RTypeServer
         for (unsigned int i = 0; i < _numberOfRoom; i++)
         {
             unsigned short port = ServerUdp::createAPort();
-            std::cout << "Room " << i + 1 << " created on port : " << port << std::endl;
             std::shared_ptr<Room> newRoom = std::make_shared<Room>(port);
             _rooms.push_back(newRoom);
             newRoom.get()->startRoom();

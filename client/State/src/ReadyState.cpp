@@ -53,7 +53,6 @@ int    ReadyState::exec() {
     }
     if (returnValue == 3 && !ready)
     {
-        std::cout << "change status" << std::endl;
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_READY;
         _roomSocket->SendToServer(msg);
@@ -61,7 +60,6 @@ int    ReadyState::exec() {
     }
     else if (returnValue == 3 && ready)
     {
-        std::cout << "stop ready" << std::endl;
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_NOT_READY;
         _roomSocket->SendToServer(msg);

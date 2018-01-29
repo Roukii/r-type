@@ -14,7 +14,7 @@ namespace RTypeGame {
          * Constructor and destructor
          */
     public:
-        Ship(int id);
+        Ship(unsigned long int id);
 
         ~Ship() = default;
     };

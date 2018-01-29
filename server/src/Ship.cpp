@@ -4,6 +4,6 @@
 
 #include "../include/Ship.hpp"
 
-RTypeGame::Ship::Ship(int id) : AGameEntity(id) {
+RTypeGame::Ship::Ship(unsigned long int id) : AGameEntity(id) {
     _type = RTypeGame::eType::SHIP;
 }

@@ -40,7 +40,6 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::RFCPlayerReady(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "player ready" << std::endl;
         _roomInfo.playerReady(_currentOwnerID);
     }
 

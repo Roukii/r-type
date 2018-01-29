@@ -26,12 +26,13 @@ namespace RTypeGame {
         std::vector<RTypeGame::AGameEntity> _entities;
         int _nbrPlayers;
         int _ticks;
+        unsigned long int _nextId;
 
         /*
          * Constructor and destructor
          */
     public:
-        Game() : _nbrPlayers(0), _ticks(1) {}
+        Game() : _nbrPlayers(0), _ticks(1), _nextId(0) {}
         ~Game() = default;
 
         /*

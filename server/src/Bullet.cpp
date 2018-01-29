@@ -4,6 +4,6 @@
 
 #include "../include/Bullet.hpp"
 
-RTypeGame::Bullet::Bullet(int id) : AGameEntity(id) {
+RTypeGame::Bullet::Bullet(unsigned long int id) : AGameEntity(id) {
     _type = RTypeGame::eType::BULLET;
 }

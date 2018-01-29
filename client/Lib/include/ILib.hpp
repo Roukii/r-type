@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 #include "EntityGraphique.hpp"
 #include "Entity.hpp"
@@ -42,6 +43,7 @@ public:
 	virtual std::vector<char> handleClientAction() = 0;
 	virtual std::shared_ptr<EntityFactoryData>	    factoryData(const std::string&) = 0;
 	virtual std::shared_ptr<sf::Sprite>	getSprite(const std::string& name) = 0;
+	virtual std::shared_ptr<sf::Sound>	getSound(const std::string& name) = 0;
 	virtual std::shared_ptr<sf::Music>	getMusic(const std::string& name) = 0;
 	virtual std::shared_ptr<Animation>	getAnimation(const std::string& name) = 0;
 	virtual std::shared_ptr<sf::RenderWindow> getWindow() = 0;

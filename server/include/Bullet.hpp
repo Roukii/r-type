@@ -14,7 +14,7 @@ namespace RTypeGame {
          * Constructor and destructor
          */
     public:
-        Bullet(int id);
+        Bullet(unsigned long int id);
 
         ~Bullet() = default;
     };
