@@ -36,11 +36,13 @@ public:
 	void addElemToRoom(RoomInfo &room);
 	void resetRoom() { _rooms.clear(); }
 	const std::string &getHost() const { return _host; };
+	unsigned short getPortRoom() const { return _portRoom; };
 
 private:
 	std::shared_ptr<IClientUdpSocket> _socket;
 	RTypeClient::MessageQueue<RTypeProtocol::Message> _messageQueue;
 	unsigned short _port;
+	unsigned short _portRoom;
 	std::vector<RoomInfo> _rooms;
 	std::string _host;
     // TODO put a message if connection failed

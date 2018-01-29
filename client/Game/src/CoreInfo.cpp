@@ -6,6 +6,7 @@
 
 CoreInfo::CoreInfo()
 {
+	_portRoom = ClientUdp::createAPort();
 }
 
 std::shared_ptr<IClientUdpSocket>& CoreInfo::getSocket() {

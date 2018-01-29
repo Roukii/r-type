@@ -66,7 +66,7 @@ int    GameState::exec() {
 void   GameState::init() {
     std::cout << "Start Game" << std::endl;
     CoreInfo::RoomInfo choosenRoom = _info.getRooms()[_engine->_libGraph->getJoin()];
-    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, ClientUdp::createAPort(), _info.getMessageQueue());
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getPortRoom(), _info.getMessageQueue());
     _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
 }

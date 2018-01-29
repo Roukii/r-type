@@ -72,7 +72,7 @@ int    ReadyState::exec() {
 
 void   ReadyState::init() {
     CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
-    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, ClientUdp::createAPort(), _info.getMessageQueue());
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getPortRoom(), _info.getMessageQueue());
     _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
     startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_JOIN_ROOM;
