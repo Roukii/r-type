@@ -34,7 +34,7 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
 
 int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
-    std::chrono::duration<double> lag = std::chrono::seconds(0);
+    std::chrono::duration<double> lag = std::chrono::milliseconds(0);
     _engine->_libGraph->getMusic("Music")->play();
     while (true)
     {
@@ -53,10 +53,10 @@ int    GameState::exec() {
         }
 
         update();
-        while (lag.count() >= MS_PER_UPDATE)
+        while (lag >= std::chrono::milliseconds(MS_PER_UPDATE))
         {
             update();
-            lag -= std::chrono::seconds(MS_PER_UPDATE);
+            lag -= std::chrono::milliseconds(MS_PER_UPDATE);
         }
 
         render(lag.count() / MS_PER_UPDATE);
