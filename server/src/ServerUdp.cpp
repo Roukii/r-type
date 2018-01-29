@@ -144,6 +144,7 @@ namespace RTypeServer
 
     void ServerUdp::shutdown()
     {
+        _clientsList.clear();
         if (!io_service.stopped())
             io_service.stop();
         _running = false;
