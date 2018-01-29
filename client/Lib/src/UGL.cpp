@@ -23,7 +23,7 @@ void 		UGL::init() {
 
 	loadSprite("../assets/ship_1.png", "Ship");
 	// UP ANIM
-	loadAnimation(_sprites["Ship"].second, "Ship_animation_up");
+	/*loadAnimation(_sprites["Ship"].second, "Ship_animation_up");
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
@@ -34,7 +34,7 @@ void 		UGL::init() {
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
-	_animations["Ship_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));*/
 
 	loadAnimation(_sprites["Ship"].second, "Ship_animation_none");
 	_animations["Ship_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
@@ -45,6 +45,12 @@ void 		UGL::init() {
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
+
+
+	_sprites["Ship"].first->setTextureRect(sf::IntRect(111, 13, 23, 11));
+	_sprites["Ship"].first->setScale(4.f, 4.f);
+	_sprites["Ennemy"].first->setTextureRect(sf::IntRect(5, 225, 16, 16));
+	_sprites["Ennemy"].first->setScale(4.f, 4.f);
 
 	loadSprite("../assets/Stars.jpg", "Background1");
 	getSprite("Background1")->setColor(sf::Color::Cyan);
@@ -147,8 +153,8 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 eEntityType	UGL::getEntity(const std::string& entityType) {
 	if (entityType == "Ship")
 		return SHIP;
-    if (entityType == "Ennemy")
-        return ENNEMY;
+    	if (entityType == "Ennemy")
+        	return ENNEMY;
 	return NONE;
 }
 
@@ -402,24 +408,13 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 		for (auto& item : entity) {
 			std::cout << "[OK] New entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
 			if (item.second->name == "Ship") {
-				std::cout << "[DBG] In ship" << std::endl;
-				try {item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up")); }
-				catch (std::exception &exception) { std::wcerr << "[X] ERROR ON SET ANIMATION!" << exception.what() << std::endl; }
-				std::cout << "[DBG] Passed ship" << std::endl;
+				_sprites["Ship"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Ship"].first);
 			}
 			if (item.second->name == "Ennemy") {
-				std::cout << "[DBG] In ennemy" << std::endl;
-				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ennemy_animation_none"));
-				std::cout << "[DBG] Passed ennemy" << std::endl;
+				_sprites["Ennemy"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Ennemy"].first);
 			}
-			std::cout << "[DBG] Passes double if" << std::endl;
-			item.second->_myGraph->_currentSprite->setPosition(item.second->_posX, item.second->_posY);
-			item.second->_myGraph->_currentSprite->setScale({4.f, 4.f});
-			item.second->_myGraph->_currentSprite->update(frameTime);
-			item.second->_myGraph->_currentSprite->play();
-			std::cout << "[DBG] Passes second item" << std::endl;
-			getWindow()->draw(*item.second->_myGraph->_currentSprite);
-			std::cout << "[DBG] Passes draw" << std::endl;
 		}
 		getWindow()->display();
 		return -1;
