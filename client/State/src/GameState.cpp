@@ -45,6 +45,11 @@ int    GameState::exec() {
 
         if (processInput()) {
             _engine->_libGraph->getMusic("Music")->stop();
+            RTypeProtocol::Message msg;
+            msg._msg->_header._code = RTypeProtocol::ACTION;
+            msg._msg->data._action._action = RTypeProtocol::LEAVE;
+            _roomSocket->SendToServer(msg);
+            _roomSocket->shutdown();
             return 1;
         }
 
