@@ -399,18 +399,25 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 		starfield();
 
 		for (auto& item : entity) {
-			std::cout << "there is a new entity right here " << item.first << " name "  << item.second->name << " position " << item.second->_posX << " " << item.second->_posY << std::endl;
+			std::cout << "[OK] New entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
 			if (item.second->name == "Ship") {
+				std::cout << "[DBG] In ship" << std::endl;
 				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up"));
+				std::cout << "[DBG] Passed ship" << std::endl;
 			}
 			if (item.second->name == "Ennemy") {
+				std::cout << "[DBG] In ennemy" << std::endl;
 				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ennemy_animation_none"));
+				std::cout << "[DBG] Passed ennemy" << std::endl;
 			}
+			std::cout << "[DBG] Passes double if" << std::endl;
 			item.second->_myGraph->_currentSprite->setPosition(item.second->_posX, item.second->_posY);
 			item.second->_myGraph->_currentSprite->setScale({4.f, 4.f});
 			item.second->_myGraph->_currentSprite->update(frameTime);
 			item.second->_myGraph->_currentSprite->play();
+			std::cout << "[DBG] Passes second item" << std::endl;
 			getWindow()->draw(*item.second->_myGraph->_currentSprite);
+			std::cout << "[DBG] Passes draw" << std::endl;
 		}
 		getWindow()->display();
 		return -1;
