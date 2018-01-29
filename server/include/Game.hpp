@@ -8,8 +8,7 @@
 
 #include <vector>
 #include "IServerUdpSocket.hpp"
-#include "include/Entity.hpp"
-#include "include/AGameEngine.hpp"
+#include "AGameEngine.hpp"
 #include "AGameEntity.hpp"
 #include "Ship.hpp"
 #include "Bullet.hpp"
@@ -21,9 +20,9 @@ namespace RTypeGame {
          */
     private:
         std::shared_ptr<UgandaEngine::AGameEngine> _engine;
-        std::vector<RTypeGame::AGameEntity> _entities;
 
     public:
+        std::vector<RTypeGame::AGameEntity> _entities;
         int _nbrPlayers;
         int _ticks;
 
@@ -38,7 +37,7 @@ namespace RTypeGame {
          * Function and methods
          */
     public:
-        void init();
+        void init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room);
         void play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room);
 
     private:
@@ -48,6 +47,7 @@ namespace RTypeGame {
         RTypeProtocol::Message createMsgMoveE(AGameEntity gameEntity);
         RTypeProtocol::Message createMsgNewE(AGameEntity gameEntity, RTypeProtocol::types type);
         Ship createNewEnnemy();
+        Ship createNewPlayer();
     };
 }
 

@@ -7,8 +7,13 @@
 #include "Game.hpp"
 #include "Message.hpp"
 
-void RTypeGame::Game::init() {
-    // TODO: création des players
+void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
+    for (int i = 0; i < _nbrPlayers; i++) {
+        Ship newPlayer = createNewPlayer();
+        _entities.push_back(newPlayer);
+        room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::SHIP));
+        std::cout << "[OK] Created new player with id : " << newPlayer._id << std::endl;
+    }
 }
 
 void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
@@ -20,20 +25,20 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
             msg = createMsgDelE(entity->_id);
         } else {
             msg = createMsgMoveE(*entity);
-            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
-                if (checkCollision(*entity, *collision) && entity->_id != collision->_id) {
-                    room.get()->SendToAll(createMsgDelE(collision->_id));
-                    msg = createMsgDelE(entity->_id);
-                    std::cout << "Erasing id : " << collision->_id << std::endl;
-                    _entities.erase(collision);
-                    --entity;
-                    std::cout << "Erasing id : " << entity->_id << std::endl;
-                    _entities.erase(entity);
-                    --entity;
-                    room.get()->SendToAll(msg);
-                    break;
-                }
-            }
+//            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
+//                if (checkCollision(*entity, *collision) && entity->_id != collision->_id) {
+//                    room.get()->SendToAll(createMsgDelE(collision->_id));
+//                    msg = createMsgDelE(entity->_id);
+//                    std::cout << "Erasing id : " << collision->_id << std::endl;
+//                    _entities.erase(collision);
+//                    --entity;
+//                    std::cout << "Erasing id : " << entity->_id << std::endl;
+//                    _entities.erase(entity);
+//                    --entity;
+//                    room.get()->SendToAll(msg);
+//                    break;
+//                }
+//            }
         }
         room.get()->SendToAll(msg);
     }
@@ -147,4 +152,16 @@ RTypeGame::Ship RTypeGame::Game::createNewEnnemy() {
     newEnnemy._height = 20;
     newEnnemy._width = 46;
     return newEnnemy;
+}
+
+RTypeGame::Ship RTypeGame::Game::createNewPlayer() {
+    Ship newPlayer(static_cast<int>(_entities.size()));
+    newPlayer._id = static_cast<int>(_entities.size());
+    newPlayer._posX = 100;
+    newPlayer._posY = 100;
+    newPlayer._speedX = 0;
+    newPlayer._speedY = 0;
+    newPlayer._height = 40;
+    newPlayer._width = 92;
+    return newPlayer;
 }

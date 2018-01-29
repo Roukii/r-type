@@ -21,9 +21,10 @@ namespace RTypeServer
 
     void Room::runGame()
     {
-        std::vector<UgandaEngine::Entity> entityList;
-        RFCGameHandler gameHandler(_roomServer, entityList);
         RTypeGame::Game game;
+        RFCGameHandler gameHandler(_roomServer, game);
+        game._nbrPlayers = static_cast<int>(_rfcHandler.getRoomInfo().getPlayers().size());
+        game.init(_roomServer);
 
         while(_roomServer.get()->isRunning())
         {
