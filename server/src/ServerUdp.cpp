@@ -39,7 +39,7 @@ namespace RTypeServer
     void ServerUdp::startReceive()
     {
         _socket.async_receive_from(
-                boost::asio::buffer(_msg._msg.get(), message.getSizeMsg()), _lastEndpoint,
+                boost::asio::buffer(_msg._msg.get(), _msg.getSizeMsg()), _lastEndpoint,
                 [this](const boost::system::error_code& error,
                        std::size_t bytes_transferred)
                 {
