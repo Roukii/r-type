@@ -154,7 +154,6 @@ namespace RTypeServer
 
     bool ServerUdp::checkPort(unsigned short port)
     {
-        std::cout << "port : " << port << std::endl;
         boost::asio::io_service service;
         boost::asio::ip::tcp::acceptor a(service);
 
