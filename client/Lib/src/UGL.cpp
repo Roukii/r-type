@@ -23,7 +23,7 @@ void 		UGL::init() {
 
 	loadSprite("../assets/ship_1.png", "Ship");
 	// UP ANIM
-	loadAnimation(_sprites["Ship"].second, "Ship_animation_up");
+	/*loadAnimation(_sprites["Ship"].second, "Ship_animation_up");
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(85, 14, 23, 10));
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(60, 14, 22, 10));
 	_animations["Ship_animation_up"]->addFrame(sf::IntRect(34, 12, 23, 13));
@@ -34,7 +34,7 @@ void 		UGL::init() {
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(137, 14, 23, 10));
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(163, 15, 23, 10));
 	_animations["Ship_animation_down"]->addFrame(sf::IntRect(189, 12, 22, 13));
-	_animations["Ship_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));
+	_animations["Ship_animation_down"]->addFrame(sf::IntRect(214, 11, 23, 15));*/
 
 	loadAnimation(_sprites["Ship"].second, "Ship_animation_none");
 	_animations["Ship_animation_none"]->addFrame(sf::IntRect(111, 13, 23, 11));
@@ -45,6 +45,16 @@ void 		UGL::init() {
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(23, 225, 16, 16));
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(41, 225, 16, 16));
 	_animations["Ennemy_animation_none"]->addFrame(sf::IntRect(59, 225, 16, 16));
+
+	//SHOOT
+	loadSprite("../assets/ship_1.png", "Shoot");
+
+
+	_sprites["Ship"].first->setTextureRect(sf::IntRect(111, 13, 23, 11));
+	_sprites["Ship"].first->setScale(4.f, 4.f);
+	_sprites["Ennemy"].first->setTextureRect(sf::IntRect(5, 225, 16, 16));
+	_sprites["Ennemy"].first->setScale(4.f, 4.f);
+	_sprites["Shoot"].first->setTextureRect(sf::IntRect(104, 73, 33, 3));
 
 	loadSprite("../assets/Stars.jpg", "Background1");
 	getSprite("Background1")->setColor(sf::Color::Cyan);
@@ -113,7 +123,8 @@ void 		UGL::init() {
 
 	ip.setSize(sf::Vector2f(500, 80));
 	ip.setPosition(sf::Vector2f(400, 280));
-
+	ip.setFillColor(sf::Color::Green);
+	
 	port.setSize(sf::Vector2f(500, 80));
 	port.setPosition(sf::Vector2f(400, 480));
 
@@ -146,8 +157,10 @@ void		UGL::loadSprite(const std::string &path, const std::string &name) {
 eEntityType	UGL::getEntity(const std::string& entityType) {
 	if (entityType == "Ship")
 		return SHIP;
-    if (entityType == "Ennemy")
-        return ENNEMY;
+    	if (entityType == "Ennemy")
+        	return ENNEMY;
+	if (entityType == "Shoot")
+		return SHOOT;
 	return NONE;
 }
 
@@ -157,6 +170,8 @@ std::shared_ptr<sf::Texture>	UGL::textureFactory(const std::string& entityName) 
             return getTexture("Ship");
         case ENNEMY:
             return getTexture("Ennemy");
+	case SHOOT:
+		return getTexture("Shoot");
 		default:
 			break;
 	};
@@ -399,26 +414,19 @@ int UGL::handleGame(std::map<int, UgandaEngine::Entity *> &entity) {
 		starfield();
 
 		for (auto& item : entity) {
-			std::cout << "[OK] New entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
+			std::cout << "[OK] Entity with id : " << item.first << " named : "  << item.second->name << " at position : " << item.second->_posX << "|" << item.second->_posY << std::endl;
 			if (item.second->name == "Ship") {
-				std::cout << "[DBG] In ship" << std::endl;
-				try {item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ship_animation_up")); }
-				catch (std::exception &exception) { std::wcerr << "[X] ERROR ON SET ANIMATION!" << exception.what() << std::endl; }
-				std::cout << "[DBG] Passed ship" << std::endl;
+				_sprites["Ship"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Ship"].first);
 			}
 			if (item.second->name == "Ennemy") {
-				std::cout << "[DBG] In ennemy" << std::endl;
-				item.second->_myGraph->_currentSprite->setAnimation(getAnimation("Ennemy_animation_none"));
-				std::cout << "[DBG] Passed ennemy" << std::endl;
+				_sprites["Ennemy"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Ennemy"].first);
 			}
-			std::cout << "[DBG] Passes double if" << std::endl;
-			item.second->_myGraph->_currentSprite->setPosition(item.second->_posX, item.second->_posY);
-			item.second->_myGraph->_currentSprite->setScale({4.f, 4.f});
-			item.second->_myGraph->_currentSprite->update(frameTime);
-			item.second->_myGraph->_currentSprite->play();
-			std::cout << "[DBG] Passes second item" << std::endl;
-			getWindow()->draw(*item.second->_myGraph->_currentSprite);
-			std::cout << "[DBG] Passes draw" << std::endl;
+			if (item.second->name == "Shoot") {
+				_sprites["Shoot"].first->setPosition(item.second->_posX, item.second->_posY);
+				getWindow()->draw(*_sprites["Shoot"].first);
+			}
 		}
 		getWindow()->display();
 		return -1;
@@ -546,7 +554,7 @@ void UGL::handleKeysConnexion(const sf::Event&e) {
 				item[boxSelected - 1].erase(item[boxSelected - 1].size() - 1, 1);
 			if (boxSelected == 1)
 				(*getText("ITEM 0").get()).setString(item[0]);
-			else if (boxSelected == 1)
+			else if (boxSelected == 2)
 				(*getText("ITEM 1").get()).setString(item[1]);
 		} else if ((e.text.unicode >= '0' && e.text.unicode <= '9') ||
 			   e.text.unicode == '.') {
@@ -617,10 +625,18 @@ std::vector<char> UGL::handleClientAction() {
 			if (unicodeEvent.empty()) {
 				if (event.key.code == sf::Keyboard::Escape)
 					unicodeEvent.push_back(27);
-				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+				else if (event.key.code == sf::Keyboard::Space)
+					unicodeEvent.push_back(32);
+				else
+					unicodeEvent.push_back(static_cast<char>(event.text.unicode + 97));
 			}
 			else if (unicodeEvent.back() != static_cast<char>(event.text.unicode)) {
-				unicodeEvent.push_back(static_cast<char>(event.text.unicode));
+				if (event.key.code == sf::Keyboard::Escape)
+					unicodeEvent.push_back(27);
+				else if (event.key.code == sf::Keyboard::Space)
+					unicodeEvent.push_back(32);
+				else
+					unicodeEvent.push_back(static_cast<char>(event.text.unicode + 97));
 			}
 		}
 	}

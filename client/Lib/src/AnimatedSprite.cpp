@@ -12,11 +12,11 @@ AnimatedSprite::AnimatedSprite(sf::Time frameTime, bool paused, bool looped)
 
 }
 
-void		AnimatedSprite::setAnimation(std::shared_ptr<Animation> animation) {
+void		AnimatedSprite::setAnimation(const std::shared_ptr<Animation> animation) {
 	//std::const_pointer_cast<Animation>(_animation) = std::make_shared<Animation>(animation);
 	if (animation == nullptr)
 		throw RTypeException("Error: AnimatedSprite.cpp : animation is null");
-	_animation = std::move(animation);
+	_animation = animation;
 	if (_animation == nullptr) {
 		throw RTypeException("Error: AnimatedSprite.cpp : Failed to load texture");
 	}

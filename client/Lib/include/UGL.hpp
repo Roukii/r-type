@@ -31,6 +31,7 @@ enum eEntityType {
 	NONE = 0,
 	SHIP,
     ENNEMY,
+	SHOOT,
 	BACKGROUND
 };
 
@@ -52,7 +53,6 @@ class UGL : public ILib {
 public:
 	UGL();
 	~UGL() override;
-	// TODO : Sami, peux tu stp faire en sorte que cette fonction ne retourne pas un élément de la lib sfml :)
 	std::shared_ptr<sf::RenderWindow> getWindow() {return _window;}
 protected:
 	int selected = 0;

@@ -18,7 +18,7 @@ public:
 	AnimatedSprite(sf::Time frameTime = sf::seconds(0.1f), bool paused = false, bool looped = true);
 
 	void		update(sf::Time deltaTime);
-	void		setAnimation(std::shared_ptr<Animation> animation);
+	void		setAnimation(const std::shared_ptr<Animation> animation);
 	void		setFrameTime(sf::Time time);
 	void		play();
 	void		play(std::shared_ptr<Animation> animation);

@@ -11,7 +11,7 @@ void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket
     for (int i = 0; i < _nbrPlayers; i++) {
         Ship newPlayer = createNewPlayer();
         _entities.push_back(newPlayer);
-        room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::ENNEMY));
+        room.get()->SendToAll(createMsgNewE(newPlayer, RTypeProtocol::SHIP));
         std::cout << "[OK] Created new player with id : " << newPlayer._id << std::endl;
     }
 }
@@ -20,9 +20,18 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
     std::cout << "Total of entities : " << _entities.size() << std::endl;
     for (auto entity = _entities.begin(); entity != _entities.end(); ++entity) {
         RTypeProtocol::Message msg;
+        int prevX = entity->_posX;
+        int prevY = entity->_posY;
         entity->move(elapsedTime);
         if (checkOutOfBound(*entity)) {
-            msg = createMsgDelE(entity->_id);
+            if (entity->_type == SHIP) {
+                entity->_posX = prevX;
+                entity->_posY = prevY;
+            } else {
+                msg = createMsgDelE(entity->_id);
+                _entities.erase(entity);
+                --entity;
+            }
         } else {
             msg = createMsgMoveE(*entity);
 //            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
@@ -45,6 +54,7 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
 
     if (_ticks == 1) {
         Ship ennemy = createNewEnnemy();
+        ennemy._type = RTypeGame::eType::ENNEMY;
         std::cout << "Ennemy pos:" << ennemy._posX << "|" << ennemy._posY << std::endl;
         _entities.push_back(ennemy);
         room.get()->SendToAll(createMsgNewE(ennemy, RTypeProtocol::ENNEMY));
@@ -59,7 +69,7 @@ bool RTypeGame::Game::checkCollision(const RTypeGame::AGameEntity &entity1, cons
 }
 
 bool RTypeGame::Game::checkOutOfBound(const RTypeGame::AGameEntity &entity) {
-    return entity._posX < 0 || entity._posX > 1920 || entity._posY < 0 || entity._posY > 1080;
+    return entity._posX < 0 || (entity._posX + entity._width) > 1920 || entity._posY < 0 || (entity._posY + entity._height) > 1080;
 }
 
 RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
@@ -147,7 +157,7 @@ RTypeGame::Ship RTypeGame::Game::createNewEnnemy() {
     newEnnemy._id = static_cast<int>(_entities.size());
     newEnnemy._posX = 800;
     newEnnemy._posY = 800;
-    newEnnemy._speedX = -20;
+    newEnnemy._speedX = -5;
     newEnnemy._speedY = 0;
     newEnnemy._height = 20;
     newEnnemy._width = 46;

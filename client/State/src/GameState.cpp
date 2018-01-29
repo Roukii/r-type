@@ -42,7 +42,6 @@ int    GameState::exec() {
         std::chrono::duration<double> elapsed = current - previous;
         previous = current;
         lag += elapsed;
-
         if (processInput()) {
             _engine->_libGraph->getMusic("Music")->stop();
             RTypeProtocol::Message msg;
@@ -85,26 +84,16 @@ int GameState::processInput()
             return 1;
             //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
             // il faut faire une récupération des touches dans le state option
-        if (_myKeys->down)
-        {
-            std::cout << "it is a down" << std::endl;
+        if (e == _myKeys->down)
             msg._msg.get()->data._action._action = RTypeProtocol::DOWN;
-        }
-        else if (_myKeys->up) {
-            std::cout << "it is a up" << std::endl;
+        else if (e == _myKeys->up)
             msg._msg.get()->data._action._action = RTypeProtocol::UP;
-        }
-        else if (_myKeys->left) {
-            std::cout << "it is a left" << std::endl;
+        else if (e == _myKeys->left)
             msg._msg.get()->data._action._action = RTypeProtocol::LEFT;
-        }
-        else if (_myKeys->right) {
-            std::cout << "it is a right" << std::endl;
+        else if (e == _myKeys->right)
             msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
-        }
-        else if (_myKeys->shoot) {
+        else if (e == _myKeys->shoot)
             msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
-        }
         _roomSocket.get()->SendToServer(msg);
     }
     return 0;

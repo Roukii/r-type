@@ -31,7 +31,7 @@ Core::Core()
 	//On associe à ship les components par nom.
 	entities["Ship"] = componentNames;
 	entities["Ennemy"] = componentNames;
-
+	entities["Shoot"] = componentNames;
 	//On associe à chaque nom de component une fonction
 //    std::function<void(RTypeProtocol::Message&)> left = func->move_left;
 //	//std::function<void(RTypeProtocol::Message&)> left = EntityFunc::move_left;
