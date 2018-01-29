@@ -29,28 +29,27 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
                 entity->_posY = prevY;
             } else {
                 msg = createMsgDelE(entity->_id);
-                _entities.erase(entity);
-                --entity;
+                entity->_removable = true;
             }
         } else {
             msg = createMsgMoveE(*entity);
 //            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
-//                if (checkCollision(*entity, *collision) && entity->_id != collision->_id) {
+//                if (checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
 //                    room.get()->SendToAll(createMsgDelE(collision->_id));
 //                    msg = createMsgDelE(entity->_id);
-//                    std::cout << "Erasing id : " << collision->_id << std::endl;
-//                    _entities.erase(collision);
-//                    --entity;
-//                    std::cout << "Erasing id : " << entity->_id << std::endl;
-//                    _entities.erase(entity);
-//                    --entity;
-//                    room.get()->SendToAll(msg);
+//                    entity->_removable = true;
+//                    collision->_removable = true;
 //                    break;
 //                }
 //            }
         }
         room.get()->SendToAll(msg);
     }
+
+    _entities.erase(
+            std::remove_if(_entities.begin(), _entities.end(),
+            [](const AGameEntity &e) { return e._removable; }),
+            _entities.end());
 
     if (_ticks == 1) {
         Ship ennemy = createNewEnnemy();

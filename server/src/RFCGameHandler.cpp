@@ -30,19 +30,19 @@ namespace RTypeServer {
         switch (static_cast<RTypeProtocol::actions>(currentMessage._msg->data._action._action)) {
             case RTypeProtocol::actions::UP :
                 std::cout << "[OK] Action is up." << std::endl;
-                _game._entities[(_currentOwnerID - 1)]._speedY = -3;
+                _game._entities[_currentOwnerID]._speedY = -7;
                 break;
             case RTypeProtocol::actions::DOWN :
                 std::cout << "[OK] Action is down." << std::endl;
-                _game._entities[(_currentOwnerID - 1)]._speedY = 3;
+                _game._entities[_currentOwnerID]._speedY = 7;
                 break;
             case RTypeProtocol::actions::LEFT :
                 std::cout << "[OK] Action is left." << std::endl;
-                _game._entities[(_currentOwnerID - 1)]._speedX = -3;
+                _game._entities[_currentOwnerID]._speedX = -7;
                 break;
             case RTypeProtocol::actions::RIGHT :
                 std::cout << "[OK] Action is right." << std::endl;
-                _game._entities[(_currentOwnerID - 1)]._speedX = 3;
+                _game._entities[_currentOwnerID]._speedX = 7;
                 break;
             default:
                 break;
