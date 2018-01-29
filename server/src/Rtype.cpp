@@ -7,9 +7,15 @@
 
 int main(int ac, char **av)
 {
-    RTypeServer::ServerCore core;
 
     try {
+        if (RTypeServer::ServerUdp::checkPort(PORT_MAIN_SERVER))
+        {
+            throw RTypeException("Error : port taken");
+        }
+
+        RTypeServer::ServerCore core;
+
         core.start();
     }
     catch (RTypeException &e){

@@ -19,7 +19,7 @@ namespace RTypeServer {
 
     void RFCGameHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        RTypeProtocol::code codeCommand =  static_cast<RTypeProtocol::code>(msg._msg->_header._code);
+        RTypeProtocol::code codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end()) {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
         }

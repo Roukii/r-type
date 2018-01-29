@@ -21,12 +21,10 @@ namespace RTypeServer
 
     void RFCServerRoomHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        std::cout << "room code : " << (int) msg._msg->_header._code << std::endl;
-        RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
+        RTypeProtocol::code codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
             (this->*_CommandHandler[codeCommand])(msg, ownerID);
-            //_CommandHandler[codeCommand](msg, ownerID);
         }
     }
 
