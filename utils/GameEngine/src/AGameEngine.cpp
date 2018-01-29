@@ -34,7 +34,6 @@ namespace UgandaEngine {
             create_graph = reinterpret_cast<ILib *(*)()>(GetProcAddress(hGetProcIDDLL, "create_lib"));
         else
             std::cout << "Path for dll not found" << std::endl;
-        std::cout << "test" << std::endl;
         ILib *get = create_graph();
         std::cout << "getshared" << std::endl;
         std::shared_ptr<ILib> getShared(get);

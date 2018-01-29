@@ -29,7 +29,6 @@ void EntityFunc::move_left(RTypeProtocol::Message &msg, CoreInfo& info) {
 }
 
 void EntityFunc::shoot() {
-	std::cout << "boom bomm" << std::endl;
 }
 
 void EntityFunc::leave(RTypeProtocol::Message& msg, CoreInfo& info) {

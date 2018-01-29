@@ -33,10 +33,13 @@ namespace RTypeClient
     void RFCClientGameHandler::RFCMoveEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
         UgandaEngine::Entity *ent = _entity[getIdFromChar(currentMessage)];
         getPosFromMessage(currentMessage, ent);
+        std::cout << "Received new movement message. Pos : " << ent->_posX
+                  << "|" << ent->_posY
+                  << ". Id : " << getIdFromChar(currentMessage) << std::endl;
     }
 
     void RFCClientGameHandler::RFCDelEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
-        _entity.erase(getIdFromChar(currentMessage));
+        _entity.erase(_entity.find(getIdFromChar(currentMessage)));
     }
 
     void RFCClientGameHandler::RFCNewEntity(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID) {
@@ -47,13 +50,14 @@ namespace RTypeClient
     }
 
 
-    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, UgandaEngine::Entity * &ent)
+    void RFCClientGameHandler::getPosFromMessage(RTypeProtocol::Message &currentMessage, UgandaEngine::Entity *ent)
     {
         union
         {
             char ch[4];
             int n;
         } char2int;
+
 
 
         char2int.ch[0] = currentMessage._msg.get()->data._entity._pos._x[0];

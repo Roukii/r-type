@@ -45,8 +45,8 @@ namespace RTypeGame {
         bool checkCollision(const RTypeGame::AGameEntity &entity1, const RTypeGame::AGameEntity &entity2);
         bool checkOutOfBound(const RTypeGame::AGameEntity &entity);
         RTypeProtocol::Message createMsgDelE(int id);
-        RTypeProtocol::Message createMsgMoveE(int id);
-        RTypeProtocol::Message createMsgNewE(Ship, RTypeProtocol::types type);
+        RTypeProtocol::Message createMsgMoveE(AGameEntity gameEntity);
+        RTypeProtocol::Message createMsgNewE(AGameEntity gameEntity, RTypeProtocol::types type);
         Ship createNewEnnemy();
     };
 }

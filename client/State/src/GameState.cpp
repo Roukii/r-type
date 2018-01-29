@@ -35,7 +35,7 @@ void GameState::changeScreen(std::shared_ptr<IState> &state, std::string s, Core
 int    GameState::exec() {
     auto previous = std::chrono::system_clock::now();
     std::chrono::duration<double> lag = std::chrono::seconds(0);
-    engine->_libGraph->getMusic("Music")->play();
+    _engine->_libGraph->getMusic("Music")->play();
     while (true)
     {
         auto current = std::chrono::system_clock::now();
@@ -44,7 +44,7 @@ int    GameState::exec() {
         lag += elapsed;
 
         if (processInput()) {
-            engine->_libGraph->getMusic("Music")->stop();
+            _engine->_libGraph->getMusic("Music")->stop();
             return 1;
         }
 
@@ -61,15 +61,15 @@ int    GameState::exec() {
 
 void   GameState::init() {
     std::cout << "Start Game" << std::endl;
-    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
-    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _messageQueue);
+    CoreInfo::RoomInfo choosenRoom = _info.getRooms()[_engine->_libGraph->getJoin()];
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _info.getMessageQueue());
     _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
 }
 
 int GameState::processInput()
 {
-    std::vector<char> actions = engine->_libGraph->handleClientAction();
+    std::vector<char> actions = _engine->_libGraph->handleClientAction();
     RTypeProtocol::Message msg;
     msg._msg.get()->_header._code = RTypeProtocol::ACTION;
 
@@ -80,18 +80,18 @@ int GameState::processInput()
             return 1;
             //TODO : interpret the action and get UP, DOWN, RIGHT, LEFT, SHOOT, LEAVE
             // il faut faire une récupération des touches dans le state option
-        if (myKeys->down)
+        if (_myKeys->down)
         {
             std::cout << "it is a down" << std::endl;
             msg._msg.get()->data._action._action = RTypeProtocol::DOWN;
         }
-        else if (myKeys->up)
+        else if (_myKeys->up)
             msg._msg.get()->data._action._action = RTypeProtocol::UP;
-        else if (myKeys->left)
+        else if (_myKeys->left)
             msg._msg.get()->data._action._action = RTypeProtocol::LEFT;
-        else if (myKeys->right)
+        else if (_myKeys->right)
             msg._msg.get()->data._action._action = RTypeProtocol::RIGHT;
-        else if (myKeys->shoot)
+        else if (_myKeys->shoot)
             msg._msg.get()->data._action._action = RTypeProtocol::SHOOT;
         _roomSocket.get()->SendToServer(msg);
     }
@@ -102,15 +102,15 @@ int GameState::processInput()
 void GameState::update()
 {
     // check if message
-    while (!_messageQueue.isEmpty())
+    while (!_info.getMessageQueue().isEmpty())
     {
-        _rfcGameHandler.executeCommand(_messageQueue.peekMessage(), _messageQueue.peekOwnerID());
-        _messageQueue.pop();
+        _rfcGameHandler.executeCommand(_info.getMessageQueue().peekMessage(), _info.getMessageQueue().peekOwnerID());
+        _info.getMessageQueue().pop();
     }
 }
 
 void GameState::render(double lag)
 {
-    engine->_libGraph->handleGame(this->Entities);
+    _engine->_libGraph->handleGame(this->_entities);
 }
 

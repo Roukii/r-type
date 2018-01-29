@@ -33,15 +33,14 @@ void ReadyState::changeScreen(std::shared_ptr<IState> &state, std::string s, Cor
 }
 
 int    ReadyState::exec() {
-    while (!_messageQueue.isEmpty())
+    while (!_info.getMessageQueue().isEmpty())
     {
-        if (_messageQueue.peekMessage()._msg->_header._code == (RTypeProtocol::code) RTypeProtocol::START_GAME)
+        if (_info.getMessageQueue().peekMessage()._msg->_header._code == (RTypeProtocol::code) RTypeProtocol::START_GAME)
         {
-            std::cout << "message qqueue" << std::endl;
             _roomSocket->shutdown();
             return 3;
         }
-        _messageQueue.pop();
+        _info.getMessageQueue().pop();
     }
     int returnValue = engine->_libGraph->handleReady();
     if (returnValue == 5)
@@ -73,7 +72,7 @@ int    ReadyState::exec() {
 
 void   ReadyState::init() {
     CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
-    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _messageQueue);
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, _info.getRandomPort(), _info.getMessageQueue());
     _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
     startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_JOIN_ROOM;

@@ -48,28 +48,23 @@ namespace RTypeServer
 
     void RFCHandler::RFCError(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCERROR wala c gg wp" << std::endl;
     }
 
 
     void RFCHandler::RFCStatus(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCStatus lol" << std::endl;
     }
 
     void RFCHandler::RFCOk(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCOK lol" << std::endl;
     }
 
     void RFCHandler::RFCConnect(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCStatus lol" << std::endl;
     }
 
     void RFCHandler::RFCEndOfGame(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)
     {
-        std::cout << "RFCStatus lol" << std::endl;
     }
 
     void RFCHandler::RFCAction(RTypeProtocol::Message &currentMessage, std::size_t _currentOwnerID)

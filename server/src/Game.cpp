@@ -12,30 +12,37 @@ void RTypeGame::Game::init() {
 }
 
 void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
-    for (RTypeGame::AGameEntity &entity : _entities) {
+    std::cout << "Total of entities : " << _entities.size() << std::endl;
+    for (auto entity = _entities.begin(); entity != _entities.end(); ++entity) {
         RTypeProtocol::Message msg;
-//        entity.move(elapsedTime);
-        if (checkOutOfBound(entity)) {
-//            msg = createMsgDelE(entity._id);
+        entity->move(elapsedTime);
+        if (checkOutOfBound(*entity)) {
+            msg = createMsgDelE(entity->_id);
         } else {
-            msg = createMsgMoveE(entity._id);
-            for (const RTypeGame::AGameEntity &collision : _entities) {
-                if (checkCollision(entity, collision)) {
-//                    room.get()->SendToAll(createMsgDelE(collision._id));
-//                    msg = createMsgDelE(entity._id);
+            msg = createMsgMoveE(*entity);
+            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
+                if (checkCollision(*entity, *collision) && entity->_id != collision->_id) {
+                    room.get()->SendToAll(createMsgDelE(collision->_id));
+                    msg = createMsgDelE(entity->_id);
+                    std::cout << "Erasing id : " << collision->_id << std::endl;
+                    _entities.erase(collision);
+                    --entity;
+                    std::cout << "Erasing id : " << entity->_id << std::endl;
+                    _entities.erase(entity);
+                    --entity;
+                    room.get()->SendToAll(msg);
                     break;
                 }
             }
         }
-//        room.get()->SendToAll(msg);
+        room.get()->SendToAll(msg);
     }
 
     if (_ticks == 1) {
         Ship ennemy = createNewEnnemy();
         std::cout << "Ennemy pos:" << ennemy._posX << "|" << ennemy._posY << std::endl;
         _entities.push_back(ennemy);
-        //TODO: changer en ennemi
-        room.get()->SendToAll(createMsgNewE(ennemy, RTypeProtocol::SHIP));
+        room.get()->SendToAll(createMsgNewE(ennemy, RTypeProtocol::ENNEMY));
     }
 }
 
@@ -51,6 +58,7 @@ bool RTypeGame::Game::checkOutOfBound(const RTypeGame::AGameEntity &entity) {
 }
 
 RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
+    std::cout << "[OK] Deleted entity : " << id << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::DEL_ENTITY;
     union
@@ -58,15 +66,17 @@ RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
         char ch[4];
         int nb;
     } char2int;
-    char2int.nb = id;// ton id de merde
+    char2int.nb = id;
     currentMessage._msg.get()->data._entity.id[0] = char2int.ch[0];
     currentMessage._msg.get()->data._entity.id[1] = char2int.ch[1];
     currentMessage._msg.get()->data._entity.id[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity.id[3] = char2int.ch[3];
+
     return currentMessage;
 }
 
-RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(int id) {
+RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(AGameEntity gameEntity) {
+    std::cout << "[OK] Moved entity : " << gameEntity._id  << " at positions : " << gameEntity._posX << "|" << gameEntity._posY << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::MOV_ENTITY;
     union
@@ -74,15 +84,29 @@ RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(int id) {
         char ch[4];
         int nb;
     } char2int;
-    char2int.nb = id;// ton id de merde
+    char2int.nb = gameEntity._id;
     currentMessage._msg.get()->data._entity.id[0] = char2int.ch[0];
     currentMessage._msg.get()->data._entity.id[1] = char2int.ch[1];
     currentMessage._msg.get()->data._entity.id[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity.id[3] = char2int.ch[3];
+
+    char2int.nb = gameEntity._posX;
+    currentMessage._msg.get()->data._entity._pos._x[0] = char2int.ch[0];
+    currentMessage._msg.get()->data._entity._pos._x[1] = char2int.ch[1];
+    currentMessage._msg.get()->data._entity._pos._x[2] = char2int.ch[2];
+    currentMessage._msg.get()->data._entity._pos._x[3] = char2int.ch[3];
+
+    char2int.nb = gameEntity._posY;
+    currentMessage._msg.get()->data._entity._pos._y[0] = char2int.ch[0];
+    currentMessage._msg.get()->data._entity._pos._y[1] = char2int.ch[1];
+    currentMessage._msg.get()->data._entity._pos._y[2] = char2int.ch[2];
+    currentMessage._msg.get()->data._entity._pos._y[3] = char2int.ch[3];
+
     return currentMessage;
 }
 
-RTypeProtocol::Message RTypeGame::Game::createMsgNewE(Ship ship, RTypeProtocol::types type) {
+RTypeProtocol::Message RTypeGame::Game::createMsgNewE(AGameEntity gameEntity, RTypeProtocol::types type) {
+    std::cout << "[OK] New entity id : " << gameEntity._id << std::endl;
     RTypeProtocol::Message currentMessage;
     currentMessage._msg.get()->_header._code = RTypeProtocol::NEW_ENTITY;
     union
@@ -90,36 +114,26 @@ RTypeProtocol::Message RTypeGame::Game::createMsgNewE(Ship ship, RTypeProtocol::
         char ch[4];
         int nb;
     } char2int;
-
-    char2int.nb = ship._id;// ton id de merde
+    char2int.nb = gameEntity._id;
     currentMessage._msg.get()->data._entity.id[0] = char2int.ch[0];
     currentMessage._msg.get()->data._entity.id[1] = char2int.ch[1];
     currentMessage._msg.get()->data._entity.id[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity.id[3] = char2int.ch[3];
 
-    std::cout << "SERV id : " << (int)char2int.ch[0] << (int)char2int.ch[1] << (int)char2int.ch[2] << (int)char2int.ch[3] << std::endl;
-
-    std::cout << "id : " << char2int.nb << std::endl;
-
-    char2int.nb = ship._posX;
+    char2int.nb = gameEntity._posX;
     currentMessage._msg.get()->data._entity._pos._x[0] = char2int.ch[0];
     currentMessage._msg.get()->data._entity._pos._x[1] = char2int.ch[1];
     currentMessage._msg.get()->data._entity._pos._x[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity._pos._x[3] = char2int.ch[3];
 
-    std::cout << "SERV x : " << (int)char2int.ch[0] << (int)char2int.ch[1] << (int)char2int.ch[2] << (int)char2int.ch[3] << std::endl;
-
-    char2int.nb = ship._posY;
+    char2int.nb = gameEntity._posY;
     currentMessage._msg.get()->data._entity._pos._y[0] = char2int.ch[0];
     currentMessage._msg.get()->data._entity._pos._y[1] = char2int.ch[1];
     currentMessage._msg.get()->data._entity._pos._y[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity._pos._y[3] = char2int.ch[3];
 
-    std::cout << "SERV y : " << (int)char2int.ch[0] << (int)char2int.ch[1] << (int)char2int.ch[2] << (int)char2int.ch[3] << std::endl;
-
     currentMessage._msg.get()->data._entity.type = type;
 
-    currentMessage.setSizeMsg(sizeof(currentMessage._msg->_header) + sizeof(currentMessage._msg->data._entity));
     return currentMessage;
 }
 
@@ -128,7 +142,7 @@ RTypeGame::Ship RTypeGame::Game::createNewEnnemy() {
     newEnnemy._id = static_cast<int>(_entities.size());
     newEnnemy._posX = 800;
     newEnnemy._posY = 800;
-    newEnnemy._speedX = -5;
+    newEnnemy._speedX = -20;
     newEnnemy._speedY = 0;
     newEnnemy._height = 20;
     newEnnemy._width = 46;

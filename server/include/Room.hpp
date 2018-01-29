@@ -14,7 +14,7 @@
 #include "RFCServerRoomHandler.hpp"
 #include "RFCGameHandler.hpp"
 
-#define FRAME_RATE 60
+#define FRAME_RATE 30
 
 namespace RTypeServer
 {

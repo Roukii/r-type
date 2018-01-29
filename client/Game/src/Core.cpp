@@ -117,13 +117,12 @@ void    Core::start() {
 				this->_state->init();
 			}
 			else {
-				std::cout << "LE ROUX A FAIL!" << std::endl;
 				this->_state->changeScreen(_state, "READY", _info, _engine);
 				this->_state->init();
 			}
 		}
 	}
-	_info.shutdownSocket();
+	_info.shutdownSocket(); 
 }
 
 bool Core::checkServer() {
