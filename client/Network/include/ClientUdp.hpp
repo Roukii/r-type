@@ -33,7 +33,7 @@ public:
 
     bool isRunning() const override { return _isRunning;}
     void SendToServer(RTypeProtocol::Message &) override;
-    static bool checkPort(unsigned short port);
+    static unsigned short createAPort();
     std::thread &getThread() override { return _serviceThread;}
 
     void shutdown() override;

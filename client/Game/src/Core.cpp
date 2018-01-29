@@ -138,11 +138,12 @@ bool Core::checkServer() {
 
 	_info.getSocket().get()->SendToServer(sendOk);
 
+	std::cout << "Try connection to server" << std::endl;
 	while (wait)
 	{
 		clock_elapsed = std::chrono::system_clock::now();
 		elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(clock_elapsed - clock_start);
-		if (elapsed_time.count() / 1000000000 >= waitTime)
+		if (elapsed_time.count() / 10000000 >= waitTime)
 			wait = false;
 		if (!_info.getMessageQueue().isEmpty())
 		{
@@ -152,5 +153,6 @@ bool Core::checkServer() {
 		}
 	}
 	std::cout << "can't connect" << std::endl;
+	_info.getSocket()->shutdown();
 	return false;
 }

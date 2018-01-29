@@ -14,7 +14,7 @@ std::shared_ptr<IClientUdpSocket>& CoreInfo::getSocket() {
 
 void CoreInfo::startSocket(const std::string& host, unsigned short hostPort) {
     _host = host;
-    getRandomPort();
+    _port = ClientUdp::createAPort();
     std::cout << "get random port : " << _port << std::endl;
     std::cout << "host : " << host  << std::endl;
     std::cout << "host port : " << hostPort << std::endl;
@@ -28,16 +28,6 @@ RTypeClient::MessageQueue<RTypeProtocol::Message>& CoreInfo::getMessageQueue() {
 
 void CoreInfo::shutdownSocket() {
 	_socket.get()->shutdown();
-}
-
-unsigned short CoreInfo::getRandomPort() {
-    Random<unsigned short> random;
-    _port = random.Generate(4000, 5000);
-    while (ClientUdp::checkPort(_port))
-    {
-        _port = random.Generate(4000, 5000);
-    }
-    return _port;
 }
 
 bool CoreInfo::isRunning() const {

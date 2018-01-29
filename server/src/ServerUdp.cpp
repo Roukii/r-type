@@ -13,7 +13,8 @@ namespace RTypeServer
           _messageQueue(queue),
           _running(false),
           _port(port)
-    {}
+    {
+    }
 
     ServerUdp::~ServerUdp() = default;
 
@@ -151,15 +152,11 @@ namespace RTypeServer
             _serviceThread.join();
     }
 
-    bool ServerUdp::checkPort(unsigned short port)
+    unsigned short ServerUdp::createAPort()
     {
         boost::asio::io_service service;
-        boost::asio::ip::tcp::acceptor a(service);
-
-        boost::system::error_code ec;
-        a.open(boost::asio::ip::tcp::v4(), ec) || a.bind({boost::asio::ip::tcp::v4(), port}, ec);
-
-        return ec == boost::asio::error::address_in_use;
+        boost::asio::ip::tcp::acceptor acceptor(service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
+        return acceptor.local_endpoint().port();
     }
 
     unsigned short ServerUdp::getPort() const

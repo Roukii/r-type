@@ -43,7 +43,7 @@ namespace RTypeServer
         void runServerWithThread() override;
         bool isRunning() const override;
         std::thread &getThread() override;
-        static bool checkPort(unsigned short port);
+        static unsigned short createAPort();
         unsigned short getPort() const override;
 
         void shutdown() override;

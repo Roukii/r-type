@@ -7,10 +7,11 @@
 
 namespace RTypeServer
 {
-    ServerCore::ServerCore()
-    : _lobbyServer(std::make_shared<ServerUdp>(_messageQueue, PORT_MAIN_SERVER)),
+    ServerCore::ServerCore(unsigned short port)
+    : _lobbyServer(std::make_shared<ServerUdp>(_messageQueue, port)),
       _rooms(NUMBER_OF_ROOM)
     {
+        std::cout << "Server Port : " << port << std::endl;
         if (_lobbyServer.get() == nullptr)
             throw RTypeException("Error : can't start socket");
     }

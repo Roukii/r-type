@@ -15,14 +15,14 @@
 #include "RFCHandler.hpp"
 #include "RoomPool.hpp"
 
-#define PORT_MAIN_SERVER 4242
 #define NUMBER_OF_ROOM 4
+
 namespace RTypeServer
 {
     class ServerCore
     {
     public:
-        ServerCore();
+        ServerCore(unsigned short port);
 
         ~ServerCore() = default;
 

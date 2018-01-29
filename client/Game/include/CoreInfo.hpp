@@ -36,7 +36,6 @@ public:
 	void addElemToRoom(RoomInfo &room);
 	void resetRoom() { _rooms.clear(); }
 	const std::string &getHost() const { return _host; };
-	unsigned short getRandomPort();
 
 private:
 	std::shared_ptr<IClientUdpSocket> _socket;

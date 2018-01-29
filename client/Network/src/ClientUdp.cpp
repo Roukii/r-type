@@ -70,24 +70,17 @@ void ClientUdp::startReceive()
                                        {
                                            std::cout << "bad file descriptor wala" << std::endl;
                                            _isRunning = false;
-                                           shutdown();
-                                           throw RTypeException("Error : socket crashed");
-                                           return ;
                                        }
                                    }
                                    startReceive();
                                });
 }
 
-bool ClientUdp::checkPort(unsigned short port)
+unsigned short ClientUdp::createAPort()
 {
     boost::asio::io_service service;
-    boost::asio::ip::tcp::acceptor a(service);
-
-    boost::system::error_code ec;
-    a.open(boost::asio::ip::tcp::v4(), ec) || a.bind({boost::asio::ip::tcp::v4(), port }, ec);
-
-    return ec == boost::asio::error::address_in_use;
+    boost::asio::ip::tcp::acceptor acceptor(service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
+    return acceptor.local_endpoint().port();
 }
 
 void ClientUdp::runWithThread()
