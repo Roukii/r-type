@@ -18,31 +18,34 @@ void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket
 
 void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
     for (auto entity = _entities.begin(); entity != _entities.end(); ++entity) {
-        RTypeProtocol::Message msg;
-        int prevX = entity->_posX;
-        int prevY = entity->_posY;
-        entity->move(elapsedTime);
-        if (checkOutOfBound(*entity)) {
-            if (entity->_type == SHIP) {
-                entity->_posX = prevX;
-                entity->_posY = prevY;
+        if (!entity->_removable) {
+            RTypeProtocol::Message msg;
+            int prevX = entity->_posX;
+            int prevY = entity->_posY;
+            entity->move(elapsedTime);
+            if (checkOutOfBound(*entity)) {
+                if (entity->_type == SHIP) {
+                    entity->_posX = prevX;
+                    entity->_posY = prevY;
+                } else {
+                    msg = createMsgDelE(entity->_id);
+                    entity->_removable = true;
+                }
             } else {
-                msg = createMsgDelE(entity->_id);
-                entity->_removable = true;
+                msg = createMsgMoveE(*entity);
+                for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
+                    if (checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
+                        std::cout << "[DBG] COLLISION!!" << std::endl;
+                        room.get()->SendToAll(createMsgDelE(collision->_id));
+                        msg = createMsgDelE(entity->_id);
+                        entity->_removable = true;
+                        collision->_removable = true;
+                        break;
+                    }
+                }
             }
-        } else {
-            msg = createMsgMoveE(*entity);
-//            for (auto collision = _entities.begin(); collision != _entities.end(); ++collision) {
-//                if (  checkCollision(*entity, *collision) && entity->_id != collision->_id && !entity->_removable) {
-//                    room.get()->SendToAll(createMsgDelE(collision->_id));
-//                    msg = createMsgDelE(entity->_id);
-//                    entity->_removable = true;
-//                    collision->_removable = true;
-//                    break;
-//                }
-//            }
+            room.get()->SendToAll(msg);
         }
-        room.get()->SendToAll(msg);
     }
 
     _entities.erase(
@@ -58,10 +61,12 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
 }
 
 bool RTypeGame::Game::checkCollision(const RTypeGame::AGameEntity &entity1, const RTypeGame::AGameEntity &entity2) {
+    std::cout << "[DBG] Pos e1: " << entity1._posX << "." << entity1._posY << std::endl;
+    std::cout << "[DBG] Pos e2: " << entity2._posX << "." << entity2._posY << std::endl;
     return entity1._posX < entity2._posX + entity2._width
            && entity1._posX + entity1._width > entity2._posX
            && entity1._posY < entity2._posY + entity2._height
-           && entity1._height + entity1._posY > entity1._posY;
+           && entity1._height + entity1._posY > entity2._posY;
 }
 
 bool RTypeGame::Game::checkOutOfBound(const RTypeGame::AGameEntity &entity) {
