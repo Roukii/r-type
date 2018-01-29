@@ -104,8 +104,10 @@ void GameState::update()
     // check if message
     while (!_info.getMessageQueue().isEmpty())
     {
+        std::cout << "[DBG] Message queue of size : "<< _info.getMessageQueue().size() << std::endl;
         _rfcGameHandler.executeCommand(_info.getMessageQueue().peekMessage(), _info.getMessageQueue().peekOwnerID());
         _info.getMessageQueue().pop();
+        std::cout << "[DBG] Message queue new size after pop : "<< _info.getMessageQueue().size() << std::endl;
     }
 }
 
