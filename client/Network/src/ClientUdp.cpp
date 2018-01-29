@@ -69,6 +69,8 @@ void ClientUdp::startReceive()
                                        {
                                            std::cout << "bad file descriptor wala" << std::endl;
                                            _isRunning = false;
+                                           shutdown();
+                                           return ;
                                        }
                                    }
                                    startReceive();
