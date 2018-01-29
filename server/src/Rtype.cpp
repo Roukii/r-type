@@ -7,9 +7,17 @@
 
 int main(int ac, char **av)
 {
-    RTypeServer::ServerCore core;
 
     try {
+        std::cout << "test port : " << (unsigned short) PORT_MAIN_SERVER << std::endl;
+        if (!RTypeServer::ServerUdp::checkPort(PORT_MAIN_SERVER))
+        {
+            throw RTypeException("Error : port taken");
+        }
+
+        std::cout << "test port" << std::endl;
+        RTypeServer::ServerCore core;
+
         core.start();
     }
     catch (RTypeException &e){

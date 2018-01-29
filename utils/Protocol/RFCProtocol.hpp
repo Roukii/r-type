@@ -19,8 +19,6 @@ namespace RTypeProtocol
     {
         ERR = 0,
         OK,
-        STATUS,
-        CONNECT,
         NEW_ENTITY,
         MOV_ENTITY,
         DEL_ENTITY,
@@ -31,7 +29,6 @@ namespace RTypeProtocol
         PLAYER_LEAVE_ROOM,
         PLAYER_READY,
         PLAYER_NOT_READY,
-        READY_ROOM,
         START_GAME,
         END_OF_GAME
     };
@@ -56,13 +53,6 @@ namespace RTypeProtocol
         char _errornb;
     };
 
-    struct status
-    {
-        char _id[4];
-        char _username[16];
-        char _stat;
-    };
-
     struct pos
     {
         char _x[4];
@@ -84,11 +74,6 @@ namespace RTypeProtocol
         bool _playing;
     };
 
-    struct nb_room
-    {
-        char _room[4];
-    };
-
     struct action
     {
         char _action;
@@ -100,10 +85,8 @@ namespace RTypeProtocol
         union Data
         {
             error _error;
-            status _status;
             entity _entity;
             room _room;
-            nb_room _nb_room;
             action _action;
         } data;
     };

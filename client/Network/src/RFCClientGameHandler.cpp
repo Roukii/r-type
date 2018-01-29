@@ -22,7 +22,7 @@ namespace RTypeClient
 
     void RFCClientGameHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        RTypeProtocol::code codeCommand = (RTypeProtocol::code) msg._msg->_header._code;
+        auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         std::cout << "code command : " << codeCommand <<  std::endl;
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {

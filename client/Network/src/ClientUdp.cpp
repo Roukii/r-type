@@ -52,12 +52,11 @@ void ClientUdp::SendToServer(RTypeProtocol::Message &message)
 
 void ClientUdp::startReceive()
 {
-    _socket.async_receive_from(boost::asio::buffer(_msg._msg.get(), message.getSizeMsg()),
+    _socket.async_receive_from(boost::asio::buffer(_msg._msg.get(), _msg.getSizeMsg()),
                                _remoteEndpoint,
                                [this](const boost::system::error_code &ec,
                                       std::size_t bytes)
                                {
-                                   std::cout << "receive message with code : " << (int) this->_msg._msg->_header._code << std::endl;
                                    if (!ec)
                                    {
                                        _messageQueue.addMessage(_msg, 0);

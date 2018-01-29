@@ -37,7 +37,6 @@
 
     void RFCClientHandler::executeCommand(RTypeProtocol::Message &msg, std::size_t ownerID)
     {
-        std::cout << "message command : " << (int) msg._msg.get()->_header._code << std::endl;
         auto codeCommand = static_cast<RTypeProtocol::code>(msg._msg->_header._code);
         if (_CommandHandler.find(codeCommand) != _CommandHandler.end())
         {
