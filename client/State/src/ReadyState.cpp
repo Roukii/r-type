@@ -14,8 +14,8 @@ void ReadyState::changeScreen(std::shared_ptr<IState> &state, std::string s, Cor
     {
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
-        _info.getSocketRoom()->SendToServer(msg);
-        _info.getSocketRoom()->shutdown();
+        _roomSocket->SendToServer(msg);
+        _roomSocket->shutdown();
         state = std::make_shared<MenuState>(info, engine);
     }
     else if (s == "SPLASH")
@@ -37,7 +37,7 @@ int    ReadyState::exec() {
     {
         if (_info.getMessageQueue().peekMessage()._msg->_header._code == (RTypeProtocol::code) RTypeProtocol::START_GAME)
         {
-            _info.getSocketRoom()->shutdown();
+            _roomSocket->shutdown();
             return 3;
         }
         _info.getMessageQueue().pop();
@@ -47,8 +47,8 @@ int    ReadyState::exec() {
     {
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_LEAVE_ROOM;
-        _info.getSocketRoom()->SendToServer(msg);
-        _info.getSocketRoom()->shutdown();
+        _roomSocket->SendToServer(msg);
+        _roomSocket->shutdown();
         return 5;
     }
     if (returnValue == 3 && !ready)
@@ -56,7 +56,7 @@ int    ReadyState::exec() {
         std::cout << "change status" << std::endl;
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_READY;
-        _info.getSocketRoom()->SendToServer(msg);
+        _roomSocket->SendToServer(msg);
         ready = true;
     }
     else if (returnValue == 3 && ready)
@@ -64,7 +64,7 @@ int    ReadyState::exec() {
         std::cout << "stop ready" << std::endl;
         RTypeProtocol::Message msg;
         msg._msg->_header._code = RTypeProtocol::PLAYER_NOT_READY;
-        _info.getSocketRoom()->SendToServer(msg);
+        _roomSocket->SendToServer(msg);
         ready = false;
     }
     return -1;
@@ -72,9 +72,9 @@ int    ReadyState::exec() {
 
 void   ReadyState::init() {
     CoreInfo::RoomInfo choosenRoom = _info.getRooms()[engine->_libGraph->getJoin()];
-    _info.getSocketRoom() = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, ClientUdp::createAPort(), _info.getMessageQueue());
-    _info.getSocketRoom().get()->runWithThread();
+    _roomSocket = std::make_shared<ClientUdp>(_info.getHost(), choosenRoom.port, ClientUdp::createAPort(), _info.getMessageQueue());
+    _roomSocket.get()->runWithThread();
     RTypeProtocol::Message startMsg;
     startMsg._msg.get()->_header._code = RTypeProtocol::PLAYER_JOIN_ROOM;
-    _info.getSocketRoom().get()->SendToServer(startMsg);
+    _roomSocket.get()->SendToServer(startMsg);
 }

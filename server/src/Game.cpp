@@ -8,6 +8,7 @@
 #include "Message.hpp"
 
 void RTypeGame::Game::init(const std::shared_ptr<RTypeProtocol::IServerUdpSocket> &room) {
+    _room = room;
     for (int i = 0; i < _nbrPlayers; i++) {
         Ship newPlayer = createNewPlayer();
         _entities.push_back(newPlayer);
@@ -42,7 +43,6 @@ void RTypeGame::Game::play(double elapsedTime, const std::shared_ptr<RTypeProtoc
 //            }
         }
         room.get()->SendToAll(msg);
-        std::cout << "[DBG] Message sent" << std::endl;
     }
 
     _entities.erase(
@@ -83,7 +83,6 @@ RTypeProtocol::Message RTypeGame::Game::createMsgDelE(int id) {
     currentMessage._msg.get()->data._entity.id[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity.id[3] = char2int.ch[3];
 
-    std::cout << "[DBG] Created new delete msg" << std::endl;
     return currentMessage;
 }
 
@@ -113,7 +112,6 @@ RTypeProtocol::Message RTypeGame::Game::createMsgMoveE(AGameEntity gameEntity) {
     currentMessage._msg.get()->data._entity._pos._y[2] = char2int.ch[2];
     currentMessage._msg.get()->data._entity._pos._y[3] = char2int.ch[3];
 
-    std::cout << "[DBG] Created new move msg" << std::endl;
     return currentMessage;
 }
 
@@ -145,7 +143,6 @@ RTypeProtocol::Message RTypeGame::Game::createMsgNewE(AGameEntity gameEntity, RT
 
     currentMessage._msg.get()->data._entity.type = type;
 
-    std::cout << "[DBG] Created new entity msg" << std::endl;
     return currentMessage;
 }
 
@@ -176,7 +173,7 @@ RTypeGame::Ship RTypeGame::Game::createNewPlayer() {
 RTypeGame::Bullet RTypeGame::Game::createNewBullet(const AGameEntity &entity) {
     Bullet newBullet(static_cast<int>(_entities.size()));
     newBullet._id = static_cast<int>(_entities.size());
-    newBullet._posY = entity._posY;
+    newBullet._posY = entity._posY + (entity._height / 2);
     newBullet._height = 3;
     newBullet._width = 33;
     switch (entity._type) {
@@ -191,5 +188,6 @@ RTypeGame::Bullet RTypeGame::Game::createNewBullet(const AGameEntity &entity) {
             newBullet._speedY = 0;
             break;
     }
+    _room.get()->SendToAll(createMsgNewE(newBullet, RTypeProtocol::BULLET));
     return newBullet;
 }

@@ -13,6 +13,7 @@ class ReadyState : public IState {
     bool ready = false;
     CoreInfo &_info;
     std::shared_ptr<UgandaEngine::AGameEngine> engine;
+    std::shared_ptr<IClientUdpSocket> _roomSocket;
 
 public:
     ReadyState(CoreInfo &info, std::shared_ptr<UgandaEngine::AGameEngine> eng) : _info(info), engine(eng) {};
